@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import Geolocation from '@react-native-community/geolocation';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function useLocation () {
     const [location, setLocation] = useState("Ss");
 
@@ -20,10 +20,12 @@ export default function useLocation () {
     currentLongitude,
     setCurrentLongitude
   ] = useState('...');
+
   const [
     currentLatitude,
     setCurrentLatitude
   ] = useState('...');
+
   const [
     locationStatus,
     setLocationStatus
@@ -69,18 +71,23 @@ export default function useLocation () {
         setLocationStatus('You are Here');
 
         //getting the Longitude from the location json
-        const currentLongitude = 
+        const currentLongitude =
           JSON.stringify(position.coords.longitude);
 
         //getting the Latitude from the location json
-        const currentLatitude = 
+        const currentLatitude =
           JSON.stringify(position.coords.latitude);
 
         //Setting Longitude state
         setCurrentLongitude(currentLongitude);
         //Setting Longitude state
         setCurrentLatitude(currentLatitude);
-        setLocation({currentLatitude,currentLongitude})
+        setLocation({currentLatitude,currentLongitude});
+        AsyncStorage.setItem("lat",JSON.stringify(currentLatitude))
+        AsyncStorage.setItem("long",JSON.stringify(currentLongitude))
+        console.log(">> location here << ", currentLatitude, currentLongitude);
+        console.log(">> location from hook << ", location);
+
 
       },
       (error) => {
@@ -98,25 +105,28 @@ export default function useLocation () {
     watchID = Geolocation.watchPosition(
       (position) => {
         //Will give you the location on location change
-        
+
         setLocationStatus('You are Here');
         console.log(position);
 
-        //getting the Longitude from the location json        
+        //getting the Longitude from the location json
         const currentLongitude =
           JSON.stringify(position.coords.longitude);
 
         //getting the Latitude from the location json
-        const currentLatitude = 
+        const currentLatitude =
           JSON.stringify(position.coords.latitude);
 
         //Setting Longitude state
         setCurrentLongitude(currentLongitude);
+        AsyncStorage.setItem("lat",JSON.stringify(currentLatitude))
+        AsyncStorage.setItem("long",JSON.stringify(currentLongitude))
 
         //Setting Latitude state
         setCurrentLatitude(currentLatitude);
-        setLocation({currentLatitude,currentLongitude})
 
+        setLocation({currentLatitude,currentLongitude})
+        console.log(">> location here << ", currentLatitude, currentLongitude)
       },
       (error) => {
         setLocationStatus(error.message);

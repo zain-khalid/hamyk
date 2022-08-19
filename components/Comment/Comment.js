@@ -22,22 +22,24 @@ import EndPoints from '../../configuration/EndPoints';
 import colors from '../Global/colors';
 import { Colors } from 'react-native-paper';
 import getAsync from '../AsynDataFolder/getAsync';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import GenerateCommentNotification from '../functions/GenerateComments';
 
 const Comment =({
   state,
   changeState,
   commentList,
   vidId,
-  onCommentSent
+  onCommentSent,
+  otheruserID
 })=>{
 const [keyBoardOpen,setKeyBoardOpen]=useState(false)
 const [Comment,setComment]=useState("")
-const [commentData,setCommentData]=useState(commentList)
+const [commentData,setCommentData]=useState([])
 
 
 
-const AsynData=getAsync()
+const AsynData = getAsync()
 
 
 
@@ -49,7 +51,6 @@ const AsynData=getAsync()
 function addFollow(){
   if(Comment !=""){
 
-  console.log("iam running")
   var myHeaders = new Headers();
 myHeaders.append("Authorization", `Bearer ${AsynData.token}`);
 
@@ -69,8 +70,8 @@ fetch(`${BaseUrl}${EndPoints.addComments}`, requestOptions)
   .then(response => response.json())
   .then(result => {
     onCommentSent()
-    fetchComments()
-    setComment("")
+    fetchComments(AsynData.token)
+    GenerateCommentNotification(otheruserID,Comment)
     console.log(result)})
   .catch(error => console.log('error', error));
 }
@@ -83,21 +84,33 @@ fetch(`${BaseUrl}${EndPoints.addComments}`, requestOptions)
 
 
 
+useEffect(()=>{
+
+  getAsyncData()
+  
+  },[])
 
 
 
+  async function getAsyncData () {
+    const userid = await AsyncStorage.getItem('userid')
+    const token = await AsyncStorage.getItem('token')
+    let user_id=JSON.parse(userid) 
 
-
+    if(token){
+      fetchComments(token)
+    }
+  }
 
 
 ///////////FETCHING COMMENT LIST//////////////////
 
 
-async function fetchComments(){
+async function fetchComments(token){
 
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${AsynData.token}`);
+  myHeaders.append("Authorization", `Bearer ${token}`);
   
   var formdata = new FormData();
   formdata.append("video_id", vidId);
@@ -113,11 +126,10 @@ async function fetchComments(){
     .then(response => response.json())
     .then(result => {
       setCommentData(result.comments)
-      console.log(result.comments)
+      console.log(result)
   
   })
     .catch(error => console.log('error', error));
-
 
 
 }
@@ -210,10 +222,10 @@ style={{color:"white",fontWeight:"500",fontSize:18}}>
 
 <View style={[styles.ListWrapper,{marginBottom:keyBoardOpen===true? -WindowHeight/2.5:0}]}>
   {
-    commentList.length >=1?
+    commentData.length >=1?
 <FlatList
 keyExtractor={KeyExtractor}
-data={commentData.length >=1 ?commentData : commentList}
+data={commentData}
 renderItem={renderUser}
 
 /> 
@@ -253,7 +265,10 @@ onEndEditing={()=>setKeyBoardOpen(false)}
     </View>
 
 <IonIcon 
-onPress={()=> addFollow()}
+onPress={()=> {addFollow()
+  setComment("")
+
+}}
 style={{marginRight:10}}
 name='send-sharp'
 size={Icon_Size}

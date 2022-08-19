@@ -5,7 +5,7 @@ import {
 import { Divider } from 'react-native-paper';
   import colors from '../Global/colors';
   const WindowWidth = Dimensions.get('window').width
-  const WindowHeight = Dimensions.get('window').height; 
+  const WindowHeight = Dimensions.get('window').height;
   const styles = StyleSheet.create({
 
 
@@ -58,7 +58,7 @@ alignItems:"center"
 
 
 
-}, 
+},
 Divider:{
    width:WindowWidth,
    height:WindowHeight/17,
@@ -75,13 +75,17 @@ ListWrapper:{
 },
 VideoOptionsContainer:{
    position:"absolute",
+
    // flexDirection: 'row',
-   height:WindowHeight-60,
+   // height:WindowHeight-60,
+   bottom:0,
    width:'100%',
    backgroundColor:"rgba(0,0,0,0)",
    justifyContent:"space-between",
 },
 optionsVideo:{
+   // bottom:0,
+   position:"absolute",
    width:WindowWidth,
    flexDirection:"row",
    justifyContent:"space-between",

@@ -16,6 +16,7 @@ import { Divider } from 'react-native-paper';
       backgroundColor:"transparent",
 alignItems:"center",
 
+
 // justifyContent:"center"
 
 },

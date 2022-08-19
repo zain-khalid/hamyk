@@ -7,13 +7,16 @@ const EndPoints={
     TopVideos:"postlisttop",
     NewVideos:"postlistnew",
     UserS_Videos:"postlistuser",
-    VideoBaseUrl:"https://hamykvideourl.khannburger.com/",
+    VideoBaseUrl:"https://hamykapp.s3.ap-south-1.amazonaws.com/",
+    ProfileUrl:"https://hamykapp.s3.ap-south-1.amazonaws.com/",
     following:"getfollowedlist",
     followers:"getfollowerlist",
     hitFollow:"addfollow",
     commentlist:"commentlist",
     addComments:"comment",
-    allUser:"getalluser"
+    allUser:"getalluser",
+    makeNotification:"makenotification",
+    getNotif:"getnotification"
 
 }
 export default EndPoints

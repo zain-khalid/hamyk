@@ -293,6 +293,7 @@ useEffect(() => {
       isActive={true}
       video={true}
       audio={true}
+      enableZoomGesture={true}
 //       enableZoomGesture={true}
 // zoom={isEnabled}
     
@@ -355,25 +356,27 @@ onPress={()=>{
 <MaterialIcons  
 onPress={() => navigation.goBack()}
 style={{marginLeft:10}}
-name='arrow-back' size={25} color="white"/>
+name='arrow-back' size={32} color="white"/>
 
-   <Text style={{color:"white",fontSize:20}}>{counter?counter+":00":"0:00"}</Text>
+   {/* <Text style={{color:"white",fontSize:20}}>{counter?counter+":00":"0:00"}</Text> */}
 <View style={{flexDirection:"row"}}>
 <Ionicons  
 onPress={()=>{
-    
-    camType === "front"?  setCamType("back"):setCamType("front")
-    setCamChanged(camChanged+1)
+    if(isRecording ===false){
+        camType === "front"?  setCamType("back"):setCamType("front")
+        setCamChanged(camChanged+1)
+    }
+   
 }}
 // style={{marginLeft:20}}
-name='camera-reverse-outline' size={25} color="white"/>
+name='camera-reverse-outline' size={32} color="white"/>
 <MaterialIcons  
 onPress={()=>{
 console.log("fresh")
     flash === "off"? setFlash("on") : setFlash("off")
 }}
 style={{marginLeft:10,marginRight:10}}
-name={flash === "off"?'flash-off':"flash-on"} size={25} color="white"/>
+name={flash === "off"?'flash-off':"flash-on"} size={32} color="white"/>
 
 </View>
 

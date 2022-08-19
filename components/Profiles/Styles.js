@@ -18,7 +18,7 @@ height:WindowHeight/15,
    },
  
    Avatar:{
-    width:105,height:105,marginTop:-20
+    width:105,height:105,marginTop:-20,borderRadius:1000
    },
    user_infro_section:{
     width:WindowWidth/1.2,

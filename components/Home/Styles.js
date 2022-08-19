@@ -5,7 +5,7 @@ import {
   import colors from '../Global/colors';
 
   const WindowWidth = Dimensions.get('window').width
-  const WindowHeight = Dimensions.get('window').height; 
+  const WindowHeight = Dimensions.get('window').height;
   const styles = StyleSheet.create({
    container:{
     width:WindowWidth,
@@ -27,12 +27,13 @@ justifyContent:"space-around",
    },
 
    OverLayScreen:{
-      
+
          width:WindowWidth,
-         height:WindowHeight,
+         // height:WindowHeight,
          flexDirection:"row",
-         position:"absolute"
-       
+         position:"absolute",
+         bottom:0
+
    },
    InnerOverLay:{alignItems:"center",alignSelf:"flex-end",width:WindowWidth,
    marginBottom:20
@@ -46,7 +47,7 @@ InnerOverLayII:{
    justifyContent:"space-between",
    marginLeft:80
 
-   
+
 },
    Avatar:{
     width:45,height:45

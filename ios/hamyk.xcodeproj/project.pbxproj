@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* hamykTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* hamykTests.m */; };
+		045C4EA5289B1064003CAB19 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 045C4EA4289B1064003CAB19 /* CoreMedia.framework */; };
+		045C4EA7289B106C003CAB19 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 045C4EA6289B106C003CAB19 /* CoreVideo.framework */; };
+		045C4EA9289B1074003CAB19 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 045C4EA8289B1073003CAB19 /* OpenGLES.framework */; };
+		045C4EAB289B107A003CAB19 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 045C4EAA289B107A003CAB19 /* AVFoundation.framework */; };
+		045C4EAF289B108D003CAB19 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 045C4EAE289B108D003CAB19 /* MobileCoreServices.framework */; };
 		0C80B921A6F3F58F76C31292 /* libPods-hamyk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-hamyk.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -26,26 +31,29 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		045C4EBC289B1294003CAB19 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* hamykTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = hamykTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* hamykTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = hamykTests.m; sourceTree = "<group>"; };
-		041D316928971F0B00BD76CE /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
-		041D316A28971F0B00BD76CE /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
-		041D316B28971F0B00BD76CE /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
-		041D316C28971F0B00BD76CE /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
-		041D316D28971F0B00BD76CE /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
-		041D316E28971F0B00BD76CE /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
-		041D316F28971F0B00BD76CE /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
-		041D317028971F0C00BD76CE /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
-		041D317128971F0C00BD76CE /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Foundation.ttf; sourceTree = "<group>"; };
-		041D317228971F0C00BD76CE /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
-		041D317328971F0C00BD76CE /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Solid.ttf; sourceTree = "<group>"; };
-		041D317428971F0C00BD76CE /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
-		041D317528971F0C00BD76CE /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
-		041D317628971F0C00BD76CE /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
-		041D317728971F0C00BD76CE /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
-		041D317828971F0C00BD76CE /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
+		045C4EA4289B1064003CAB19 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		045C4EA6289B106C003CAB19 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		045C4EA8289B1073003CAB19 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		045C4EAA289B107A003CAB19 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		045C4EAC289B1082003CAB19 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		045C4EAE289B108D003CAB19 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		13B07F961A680F5B00A75B9A /* hamyk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hamyk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = hamyk/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = hamyk/AppDelegate.mm; sourceTree = "<group>"; };
@@ -75,7 +83,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				045C4EA5289B1064003CAB19 /* CoreMedia.framework in Frameworks */,
+				045C4EAF289B108D003CAB19 /* MobileCoreServices.framework in Frameworks */,
 				0C80B921A6F3F58F76C31292 /* libPods-hamyk.a in Frameworks */,
+				045C4EAB289B107A003CAB19 /* AVFoundation.framework in Frameworks */,
+				045C4EA7289B106C003CAB19 /* CoreVideo.framework in Frameworks */,
+				045C4EA9289B1074003CAB19 /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,33 +112,9 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		041D316828971E6F00BD76CE /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				041D317528971F0C00BD76CE /* AntDesign.ttf */,
-				041D317228971F0C00BD76CE /* Entypo.ttf */,
-				041D316C28971F0B00BD76CE /* EvilIcons.ttf */,
-				041D317028971F0C00BD76CE /* Feather.ttf */,
-				041D317628971F0C00BD76CE /* FontAwesome.ttf */,
-				041D316F28971F0B00BD76CE /* FontAwesome5_Brands.ttf */,
-				041D316D28971F0B00BD76CE /* FontAwesome5_Regular.ttf */,
-				041D317328971F0C00BD76CE /* FontAwesome5_Solid.ttf */,
-				041D316A28971F0B00BD76CE /* Fontisto.ttf */,
-				041D317128971F0C00BD76CE /* Foundation.ttf */,
-				041D317828971F0C00BD76CE /* Ionicons.ttf */,
-				041D317428971F0C00BD76CE /* MaterialCommunityIcons.ttf */,
-				041D316928971F0B00BD76CE /* MaterialIcons.ttf */,
-				041D316B28971F0B00BD76CE /* Octicons.ttf */,
-				041D316E28971F0B00BD76CE /* SimpleLineIcons.ttf */,
-				041D317728971F0C00BD76CE /* Zocial.ttf */,
-			);
-			name = Fonts;
-			sourceTree = "<group>";
-		};
 		13B07FAE1A68108700A75B9A /* hamyk */ = {
 			isa = PBXGroup;
 			children = (
-				041D316828971E6F00BD76CE /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -139,6 +128,12 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				045C4EAE289B108D003CAB19 /* MobileCoreServices.framework */,
+				045C4EAC289B1082003CAB19 /* QuartzCore.framework */,
+				045C4EAA289B107A003CAB19 /* AVFoundation.framework */,
+				045C4EA8289B1073003CAB19 /* OpenGLES.framework */,
+				045C4EA6289B106C003CAB19 /* CoreVideo.framework */,
+				045C4EA4289B1064003CAB19 /* CoreMedia.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-hamyk.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-hamyk-hamykTests.a */,
@@ -232,6 +227,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
 				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				045C4EBC289B1294003CAB19 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -255,7 +251,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1340;
 					};
 				};
 			};
@@ -531,22 +527,29 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-hamyk.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4XZK9QW968;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = hamyk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.7;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = app.hamyk.com;
 				PRODUCT_NAME = hamyk;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -557,21 +560,28 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-hamyk.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4XZK9QW968;
 				INFOPLIST_FILE = hamyk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.7;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = app.hamyk.com;
 				PRODUCT_NAME = hamyk;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

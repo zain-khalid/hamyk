@@ -16,7 +16,7 @@ import BaseUrl from '../../configuration/url';
 import EndPoints from '../../configuration/EndPoints';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SpinnerButton from 'react-native-spinner-button';
-const Login =()=>{
+const Login =({ChangeState})=>{
 const navigation = useNavigation()
 
 
@@ -60,9 +60,9 @@ fetch(`${BaseUrl}${EndPoints.Signin}`, requestOptions)
     AsyncStorage.setItem('token',result.token)
     AsyncStorage.setItem('login',JSON.stringify("true"))
     setLoading(false)
-    navigation.navigate("Home")
+    ChangeState()
     console.log(result)}
-    
+
     )
   .catch(error => {
     setLoading(false)
@@ -86,14 +86,14 @@ return(
       style={styles.innerView}
       >
 
-    
+
         <Text
         style={styles.Text_logo}
         >hamyk</Text>
         <View style={styles.Mid_View}>
 
 <View style={[styles.input_container,{borderBottomColor:submitPressed===true && username===""?colors[0].primaryColor: colors[0].FontColor}]}>
-<TextInput 
+<TextInput
 placeholderTextColor={colors[0].FontColor}
 placeholder='Enter your email'
 autoCapitalize="none"
@@ -113,7 +113,7 @@ style={styles.InputStyle}
 :
 null}
 <View style={[styles.input_container,{borderBottomColor:submitPressed===true && password===""?colors[0].primaryColor: colors[0].FontColor}]}>
-<TextInput 
+<TextInput
 placeholderTextColor={colors[0].FontColor}
 placeholder='Enter password'
 secureTextEntry={true}
@@ -136,7 +136,7 @@ style={{color:colors[0].FontColor,marginTop:50}}
 
 {
   loading ===false?
-<Pressable 
+<Pressable
 onPress={()=>{
   setLoading(true)
   onSubmit()}}
@@ -153,7 +153,7 @@ onPress={()=>{
                         spinnerColor=''
                         spinnerType='PulseIndicator'
                         indicatorCount={0}
-                    
+
 // onPress={()=>onSubmit()}
 >
 

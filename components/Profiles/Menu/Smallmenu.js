@@ -120,7 +120,7 @@ style={styles.Text}>
               <Pressable 
               
               onPress={()=> OnSetModal()}
-              style={styles.closeModalButton}>
+              style={styles.closeModalButtonI}>
               <Text
                 style={{
                   fontFamily: 'avenir',

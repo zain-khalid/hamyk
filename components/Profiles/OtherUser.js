@@ -9,14 +9,14 @@ import {
   ImageBackground,
   Modal,
   PermissionsAndroid,
-  
+  SafeAreaView
+
 } from 'react-native';
 import styles from './Styles';
 import profile from '../../assets/images/Profile.png'
 import { useNavigation } from '@react-navigation/native';
 import colors from '../Global/colors';
 import { FlatList } from 'react-native-gesture-handler';
-import videosdata from '../Feed/data/videoData';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
@@ -30,6 +30,9 @@ import Following from '../Follow_Data/Following';
 import getAsync from '../AsynDataFolder/getAsync';
 import UserData from '../Data/UserData';
 import SmallMenu from './Menu/Smallmenu';
+import moment from 'moment';
+
+import GenerateFollowers from '../functions/GenerateFollowNotification';
 const itemHeight = Dimensions.get('window').height/3
 
 import SpinnerButton from 'react-native-spinner-button';
@@ -58,9 +61,15 @@ const [userData,setUserData]= useState(
     followers:0,
     username:"",
     OtherUserr:0,
-    
+    profile:"",
+    total_likes:0
+
+
 }
 )
+const [followed,setFollowed]=useState(0)
+const [followers,setfollowers]=useState(0)
+
 
 
 
@@ -96,12 +105,12 @@ useEffect(()=>{
   async function getAsyncData () {
     const userid = await AsyncStorage.getItem('userid')
     const token = await AsyncStorage.getItem('token')
-    let user_id=JSON.parse(userid) 
+    let user_id=JSON.parse(userid)
     if(token){
       getUserData(token,user_id)
-      getUserVideos(token,user_id)  
-  
-    } 
+      getUserVideos(token,user_id)
+
+    }
   }
 
 
@@ -113,29 +122,51 @@ useEffect(()=>{
 
 ////////////UNFOLLOW OR FOLLOW/////////////
 
+
+function onFollowPress(){
+  setfollowers(isFollowing==="true"?followers - 1:followers + 1)
+}
+
+
+
+
+
+
+
+
+
 function followUser(){
+  setIsFollowing(isFollowing==="true"?"false":"true")
+
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${AsyncData.token}`);
-  
+
   var formdata = new FormData();
   formdata.append("follow_to", Other_id);
   formdata.append("follow_by", AsyncData.myId);
-  
+
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
     body: formdata,
     redirect: 'follow'
   };
-  
+
   fetch(`${BaseUrl}${EndPoints.hitFollow}`, requestOptions)
     .then(response => response.json())
     .then(result => {
 
       getAsyncData(AsyncData.token,AsyncData.myId)
 
+ if(isFollowing !=="true"){
+console.log("go run")
+   GenerateFollowers(Other_id)
+ }
 
-      console.log(result)})
+
+
+
+    })
     .catch(error => {
       setIsFollowing(isFollowing==="true"?"false":"true")
 
@@ -159,22 +190,22 @@ const Buffer = require("buffer").Buffer;
 function getUserData (token,user_id){
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
-  
+
   var formdata = new FormData();
   formdata.append("id", user_id);
   formdata.append("user_id", Other_id);
-  
+
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
     body: formdata,
     redirect: 'follow'
   };
-  
-  fetch("https://hymkapp.khannburger.com/api/getotheruserprofile", requestOptions)
+
+  fetch(`${BaseUrl}getotheruserprofile`, requestOptions)
 .then(response => response.json())
 .then(result => {
-  
+
   if(result.starus==="200"){
       setUserData({
         f_name:result.data[0].firstname,
@@ -183,11 +214,15 @@ function getUserData (token,user_id){
         followers:result.followers,
         username:result.data[0].username,
         OtherUserr:result.data[0].id,
+        profile:result.data[0].profile_photo,
+        total_likes:0
+
 
       })
-      console.log(result.isfollowed)
+      setFollowed(result.followed)
+      setfollowers(result.followers)
+
       setIsFollowing(result.isfollowed)
-      console.log(result)
   }
 })
 .catch(error => console.log('error', error));
@@ -201,23 +236,22 @@ function getUserData (token,user_id){
 function getUserVideos(token,myID){
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
-  
+
   var formdata = new FormData();
   formdata.append("user_id", Other_id);
-  
+
   var requestOptions = {
   method: 'POST',
   headers: myHeaders,
   body: formdata,
   redirect: 'follow'
   };
-  
+
   fetch(`${BaseUrl}${EndPoints.UserS_Videos}`, requestOptions)
   .then(response => response.json())
   .then(result => {
     setUserVideos(result.posts)
-    console.log(result)
-  
+
   })
   .catch(error => console.log('error', error));
   }
@@ -242,27 +276,34 @@ const getItemLayout = useCallback(
   length:itemHeight,
   offset: itemHeight*index,
   index,
-          
+
   }),
   []
-  
+
   );
 
 
 
 const RenderVideo=({item,index})=>{
-
+  const uploadedDate = moment(item.created_at).format('MM/DD/YYYY');
+  var date = new Date().getDate();
+        var month = new Date().getMonth() + 1;
+        var year = new Date().getFullYear();
+  const today = month+"/"+date+"/"+year
+    const date1 = new Date(today);
+    const date2 = new Date(uploadedDate);
+   const diff= Math.abs(date2 - date1)
 
 return(
-  <Pressable 
-  
+  <Pressable
+
   onPress={()=>
-  
+
   {
     setSinglePost(true)
     setSingleItem(item)
   }
-  
+
   }
   style={styles.ListView}>
 
@@ -272,16 +313,16 @@ return(
 
 source={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
 
-// paused={true}   
+// paused={true}
   // resizeMode="stretch"             // Fill the whole screen at aspect ratio.
   style={styles.ListView}  // any style you want
 
-  
+
 
   >
 <View style={styles.ListBottom}>
 
-    <Text style={{color:"white",fontSize:20}}>3 days</Text>
+<Text style={{color:"white",fontSize:20}}>{diff===0?"3 days Left":diff===1?"2 days Left":diff===2?"1 day Left":"1 day Left"}</Text>
 </View>
 <View style={styles.ListBottom}>
 
@@ -304,7 +345,7 @@ style={{flexDirection:"row",alignItems:"center"}}
 </View>
 
 
-<MaterialIcons 
+<MaterialIcons
 
 onPress={()=>Download(`${EndPoints.VideoBaseUrl}${item.video}`)}
 
@@ -317,16 +358,16 @@ name="file-download" color="white" size={30} />
                         spinnerColor='red'
                         spinnerType='PulseIndicator'
                         indicatorCount={0}
-                    
+
 // onPress={()=>onSubmit()}
 /> */}
 
 </View>
 
 </View>
-    
-    
-    </ImageBackground> 
+
+
+    </ImageBackground>
 
 
 
@@ -338,14 +379,14 @@ return(
   <Modal
   visible={showOtherUser}
   animationType={"slide"}
-  
-  >
 
+  >
+  <SafeAreaView>
   <View style={styles.container}>
     <View
     style={styles.headers}
     >
-<MaterialIcons  
+<MaterialIcons
 style={{margin:10}}
 onPress={()=>HideOtherUser()}
 name='arrow-back' size={25} color="black"/>
@@ -353,22 +394,29 @@ name='arrow-back' size={25} color="black"/>
    <View
    style={styles.user_infro_section}
    >
-<Image  
+    {
+userData.profile === "default"?
+
+<Image
     source={profile}
     style={styles.Avatar}
-    />
+    />:
+<Image
+    source={{uri:`${EndPoints.ProfileUrl}${userData.profile}`}}
+    style={styles.Avatar}
+    />  }
 
 <View style={styles.user_info_inner}>
 
 <View style={[styles.Infor_dividing_view,{borderBottomWidth:1}]}>
 <Pressable
  onPress={()=>{
-    
+
   setRoute("followers")
   setShowFollowingScreen(true)}}
       style={styles.followSection}>
 <Text style={{color:"black",fontSize:17}}>
-    {userData.followers}
+    {followers}
 </Text>
 <Text style={{fontSize:17,color:colors[0].FontColor}}>
     followers
@@ -376,15 +424,15 @@ name='arrow-back' size={25} color="black"/>
   </Pressable>
   <Pressable
  onPress={()=>{
-    
+
   setRoute("following")
   setShowFollowingScreen(true)}}
-  
+
   style={styles.followSection}>
   <Text
-  
+
   style={{fontSize:17,color:"black"}}>
-    {userData.followed}
+    {followed}
     <Text style={{color:colors[0].FontColor}}>
       /150
     </Text>
@@ -397,7 +445,7 @@ name='arrow-back' size={25} color="black"/>
 
 
 <View style={styles.Infor_dividing_viewI}>
- 
+
 <Text style={{color:"black",fontSize:20}}>{userData.f_name+" "+userData.l_name}</Text>
 
 <Text>@{userData.username}</Text>
@@ -407,10 +455,12 @@ name='arrow-back' size={25} color="black"/>
 {
  userData.OtherUserr === AsyncData.myId?null:
 
-<Pressable 
+<Pressable
 onPress={()=>{
 
-setIsFollowing(isFollowing==="true"?"false":"true")
+
+onFollowPress()
+
   followUser()}}
 
 style={styles.FollowingBtn} >
@@ -426,16 +476,22 @@ style={styles.FollowingBtn} >
 </View>
     <View style={styles.Options}>
 
-    <MaterialIcons 
+    <MaterialIcons
     onPress={()=> setShowModal(true)}
     name="more-horiz" color="#A9A9AF" size={40} />
+ <View
+    style={{flexDirection:"row",alignItems:"center"}}
+    >
+
     <Icon
                     name="ios-heart"
                     size={35}
                     color={'red'}
                     />
-    
-    
+                    <Text style={{fontSize:17,marginLeft:5}}>{userData.total_likes}</Text>
+                    </View>
+
+
     </View>
 
 
@@ -451,51 +507,53 @@ renderItem={({item})=>
 keyExtractor={KeyExtractor}
 getItemLayout={getItemLayout}
 // onViewableItemsChanged={onViewableItemsChanged}
-/> 
+/>
 {/* <Menu showModal={showModal} OnSetModal={OnSetModal}/> */}
-<SmallMenu 
 
-showModal={showModal} 
 
-OnSetModal={OnSetModal} 
+{
+   userData.OtherUserr === AsyncData.myId?
+null
+   :
+
+<SmallMenu
+
+showModal={showModal}
+
+OnSetModal={OnSetModal}
 
 Goback={HideOtherUser}
 
 Other_id={Other_id}
 
 />
+}
 
 
 
 
 
+</View>
+{
+  Single_Post === true ?
+  <SinglePost
+    Single_Post={Single_Post}
+    OnsetSingleVideo={OnsetSingleVideo} i
+    items={singleItem}
+  />
+  :null
+}
 
-                    </View>
-
-                    {
-                      Single_Post === true ? 
-                      <SinglePost 
-                      Single_Post={Single_Post} 
-                      OnsetSingleVideo={OnsetSingleVideo} i
-                      items={singleItem} 
-                      />
-:
-null
-                    }
-                    {
-showFollwingScreen === true ? 
-<Following 
-state={showFollwingScreen} 
-changeState={hideFollowing} 
-route={route}
-OtherId={Other_id}
-
-/>:
-null
-
-
-
-                    }
+{
+showFollwingScreen === true ?
+  <Following
+    state={showFollwingScreen}
+    changeState={hideFollowing}
+    route={route}
+    OtherId={Other_id}
+  /> : null
+}
+</SafeAreaView>
 
 </Modal>
 )

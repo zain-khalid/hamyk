@@ -12,32 +12,24 @@ import styles from './Styles';
 
 import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native-gesture-handler';
-
+import useLocation from '../Hooks/getLocation';
 import RenderVideo from '../VideoRenderer/RenderVideo';
 const itemHeight = Dimensions.get('window').height-60
 const Icon_Size = 35
-function VideoFeed({data,callBack}){
+function VideoFeed({data,callBack,Currentindex}){
+  const getLocation=useLocation()
 const navigation = useNavigation()
 // const [cellRefs,setCellrefs] = useState({})
 const cellRefs = useRef()
 const [indexx,setIndexx]=useState(0)
-console.log("feed rendered")
 
 const [showModal,setShowModal]=useState(false)
 let width = Dimensions.get('window').width;
 
 
-////////////VIDEO CONTROL FUNCTIONS ///////////////////
-
-
-
-
-
-
-
+//////////// get data ///////////////////
 
 /////////Flat list optimizing  functions ////////////////
-
 
 
 const KeyExtractor=useCallback((item)=>item.id.toString(),[])
@@ -69,6 +61,8 @@ const viewabilityConfig = () => {
 
 }
 
+
+if(Currentindex===2){
 
 
 return(
@@ -113,6 +107,14 @@ viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
 
 </View>
 )
+}else{
+  return(
+
+    <View style={styles.Container}>
+
+  </View>
+)
+}
 
 }
 
@@ -150,13 +152,13 @@ export default VideoFeed;
  
 
  
-//   onSwipeLeft(gestureState) {
-//     this.setState({myText: 'You swiped left!'});
-//   }
+  // onSwipeLeft(gestureState) {
+  //   this.setState({myText: 'You swiped left!'});
+  // }
  
-//   onSwipeRight(gestureState) {
-//     this.setState({myText: 'You swiped right!'});
-//   }
+  // onSwipeRight(gestureState) {
+  //   this.setState({myText: 'You swiped right!'});
+  // }
  
 //   onSwipe(gestureName, gestureState) {
 //     const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;

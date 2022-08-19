@@ -75,21 +75,18 @@ function onBlock(){
 style={[styles.Text,{textAlign:"center"}]}>
                 Do you want to report that video?
               </Text>
-              <Text
+              {/* <Text
               
               onPress={()=>onBlock()}
 
               style={[styles.Text,{marginTop:10,textDecorationLine: 'underline'}]}>
               Yes report it.
-              </Text>
+              </Text> */}
 
-             
-
-              </View>
               <Pressable 
               
-              onPress={()=> OnSetModal()}
-              style={styles.closeModalButton}>
+              onPress={()=>onBlock()}
+              style={[styles.closeModalButtonI,{marginTop:10}]}>
               <Text
                 style={{
                   fontFamily: 'avenir',
@@ -97,7 +94,24 @@ style={[styles.Text,{textAlign:"center"}]}>
                   fontWeight: '500',
                   color: 'white',
                 }}>
-                NO
+                Report
+              </Text>
+
+</Pressable>
+
+              </View>
+              <Pressable 
+              
+              onPress={()=> OnSetModal()}
+              style={styles.closeModalButtonI}>
+              <Text
+                style={{
+                  fontFamily: 'avenir',
+                  fontSize: 14,
+                  fontWeight: '500',
+                  color: 'white',
+                }}>
+                No
               </Text>
 
 </Pressable>

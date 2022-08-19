@@ -25,12 +25,21 @@ import BaseUrl from '../../configuration/url';
 import getAsync from '../AsynDataFolder/getAsync';
 import Comment from '../Comment/Comment';
 import onShare from '../SHareVideo/share';
+import GenerateLikeNotification from '../functions/GenerateLike';
+import Filters from '../Filters/Filters';
+
+import VideoPlayer from 'react-native-video-player';
 const itemHeight = Dimensions.get('window').height/1.5
 const Icon_Size = 35
 
 
-const SinglePost =({Single_Post,OnsetSingleVideo,items})=>{
-  console.log(items.liked)
+const SinglePost =({
+
+  Single_Post,
+  OnsetSingleVideo,
+  items
+
+})=>{
 const  AsynData = getAsync()
 const navigation = useNavigation()
 const cellRefs = useRef()
@@ -41,6 +50,7 @@ const [showModal,setShowModal]=useState(false)
 const [isLiked ,setIsliked]=useState(items.liked ===null?false:true)
 const [comment ,setComment]=useState(Number(items.comments))
 
+const [filter,setFilter]=useState(Number(items.filter_type))
 
 const [likeCount,setLikeCount]=useState(Number(items.likes))
 
@@ -95,11 +105,8 @@ async function fetchComments(){
 
 const onComment =()=>{
   setComment(comment+1)
-
+  // fetchComments()
 }
-
-
-
 /////////////FEATURSSS//////////
 const onPlayPausePress = () => {
   setPaused(!paused);
@@ -109,11 +116,11 @@ const onLikedPress=()=>{
 setIsliked((prev)=>!prev)
 }
 
-
 /////////////likes////////////
 
 const onLike =()=>{
 setLikeCount(likeCount+1)
+GenerateLikeNotification(items.user_id)
 LikeVide()
 }
 
@@ -173,8 +180,8 @@ onPress={()=>{
 }}
 
 style={styles.VideoContainerWrap}>
- <Video  
-  source={{uri:`https://hamykvideourl.khannburger.com/${items.video}`}}        
+ {/* <Video  
+  source={{uri:`${EndPoints.VideoBaseUrl}${items.video}`}}        
   paused={paused}   
   posterResizeMode="stretch"
   resizeMode="stretch"            
@@ -184,11 +191,35 @@ style={styles.VideoContainerWrap}>
   // onEnd={() => setLoading(false)}
   
 
-  /> 
+  />  */}
+
+
+<VideoPlayer
+  video={{uri:`${EndPoints.VideoBaseUrl}${items.video}`}}        
+  paused={paused}
+  thumbnail={{uri:`${EndPoints.VideoBaseUrl}${items.thumbnail}`}}
+  resizeMode="stretch"            
+  style={styles.backgroundVideo} 
+autoplay={true}
+renderToHardwareTextureAndroid={true}
+muted={false}
+repeat={true}
+hideControlsOnStart={true}
+
+/>
+<Filters filterType={filter}/>
+
+
 
 <View style={styles.VideoOptionsContainer}>
 
+<View>
+  
+<Text
+     
+     style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%"}}
 
+     >{items.description}</Text>
      <View
      style={styles.optionsVideo}
      >
@@ -213,10 +244,7 @@ color= {isLiked ===true? colors[0].primaryColor : "white"}
 
 <MaterialIcon 
 onPress={async()=>{
-
-
-
-  fetchComments()
+  // fetchComments()
   setPaused(true)
   setShowModal(true)
   }
@@ -249,7 +277,7 @@ color="white"
       </View>
       
       </View>               
-
+      </View>
 
 
 
@@ -285,6 +313,7 @@ changeState={()=>onchangeState()}
   vidId={items.id}
   
   onCommentSent={onComment}
+  otheruserID={items.user_id}
   />
 :null
 }

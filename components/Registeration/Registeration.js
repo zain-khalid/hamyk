@@ -94,7 +94,7 @@ const Register = () =>{
         AsyncStorage.setItem('userid',JSON.stringify(result.user.id))
         AsyncStorage.setItem('token',result.token)
         AsyncStorage.setItem('login',JSON.stringify("true"))
-        navigation.navigate("Home")
+        navigation.navigate("Splash")
 
         setLoading(false)
 

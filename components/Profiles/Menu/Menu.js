@@ -4,12 +4,12 @@ import styles from "./Styles";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const Menu = ({showModal,OnSetModal}) =>{
+const Menu = ({showModal,OnSetModal,ChangeState}) =>{
   const navigation=useNavigation()
 
 function onLogout (){
-  AsyncStorage.setItem('login',JSON.stringify("true"))
-navigation.navigate("Login")
+  AsyncStorage.clear()
+  ChangeState()
 }
 
 

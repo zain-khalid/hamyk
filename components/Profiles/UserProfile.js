@@ -15,7 +15,6 @@ import profile from '../../assets/images/Profile.png'
 import { useNavigation } from '@react-navigation/native';
 import colors from '../Global/colors';
 import { FlatList } from 'react-native-gesture-handler';
-import videosdata from '../Feed/data/videoData';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
@@ -26,17 +25,27 @@ import SinglePost from '../singlePost/SinglePost';
 import Following from '../Follow_Data/Following';
 import EndPoints from '../../configuration/EndPoints';
 import Delete from './Menu/Delete';
+import moment from 'moment';
+import RNFetchBlob from 'rn-fetch-blob';
+
 import TOS from '../TOS/TOS';
+import * as ImagePicker from 'react-native-image-picker';
+import getAsync from '../AsynDataFolder/getAsync';
+
 const itemHeight = Dimensions.get('window').height/3
 
 
-const UserProfile =({userData,userVideos,getUserVideos})=>{
+const UserProfile =({userData,userVideos,getUserVideos,Currentindex,getUserData,ChangeState})=>{
 const navigation = useNavigation()
 
 const [paused, setPaused] = useState(true);
-const [showModal,setShowModal]=useState(false)
+
+const [showModal,setShowModal] = useState(false)
+
 const [OtherId,setOtherId]=useState("")
+
 const [ShowDelModal,setShowDelModal]=useState(false)
+
 const [DelId,setDelId]=useState("")
 
 
@@ -46,6 +55,19 @@ const [route , setRoute]=useState("following")
 
 const [singleItem,setSingleItem]=useState([])
 const [showFollwingScreen,setShowFollowingScreen]=useState(false)
+
+
+
+const asyndata= getAsync()
+
+
+
+//////////// get data ///////////////////
+
+
+
+
+
 
 
 //////////////MODAL SETTINGS ////////////////////
@@ -72,7 +94,6 @@ setShowFollowingScreen((prev)=>!prev)
 }
 
 //////////////////////ASYNC DATA ///////////////////////
-
 
 
 
@@ -115,8 +136,23 @@ const getItemLayout = useCallback(
 
   const Buffer = require("buffer").Buffer;
 
+  let today = new Date();
+
+  let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  
 
 const RenderVideo=({item,index})=>{
+
+const uploadedDate = moment(item.created_at).format('MM/DD/YYYY');
+var date = new Date().getDate();
+      var month = new Date().getMonth() + 1;
+      var year = new Date().getFullYear();
+const today = month+"/"+date+"/"+year
+  const date1 = new Date(today);
+  const date2 = new Date(uploadedDate);
+ const diff= Math.abs(date2 - date1)
+
+  
 
 
 return(
@@ -150,7 +186,7 @@ source={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
   >
 <View style={styles.ListBottom}>
 
-    <Text style={{color:"white",fontSize:20}}>3 days</Text>
+    <Text style={{color:"white",fontSize:20}}>{diff===0?"3 days Left":diff===1?"2 days Left":diff===2?"1 day Left":"1 day Left"}</Text>
 </View>
 <View style={styles.ListBottom}>
 
@@ -192,16 +228,154 @@ name="file-download" color="white" size={30} />
   )
                   }
 
+
+
+
+
+
+
+//////////Select from gallery/////////
+
+
+
+
+const permissionForGallery=async ()=>{
+
+
+  if (Platform.OS === 'ios') {
+      SelectFromGallery();
+    } else {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: 'Storage Permission Required',
+            message:
+              'Application needs access to your storage to download File',
+          }
+        );
+
+
+        const grantedRead = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          {
+            title: 'Storage Permission Required',
+            message:
+              'Application needs access to your storage to upload file',
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED && grantedRead === PermissionsAndroid.RESULTS.GRANTED) {
+          // Start downloading
+          SelectFromGallery();
+          
+alert("Download started please wait")
+
+        } else {
+          // If permission denied then show alert
+          Alert.alert('Error','Storage Permission Not Granted');
+        }
+      } catch (err) {
+        // To handle permission related exception
+        console.log("++++"+err);
+      }
+    }
+ }
+
+ async function SelectFromGallery(){
+  ImagePicker.launchImageLibrary({ mediaType: 'image', includeBase64: false, }, (response) => {
+      if(response.didCancel !=true){
+       
+  UpdatePicture(response.assets[0].uri)
+          
+      }
+      else{
+          console.log("jedhfk")
+      }
+
+  })
+ }
+ 
+
+
+
+
+
+
+ const UpdatePicture = (uri) =>{
+  const realPath =
+  Platform.OS === 'ios'
+    ? uri.replace('file://', '')
+    : uri;
+
+  
+  
+    RNFetchBlob.fetch(
+      'POST',
+      `https://hymkapp.khannburger.com/api/updateprofile/${asyndata.myId}`,
+      {
+        // 'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${asyndata.token}`,
+      },
+      [
+       {
+          name: "profile_photo",
+          filename: "profile_photo.jpg",
+          type: "image/jpg",
+          data:  RNFetchBlob.wrap(realPath),
+        },
+
+      ],
+    ).then(response => response.json())
+      .then(res => {
+        if(res.result){
+          if(res.result==="data saved"){
+            getUserData()
+          }
+        }
+    
+      })
+      .catch(err => {
+        setLoading(false)
+        console.log('err >>>', err);
+    
+      });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 return(
   <View style={styles.container}>
    <View
    style={styles.user_infro_section}
    >
+    <Pressable
+    onPress={()=>permissionForGallery()}
+    >
+{
+  userData.profile==="default"?
 <Image  
     source={profile}
     style={styles.Avatar}
+    />:
+    <Image  
+    source={{uri:`${EndPoints.ProfileUrl}${userData.profile}`}}
+    style={styles.Avatar}
     />
 
+  }
+    </Pressable>
 <View style={styles.user_info_inner}>
 
 <View style={[styles.Infor_dividing_view,{borderBottomWidth:1}]}>
@@ -259,11 +433,17 @@ return(
     <MaterialIcons 
     onPress={()=> setShowModal(true)}
     name="more-horiz" color="#A9A9AF" size={40} />
+    <View
+    style={{flexDirection:"row",alignItems:"center"}}
+    >
+
     <Icon
                     name="ios-heart"
                     size={35}
                     color={'red'}
                     />
+                    <Text style={{fontSize:17,marginLeft:5}}>{userData.total_likes}</Text>
+                    </View>
     
     
     </View>
@@ -271,7 +451,7 @@ return(
 
 
 
-
+  {Currentindex === 0?
 <FlatList
 data={userVideos}
 renderItem={({item})=>
@@ -282,9 +462,15 @@ keyExtractor={KeyExtractor}
 getItemLayout={getItemLayout}
 // onViewableItemsChanged={onViewableItemsChanged}
 /> 
+:null
+
+}
 <Menu 
 showModal={showModal} 
-OnSetModal={OnSetModal}/>
+OnSetModal={OnSetModal}
+ChangeState={ChangeState}
+
+/>
 {
   ShowDelModal === true ? 
 <Delete 

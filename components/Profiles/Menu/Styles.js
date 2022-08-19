@@ -60,19 +60,30 @@ logout: {
    borderRadius: 100 / 2,
  },
  TOS:{
-   margin:30,
+   margin:10,
    alignItems:"center"
  },
- Text:{color:"black",fontSize:15},
+ Text:{color:"black",fontSize:15,textDecorationLine:'underline'},
  closeModalButton: {
    backgroundColor: '#FE2905',
    borderRadius: 40,
    height: 45,
    justifyContent: 'center',
    alignItems: 'center',
-   width: 140,
+   width: 120,
    alignSelf: 'center',
+   margin:50
  },
+ closeModalButtonI: {
+  backgroundColor: '#FE2905',
+  borderRadius: 40,
+  height: 35,
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: 120,
+  alignSelf: 'center',
+},
+
 
 
   });

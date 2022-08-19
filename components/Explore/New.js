@@ -12,22 +12,19 @@ import { FlatList } from 'react-native-gesture-handler';
 
 import RenderVideo from '../VideoRenderer/RenderVideo';
 import {getDistance, getPreciseDistance} from 'geolib';
-
 import useLocation from '../Hooks/getLocation';
+
 const itemHeight = Dimensions.get('window').height-60
+const TitleHeight = Dimensions.get('window').height/2.5
+
 const Icon_Size = 35
 
 
-function New ({newVideos}){
+function New ({newVideos ,lat,long}){
   const getLocation = useLocation()
 
-const navigation = useNavigation()
-// const [cellRefs,setCellrefs] = useState({})
 const cellRefs = useRef()
 const [indexx,setIndexx]=useState(0)
-// const[myLat,setMyLat]=useState(Number(getLocation.currentLatitude))
-// const[myLong,setMyLong]=useState(Number(getLocation.currentLongitude))
-
 
 
 
@@ -52,7 +49,6 @@ index,
 );
 
 const onViewableItemsChanged = ({ viewableItems, changed })=> {
-  console.log("Visible item", viewableItems[0].index);
   
   setIndexx(viewableItems[0].index)
 }
@@ -85,9 +81,24 @@ return(
  windowSize={10}
  maxToRenderPerBatch={3}
  updateCellsBatchingPeriod={10}
- renderItem={({item,index})=>
+ renderItem={({item,index})=>{
+  
+  var dis = getDistance(
+    {latitude: lat, longitude:long},
+    {latitude: item.latitude, longitude: item.longitude},
+  );
+if(dis/1000 <= 6 && dis/1000 !="NaN"){
+  return(
+  
+    <RenderVideo  item={item} index={index} indexx={indexx} />
+    )
+}
  
- <RenderVideo  item={item} index={index} indexx={indexx} />
+
+ 
+
+  
+  }
 }
 keyExtractor={KeyExtractor}
 getItemLayout={getItemLayout}

@@ -141,10 +141,15 @@ onPress={()=>{
 }}
 style={styles.ListData}>
     <View style={{alignItems:"center",flexDirection:"row"}}>
-    <Image
+    {item.profile_photo ==="default"?
+  <Image
   source={profile}
   style={{width:38,height:38,margin:10}}
   />
+:  <Image
+source={{uri:`${EndPoints.ProfileUrl}${item.profile_photo}`}}
+style={{width:38,height:38,margin:10,borderRadius:1000}}
+/>}
   <View style={{flexDirection:'column'}}>
     <Text style={{color:"rgba(0,0,0,0.7)"}}>
 {item.firstname}

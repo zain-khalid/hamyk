@@ -17,7 +17,6 @@ import recordBtn from'../../assets/images/record.png'
 import Icon from 'react-native-vector-icons/AntDesign'
 import Search from '../SearchScreen/Search';
 
-
 const Icon_Size = 35
 
 

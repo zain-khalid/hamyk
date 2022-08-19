@@ -44,6 +44,7 @@ position:"absolute",
    flexDirection:"row",
    justifyContent:"space-between",
    alignItems:"center",
+   marginTop:6
    }
 
 
