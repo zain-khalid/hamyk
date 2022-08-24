@@ -178,9 +178,9 @@ function Start(id,token)
 
  return(
    <NavigationContainer>
-   <Stack.Navigator initialRouteName="Splash"   screenOptions={{
+    <Stack.Navigator initialRouteName="Splash"   screenOptions={{
        headerShown: false
-     }} >
+    }} >
      <Stack.Screen name="Login" component={Login} />
      <Stack.Screen name="Register" component={Register} />
      <Stack.Screen name="Home" component={Home} />

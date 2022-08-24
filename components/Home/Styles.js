@@ -12,11 +12,12 @@ container:{
 },
 Header:{
 width:WindowWidth,
-height:WindowHeight/11,
+height:WindowHeight/9,
 backgroundColor:colors[0].primaryColor,
 flexDirection:'row',
 alignItems:"center",
 justifyContent:"space-around",
+paddingTop:30
 },
 
 OverLayScreen:{
