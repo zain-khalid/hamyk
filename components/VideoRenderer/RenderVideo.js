@@ -232,7 +232,7 @@ function VideoOptionsAll(){
       style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%",position:"absolute",bottom:0}}
       >{item.description}</Text> */}
       <View
-        style={[styles.optionsVideo, {bottom:30,}]}
+        style={[styles.optionsVideo, {bottom:50,}]}
       >
         <View style={styles.OptionsVideoInnerWrapper}>
           <View
