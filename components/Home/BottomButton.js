@@ -22,52 +22,29 @@ const Icon_Size = 35
 
 function BottomButton ({}){
 const navigation = useNavigation()
-
-
-
-      
-      
-
-
-
-    return(
-<View style={styles.OverLayScreen}>
-    <View style={styles.InnerOverLay}>
-      <View style={styles.InnerOverLayII}>
-        <Pressable
-       onPress={()=>{navigation.navigate('Recorder')}}
-
-        >
-
-      <Image 
-  
-  source={recordBtn}
-  style={{width:75,height:75}}
-  />
-
-  </Pressable>
-  <View style={styles.SearchBtn}
->
-<Icon 
-onPress={()=>{
-  
-navigation.navigate("Search")  
-
-}}
-  name='search1'
-  size={Icon_Size}
-  color="white"
-  
-  />
-  </View>
-
+  return(
+    <View style={styles.OverLayScreen}>
+      <Pressable
+        onPress={()=>{navigation.navigate('Recorder')}}
+      >
+        <Image
+          source={recordBtn}
+          style={{width:75,height:75}}
+        />
+      </Pressable>
+      <View
+        style={styles.SearchBtn}
+      >
+        <Icon
+          onPress={()=>{
+            navigation.navigate("Search")
+          }}
+          name='search1'
+          size={Icon_Size}
+          color="white"
+        />
       </View>
-  
     </View>
-
-
-</View>
-
-    )
+  )
 }
 export default BottomButton

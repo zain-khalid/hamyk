@@ -396,9 +396,7 @@ const renderScene = SceneMap({
 
   />
   ,
-  third: ()=><VideoFeed data={followingData} Currentindex={index}
-
-  />
+  third: ()=><VideoFeed data={followingData} Currentindex={index}/>
 
 });
 
@@ -420,7 +418,6 @@ const [routes] = React.useState([
 
 return(
 <>
-
   <TabView
     renderTabBar={_renderTabBar}
     navigationState={{ index, routes }}
@@ -429,9 +426,8 @@ return(
     initialLayout={{ width: layout.width }}
 
   />
-
   <BottomButton/>
-    </>
+</>
 )
 
 }

@@ -84,12 +84,11 @@ VideoOptionsContainer:{
    justifyContent:"space-between",
 },
 optionsVideo:{
-   // bottom:0,
+   left:0,
+   right:0,
    position:"absolute",
-   width:WindowWidth,
    flexDirection:"row",
    justifyContent:"space-between",
-   marginBottom:20
 },
 OptionsVideoInnerWrapper:{
    width:WindowWidth/3,

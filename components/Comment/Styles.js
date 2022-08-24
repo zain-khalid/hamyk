@@ -5,7 +5,7 @@ import {
   import colors from '../Global/colors';
 
   const WindowWidth = Dimensions.get('window').width
-  const WindowHeight = Dimensions.get('window').height; 
+  const WindowHeight = Dimensions.get('window').height;
   const styles = StyleSheet.create({
    container:{
     width:WindowWidth,

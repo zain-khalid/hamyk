@@ -185,116 +185,96 @@ fetch(`${BaseUrl}like`, requestOptions)
 function VideoOptionsAll(){
   return(
     <>
+      <View
+      style={[styles.optionsVideo,{top:5, alignItems: 'center'}]}
+      >
+      <View style={styles.OptionsVideoInnerWrapperI}>
+  {
 
+    item.image ==="default"?
+    <Image source={profile}
 
-    <View
-    style={[styles.optionsVideo,{top:5, alignItems: 'center'}]}
-    >
-     <View style={styles.OptionsVideoInnerWrapperI}>
-{
+    style={{width:30,height:30,marginLeft:10}}
+    />
+  :
 
-  item.image ==="default"?
-  <Image source={profile}
+  <Image source={{uri:`${EndPoints.ProfileUrl}${item.image}`}}
 
-  style={{width:30,height:30,marginLeft:10}}
+  style={{width:30,height:30,marginLeft:10,borderRadius:1000}}
   />
-:
 
-<Image source={{uri:`${EndPoints.ProfileUrl}${item.image}`}}
+  }
+    <Text
+    onPress={()=>HideOtherUser()}
 
-style={{width:30,height:30,marginLeft:10,borderRadius:1000}}
-/>
-
-}
-  <Text
-  onPress={()=>HideOtherUser()}
-
-  style={{color:"white",fontSize:18,marginLeft:10}}>{item.username}</Text>
-</View>
+    style={{color:"white",fontSize:18,marginLeft:10}}>{item.username}</Text>
+  </View>
 
 
 
-     <View style={[styles.IconWrapper,{marginRight:10,}]}>
-<Pressable
- onPress={() => {
-  setShouldShowReport(true)
-  setPaused(true)
+      <View style={[styles.IconWrapper,{marginRight:10,}]}>
+  <Pressable
+  onPress={() => {
+    setShouldShowReport(true)
+    setPaused(true)
 
-  }}
->
-<MaterialIcons
+    }}
+  >
+  <MaterialIcons
 
- name="more-vert" color="white" size={30} />
-</Pressable>
+  name="more-vert" color="white" size={30} />
+  </Pressable>
 
-     </View>
+      </View>
 
-     </View>
-
-
-
-
-
-
-     <Text
-
-     style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%",position:"absolute",bottom:0}}
-
-     >{item.description}</Text>
-
-
-  <View
-    style={[styles.optionsVideo, {bottom:0,}]}
-    >
-     <View style={styles.OptionsVideoInnerWrapper}>
-     <View style={[styles.IconWrapper,{marginLeft:10}]}>
-
-<Icon
-onPress={()=>{
-onLikedPress()
-isLiked===false?onLike():onDislike()
-}}
-name='heart'
-size={Icon_Size}
-color= {isLiked ===true? colors[0].primaryColor : "white"}
-
-/>
-<Text style={styles.fontStyling}>{likeCount}</Text>
-</View>
-<View style={styles.IconWrapper}>
-
-<MaterialIcon
-onPress={async()=>{
-// fetchComments(item.id)
-setVidId(item.id)
-setPaused(true)
-setShowModal(true)
-}
-}
-name='comment-text'
-size={Icon_Size}
-color="white"
-/>
-<Text style={styles.fontStyling}>{comments}</Text>
-</View>
-</View>
-
-
-
-     <View style={[styles.IconWrapper,{marginRight:10}]}>
-
-<IonIcon
-onPress={()=> onShare(item.video,item.id)}
-name='send-sharp'
-size={Icon_Size}
-color="white"
-
-/>
-<Text style={styles.fontStyling}>{state.Global_Paused === true ?1:0}</Text>
-     </View>
-
-     </View>
-     </>
+      </View>
+      {/* <Text
+      style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%",position:"absolute",bottom:0}}
+      >{item.description}</Text> */}
+      <View
+        style={[styles.optionsVideo, {bottom:30,}]}
+      >
+        <View style={styles.OptionsVideoInnerWrapper}>
+          <View
+            style={[styles.IconWrapper,{marginLeft:10}]}
+          >
+            <Icon
+              onPress={()=>{
+                onLikedPress()
+                isLiked===false?onLike():onDislike()
+              }}
+              name='heart'
+              size={Icon_Size}
+              color= {isLiked ===true? colors[0].primaryColor : "white"}
+            />
+            <Text style={styles.fontStyling}>{likeCount}</Text>
+          </View>
+          <View style={styles.IconWrapper}>
+            <MaterialIcon
+              onPress={async()=>{
+              // fetchComments(item.id)
+                setVidId(item.id)
+                setPaused(true)
+                setShowModal(true)
+              }}
+              name='comment-text'
+              size={Icon_Size}
+              color="white"
+            />
+            <Text style={styles.fontStyling}>{comments}</Text>
+          </View>
+        </View>
+        <View style={[styles.IconWrapper,{marginRight:10}]}>
+          <IonIcon
+            onPress={()=> onShare(item.video,item.id)}
+            name='send-sharp'
+            size={Icon_Size}
+            color="white"
+          />
+          <Text style={styles.fontStyling}>{state.Global_Paused === true ?1:0}</Text>
+        </View>
+      </View>
+    </>
   )
 }
 

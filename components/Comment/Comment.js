@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import styles from './Styles';
 import IonIcon from 'react-native-vector-icons/Ionicons'
-const WindowHeight = Dimensions.get('window').height; 
+const WindowHeight = Dimensions.get('window').height;
 const Icon_Size = 20
 import profile from '../../assets/images/Profile.png'
 
@@ -37,16 +37,9 @@ const [keyBoardOpen,setKeyBoardOpen]=useState(false)
 const [Comment,setComment]=useState("")
 const [commentData,setCommentData]=useState([])
 
-
-
 const AsynData = getAsync()
 
-
-
-
-
-    const KeyExtractor=useCallback((item,index)=>index.toString(),[])
-
+const KeyExtractor=useCallback((item,index)=>index.toString(),[])
 
 function addFollow(){
   if(Comment !=""){
@@ -77,214 +70,137 @@ fetch(`${BaseUrl}${EndPoints.addComments}`, requestOptions)
 }
 }
 
-
-
-
-
-
-
-
 useEffect(()=>{
-
   getAsyncData()
-  
-  },[])
+},[])
 
+async function getAsyncData () {
+  const userid = await AsyncStorage.getItem('userid')
+  const token = await AsyncStorage.getItem('token')
+  let user_id=JSON.parse(userid)
 
-
-  async function getAsyncData () {
-    const userid = await AsyncStorage.getItem('userid')
-    const token = await AsyncStorage.getItem('token')
-    let user_id=JSON.parse(userid) 
-
-    if(token){
-      fetchComments(token)
-    }
+  if(token){
+    fetchComments(token)
   }
-
-
+}
 ///////////FETCHING COMMENT LIST//////////////////
-
-
 async function fetchComments(token){
 
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
-  
+
   var formdata = new FormData();
   formdata.append("video_id", vidId);
-  
+
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
     body: formdata,
     redirect: 'follow'
   };
-  
+
   fetch(`${BaseUrl}${EndPoints.commentlist}`, requestOptions)
     .then(response => response.json())
     .then(result => {
       setCommentData(result.comments)
       console.log(result)
-  
   })
-    .catch(error => console.log('error', error));
-
-
+  .catch(error => console.log('error', error));
 }
 
-
-
-
-
-
-const renderUser =({item,index})=>(
-    <Pressable 
-    onPress={()=>{
- 
-    }}
-    style={styles.ListData}>
-      {index===0&&
-         <Text style={{fontSize:20,fontWeight:"bold",color:"yellow"}}>1st</Text> 
-      }
-       {index===1&&
-         <Text style={{fontSize:20,fontWeight:"bold",color:colors[0].FontColor}}>2nd</Text> 
-      }
-        <Image
+const renderUser = ({item,index})=>(
+  <Pressable
+    onPress={()=>{}}
+    style={styles.ListData}
+  >
+    {
+      index===0&&
+      <Text style={{fontSize:20,fontWeight:"bold",color:"yellow"}}>1st</Text>
+    }
+    {
+      index===1&&
+      <Text style={{fontSize:20,fontWeight:"bold",color:colors[0].FontColor}}>2nd</Text>
+    }
+    <Image
       source={profile}
       style={{width:35,height:35,marginLeft:10}}
-      />
-      
-      <View style={styles.ListInner}>
-        <Text style={{color:"white"}}>
-    {item.comment}
-    </Text>
-    <Text style={{color:colors[0].FontColor,marginTop:5,marginBottom:5}}>
-    @{item.username}
-    </Text>
-   <View style={{flexDirection:"row",alignItems:"center"}}>
-   <IonIcon
-                    name="heart"
-                    size={13}
-                    color={'white'}
-                    />
-                    <Text style={{color:"white",marginLeft:5,marginRight:5}}>0</Text>
-                    <Text
-                    
-                    onPress={()=>setComment("@"+item.username)}
-                    style={{color:colors[0].FontColor}}>Rply </Text>
-   </View>
-    {/* {item.lastname}
+    />
+    <View style={styles.ListInner}>
+      <Text style={{color:"white"}}>
+        {item.comment}
       </Text>
-        <Text style={{fontSize:12}}>
-    @{item.username}
-      </Text> */}
-      </View> 
-       
-      
-    
-    </Pressable>
-    )
-
-
-
-
-
-
-
-
-return(
-    
-
-<Modal
-
-animationType={"slide"}
-
-
-// transparent={false}
-visible={state}
-
->
-
-<View style={styles.container}>
-<View style={styles.Header}>
-<Text style={{color:"white",fontWeight:"500",fontSize:18}}>
-    Comment
-</Text>
-<Text 
-onPress={()=>changeState()}
-style={{color:"white",fontWeight:"500",fontSize:18}}>
-    Close
-</Text>
-</View>
-
-
-<View style={[styles.ListWrapper,{marginBottom:keyBoardOpen===true? -WindowHeight/2.5:0}]}>
-  {
-    commentData.length >=1?
-<FlatList
-keyExtractor={KeyExtractor}
-data={commentData}
-renderItem={renderUser}
-
-/> 
-:null}
-</View>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<View style={[styles.CommentWrap]}>
-    <View style={styles.commeninput}>
-    <TextInput
-placeholder='hop on it'
-value={Comment}
-style={{flex:1,marginLeft:10}}
-onChangeText={(e)=>setComment(e)}
-onPressIn={()=>setKeyBoardOpen(true)}
-onEndEditing={()=>setKeyBoardOpen(false)}
-
-/>
+      <Text style={{color:colors[0].FontColor,marginTop:5,marginBottom:5}}>
+        @{item.username}
+      </Text>
+      <View style={{flexDirection:"row",alignItems:"center"}}>
+        <IonIcon
+          name="heart"
+          size={13}
+          color={'white'}
+        />
+        <Text style={{color:"white",marginLeft:5,marginRight:5}}>0</Text>
+        <Text
+          onPress={()=>setComment("@"+item.username)}
+          style={{color:colors[0].FontColor}}
+        >Reply </Text>
+      </View>
     </View>
+  </Pressable>
+  )
 
-<IonIcon 
-onPress={()=> {addFollow()
-  setComment("")
+  return(
+    <Modal
+      animationType={"slide"}
+      visible={state}
+    >
+      <View style={styles.container}>
+        <View style={styles.Header}>
+          <Text style={{color:"white",fontWeight:"500",fontSize:18}}>
+              Comment
+          </Text>
+          <Text
+            onPress={()=>changeState()}
+            style={{color:"white",fontWeight:"500",fontSize:18}}
+          >
+              Close
+          </Text>
+        </View>
+        <View style={[styles.ListWrapper,{marginBottom:keyBoardOpen===true? -WindowHeight/2.5:0}]}>
+          {
+          commentData.length >=1 ?
+            <FlatList
+              keyExtractor={KeyExtractor}
+              data={commentData}
+              renderItem={renderUser}
+            /> :null
+          }
+        </View>
+        <View style={[styles.CommentWrap]}>
+          <View style={styles.commeninput}>
+            <TextInput
+              placeholder='hop on it'
+              value={Comment}
+              style={{flex:1,marginLeft:10}}
+              onChangeText={(e)=>setComment(e)}
+              onPressIn={()=>setKeyBoardOpen(true)}
+              onEndEditing={()=>setKeyBoardOpen(false)}
 
-}}
-style={{marginRight:10}}
-name='send-sharp'
-size={Icon_Size}
-color="black"
-
-/>
-</View>
-
-
-
-</View>
-
-
-</Modal>
-    
-)
-
+            />
+          </View>
+          <IonIcon
+            onPress={()=> {addFollow()
+              setComment("")
+            }}
+            style={{marginRight:10}}
+            name='send-sharp'
+            size={Icon_Size}
+            color="black"
+          />
+        </View>
+      </View>
+    </Modal>
+  )
 }
+
 export default Comment
