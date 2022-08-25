@@ -53,11 +53,11 @@ async function VeryIntensiveTask(taskDataArguments){
 }
 
 function Fetch_Notification (id,token){
-  if(id&& token){
+  if(id && token){
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
     var formdata = new FormData();
-    formdata.append("user_id", 11);
+    formdata.append("user_id", id);
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
