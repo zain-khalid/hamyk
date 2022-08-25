@@ -319,6 +319,7 @@ function VideoOptionsAll(){
   video={{uri:`${EndPoints.VideoBaseUrl}${item.video}`}}
   paused={paused===true?paused:indexx===index?false:true}
   thumbnail={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
+  controller = {false}
 />
 
 
