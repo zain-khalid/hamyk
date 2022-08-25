@@ -76,7 +76,7 @@ Alert.alert("Failed","Some fields are missing.")
 
 const Register = () =>{
 
-  
+
   var formdata = new FormData();
   formdata.append("password_confirmation", password);
   formdata.append("email", email);
@@ -86,38 +86,30 @@ const Register = () =>{
   formdata.append("password", password);
   formdata.append("username", username);
   formdata.append("date_of_birth", birthday);
-  
+
   var requestOptions = {
     method: 'POST',
     body: formdata,
     redirect: 'follow'
   };
-  
-  fetch(`${BaseUrl}${EndPoints.Registration}`, requestOptions)
-    .then(response => 
-      
-      
-      response.json())
-    .then(result => {
-      
-      if(result.user){
 
+  fetch(`${BaseUrl}${EndPoints.Registration}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      if(result.user){
         AsyncStorage.setItem('userid',JSON.stringify(result.user.id))
         AsyncStorage.setItem('token',result.token)
         AsyncStorage.setItem('login',JSON.stringify("true"))
         ChangeState()
-
         setLoading(false)
-
-
-
       }
-      console.log(result)})
+      console.log(result)
+    })
     .catch(error =>{
       setSubmitPressed(true)
       setLoading(false)
-      console.log('error', error)});
-}
+      console.log('response error', error)});
+  }
 
 
 
@@ -129,13 +121,13 @@ const Register = () =>{
 return(
   <ScrollView>
 
- 
+
     <View style={styles.container}>
       <View
       style={styles.innerView}
       >
 
-    
+
         <Text
         style={styles.Text_logo}
         >hamyk</Text>
@@ -144,7 +136,7 @@ return(
 
 <View style={styles.Input_small_cont}>
 <View style={[styles.Input_two,{borderBottomColor:submitPressed ===true && f_name===""? colors[0].primaryColor:colors[0].FontColor}]}>
-<TextInput 
+<TextInput
 value={f_name}
 onChangeText={(e)=>setF_name(e)}
 autoCapitalize={"words"}
@@ -161,7 +153,7 @@ style={styles.InputStyleI}
 <TextInput
 value={l_name}
 autoCapitalize={"words"}
-onChangeText={(e)=>setL_name(e)} 
+onChangeText={(e)=>setL_name(e)}
 placeholderTextColor={colors[0].FontColor}
 placeholder='Last name'
 textAlign='center'
@@ -173,7 +165,7 @@ style={styles.InputStyleI}
 </View>
 
 <View style={[styles.input_container,{borderBottomColor:submitPressed ===true && username===""? colors[0].primaryColor:colors[0].FontColor}]}>
-<TextInput 
+<TextInput
 value={username}
 autoCapitalize={"none"}
 onChangeText={(e)=>setUserName(e)}
@@ -185,7 +177,7 @@ style={styles.InputStyle}
 />
 </View>
 <View style={[styles.input_container,{borderBottomColor:submitPressed ===true && email===""? colors[0].primaryColor:colors[0].FontColor}]}>
-<TextInput 
+<TextInput
 value={email}
 autoCapitalize={"none"}
 
@@ -198,7 +190,7 @@ style={styles.InputStyle}
 />
 </View>
 <View style={[styles.input_container,{borderBottomColor:submitPressed ===true && password===""? colors[0].primaryColor:colors[0].FontColor}]}>
-<TextInput 
+<TextInput
 value={password}
 autoCapitalize={"none"}
 
@@ -210,11 +202,11 @@ textAlign='center'
 style={styles.InputStyle}
 />
 </View>
-<Pressable 
+<Pressable
 
 onPress={()=>setShowCalander(true)}
 style={[styles.input_container,{borderBottomColor:submitPressed ===true && birthday===""? colors[0].primaryColor:colors[0].FontColor}]}>
-{/* <TextInput 
+{/* <TextInput
 value={birthday}
 onChangeText={(e)=>setBirthday(e)}
 placeholderTextColor={colors[0].FontColor}
@@ -231,7 +223,7 @@ style={styles.InputStyle}
 {
   loading===false ?
 
-<Pressable 
+<Pressable
 onPress={()=>{
   setLoading(true)
   OnRegstration()}}
@@ -246,7 +238,7 @@ style={globalStyles.LoginButton}
                         isLoading={true}
                         spinnerType='PulseIndicator'
                         indicatorCount={0}
-                    
+
 // onPress={()=>onSubmit()}
 >
 
@@ -275,7 +267,7 @@ showCalander={showCalander}
 
 />
     </View>
-  
+
     </ScrollView>
 )
 
