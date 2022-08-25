@@ -46,12 +46,7 @@ const sleep = time => new Promise(resolve => setTimeout(() => resolve(), time));
  const App = () => {
 const getLocation=useLocation()
   useEffect(()=>{
-    Notifications.postLocalNotification({
-      title: "welcome",
-      body: "You are using hamyk world's most famous platform",
-      extra: "data"
-    });
-    GetAsyncData()
+    getAsyncData()
     Notifications.registerRemoteNotifications();
     Notifications.events().registerNotificationReceivedForeground((notification: Notification, completion) => {
       Notifications.postLocalNotification({
@@ -73,6 +68,15 @@ async function getAsyncData () {
   let user_id=JSON.parse(userid)
   if(token){
     Start(user_id,token)
+  }
+  const notif =  await AsyncStorage.getItem('notification')
+  if(!notif){
+    Notifications.postLocalNotification({
+      title: "welcome",
+      body: "You are using hamyk world's most famous platform",
+      extra: "data"
+    });
+    AsyncStorage.setItem("notification","sent")
   }
 }
 
