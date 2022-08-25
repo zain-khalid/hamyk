@@ -158,7 +158,7 @@ const images= Buffer.from((item.thumbnail), 'base64').toString('ascii')
 
   function LikeVide(){
     var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${AsynData.token}`);
+    myHeaders.append("Authorization", `Bearer ${AsynData.token}`);
 
 var formdata = new FormData();
 formdata.append("user_id", AsynData.myId);
@@ -297,19 +297,18 @@ function VideoOptionsAll(){
   resizeMode="stretch"
 
   >
-{/*
-   <Video
-    source={{uri:`${EndPoints.VideoBaseUrl}${item.video}`}}
-    paused={paused===true?paused:indexx===index?false:true}
 
-    playInBackground={false}
-    resizeMode="stretch"
-    style={styles.backgroundVideo}
-    repeat={true}
-    />  */}
+<Video
+  source={{uri:`${EndPoints.VideoBaseUrl}${item.video}`}}
+  paused={paused===true?paused:indexx===index?false:true}
+  playInBackground={false}
+  resizeMode="stretch"
+  style={styles.backgroundVideo}
+  repeat={true}
+/>
 
 
-<VideoPlayer
+{/* <VideoPlayer
   repeat={true}
   muted={false}
   autoplay={true}
@@ -320,7 +319,7 @@ function VideoOptionsAll(){
   paused={paused===true?paused:indexx===index?false:true}
   thumbnail={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
   controller = {false}
-/>
+/> */}
 
 
 
@@ -330,15 +329,15 @@ function VideoOptionsAll(){
   <VideoOptionsAll/>
  {showModal === true ?
 
- <Comment
- state={showModal}
- changeState={()=>onchangeState()}
+<Comment
+  state={showModal}
+  changeState={()=>onchangeState()}
   commentList={commentList}
-   vidId={vidId}
+  vidId={vidId}
 
-   onCommentSent={onComment}
-   otheruserID={item.user_id}
-   />
+  onCommentSent={onComment}
+  otheruserID={item.user_id}
+/>
 :null
 }
 
@@ -367,5 +366,5 @@ videoId={item.id}
 
 
     )
-                    }
-  export default RenderVideo
+}
+export default RenderVideo

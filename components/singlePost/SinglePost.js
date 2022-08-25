@@ -180,7 +180,7 @@ onPress={()=>{
 }}
 
 style={styles.VideoContainerWrap}>
- {/* <Video
+<Video
   source={{uri:`${EndPoints.VideoBaseUrl}${items.video}`}}
   paused={paused}
   posterResizeMode="stretch"
@@ -189,15 +189,13 @@ style={styles.VideoContainerWrap}>
   repeat={true}
   // onLoad={()=> setLoading(true)}
   // onEnd={() => setLoading(false)}
+/>
 
 
-  />  */}
-
-
-<VideoPlayer
+{/* <VideoPlayer
   video={{uri:`${EndPoints.VideoBaseUrl}${items.video}`}}
   paused={paused}
-  thumbnail={{uri:`${EndPoints.VideoBaseUrl}${items.thumbnail}`}}
+  // thumbnail={{uri:`${EndPoints.VideoBaseUrl}${items.thumbnail}`}}
   resizeMode="stretch"
   style={styles.backgroundVideo}
   autoplay={true}
@@ -205,8 +203,8 @@ style={styles.VideoContainerWrap}>
   muted={false}
   repeat={true}
   hideControlsOnStart={true}
-  controller = {false}
-/>
+  controls={false}
+/> */}
 <Filters filterType={filter}/>
 
 
@@ -296,7 +294,7 @@ null
 
 </ImageBackground>
 <MaterialIcons
-style={{margin:10,position:"absolute"}}
+style={{margin:10, marginTop: 50,position:"absolute"}}
 onPress={()=>OnsetSingleVideo()}
 name='arrow-back' size={25} color="white"/>
 
@@ -311,7 +309,6 @@ state={showModal}
 changeState={()=>onchangeState()}
  commentList={commentList}
   vidId={items.id}
-
   onCommentSent={onComment}
   otheruserID={items.user_id}
   />

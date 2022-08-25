@@ -46,7 +46,7 @@ const sleep = time => new Promise(resolve => setTimeout(() => resolve(), time));
  const App = () => {
 const getLocation=useLocation()
   useEffect(()=>{
-    getAsyncData()
+    getAsyncData();
     Notifications.registerRemoteNotifications();
     Notifications.events().registerNotificationReceivedForeground((notification: Notification, completion) => {
       Notifications.postLocalNotification({
@@ -69,6 +69,7 @@ async function getAsyncData () {
   if(token){
     Start(user_id,token)
   }
+  //
   const notif =  await AsyncStorage.getItem('notification')
   if(!notif){
     Notifications.postLocalNotification({

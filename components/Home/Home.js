@@ -116,7 +116,9 @@ function getAlluserDATA(){
 }
 
 
-
+useEffect(()=>{
+  GetAsyncData();
+},[])
 
 
 ////////////////////  GETTING ASYNC DATA   ////////////////////////
@@ -215,11 +217,7 @@ fetch(`${BaseUrl}${EndPoints.UserS_Videos}`, requestOptions)
   .catch(error => console.log('error', error));
 }
 
-
 //////////////Getting Following Video////////////////
-
-
-
 
 function getingFollowingVideos (){
  var myHeaders = new Headers();
@@ -238,7 +236,7 @@ function getingFollowingVideos (){
     setFollowingData(result.posts)
   })
     .catch(error => console.log('error', error))
-  }
+}
 
 
 
