@@ -19,8 +19,11 @@ import BaseUrl from '../../configuration/url';
 import EndPoints from '../../configuration/EndPoints';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SpinnerButton from 'react-native-spinner-button';
+import Calander from '../Calander/Calander';
+import { ScrollView } from 'react-native-gesture-handler';
 
-const Register =()=>{
+
+const Register =({ChangeState})=>{
 const navigation = useNavigation()
 
 
@@ -42,6 +45,7 @@ const [password,setPassword]=useState("")
 const [birthday,setBirthday]=useState("")
 const [submitPressed,setSubmitPressed]=useState(false)
 const [loading,setLoading]=useState(false)
+const [showCalander,setShowCalander]=useState(false)
 
 
 const onSubmit =()=>{
@@ -49,6 +53,13 @@ const onSubmit =()=>{
 setSubmitPressed(true)
 
 
+}
+
+
+function getCalanderData(dd,yy,mm){
+const birth = dd+"-"+mm+"-"+yy
+setBirthday(birth)
+setShowCalander(!showCalander)
 }
 
 
@@ -94,7 +105,7 @@ const Register = () =>{
         AsyncStorage.setItem('userid',JSON.stringify(result.user.id))
         AsyncStorage.setItem('token',result.token)
         AsyncStorage.setItem('login',JSON.stringify("true"))
-        navigation.navigate("Splash")
+        ChangeState()
 
         setLoading(false)
 
@@ -102,7 +113,10 @@ const Register = () =>{
 
       }
       console.log(result)})
-    .catch(error => console.log('error', error));
+    .catch(error =>{
+      setSubmitPressed(true)
+      setLoading(false)
+      console.log('error', error)});
 }
 
 
@@ -113,6 +127,9 @@ const Register = () =>{
 
 
 return(
+  <ScrollView>
+
+ 
     <View style={styles.container}>
       <View
       style={styles.innerView}
@@ -193,16 +210,20 @@ textAlign='center'
 style={styles.InputStyle}
 />
 </View>
-<View style={[styles.input_container,{borderBottomColor:submitPressed ===true && birthday===""? colors[0].primaryColor:colors[0].FontColor}]}>
-<TextInput 
+<Pressable 
+
+onPress={()=>setShowCalander(true)}
+style={[styles.input_container,{borderBottomColor:submitPressed ===true && birthday===""? colors[0].primaryColor:colors[0].FontColor}]}>
+{/* <TextInput 
 value={birthday}
 onChangeText={(e)=>setBirthday(e)}
 placeholderTextColor={colors[0].FontColor}
 placeholder='Birthday'
 textAlign='center'
 style={styles.InputStyle}
-/>
-</View>
+/> */}
+<Text style={{color:colors[0].FontColor,fontSize:20}}>{birthday!=""?birthday:"Birthday"}</Text>
+</Pressable>
 
 
         </View>
@@ -233,12 +254,29 @@ style={globalStyles.LoginButton}
 
 }
 <Text
-        onPress={()=>navigation.goBack()}
+onPress={()=>navigation.navigate("Policies")}
+
+style={{color:colors[0].FontColor}}
+>Privacy Policy.</Text>
+<Text
+onPress={()=>navigation.navigate("Tos")}
+
+style={{color:colors[0].FontColor}}
+>Terms of Services.</Text>
+<Text
+        onPress={()=>navigation.navigate("Login")}
 
 style={{color:colors[0].FontColor}}
 >Login</Text>
 </View>
+<Calander
+getCalanderData={getCalanderData}
+showCalander={showCalander}
+
+/>
     </View>
+  
+    </ScrollView>
 )
 
 }

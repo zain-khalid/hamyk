@@ -28,9 +28,10 @@ const styles = StyleSheet.create({
     },
 
     header: {
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         height: 50,
-        paddingLeft: 15
+        paddingLeft: 0,
+        flexDirection:"row"
     },
 
     back: {
@@ -256,6 +257,13 @@ If you have any questions about these Terms, please contact us-`
 
 export default class TOS extends PureComponent {
 
+
+
+
+
+
+
+    
     render() {
         return (
            
@@ -264,8 +272,13 @@ export default class TOS extends PureComponent {
             <SafeAreaView style={{flex: 1}} >
                 <View style={styles.header}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                        <Text style={styles.back}>
+                        <Text style={[styles.back,{marginLeft:5}]}>
                             Back
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                    <Text style={[styles.back,{marginRight:5}]}>
+                            Accept
                         </Text>
                     </TouchableOpacity>
                 </View>

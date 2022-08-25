@@ -27,9 +27,11 @@ const styles = StyleSheet.create({
     },
 
     header: {
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         height: 50,
-        paddingLeft: 15
+        flexDirection:"row",
+        paddingLeft: 0,
+
     },
 
     back: {
@@ -210,8 +212,13 @@ export default class Policies extends PureComponent {
             <SafeAreaView style={{ flex: 1 }} forceInset={{top: 'always', bottom: 'never'}}>
                 <View style={styles.header}>
                     <TouchableOpacity onPress={() =>this.props.navigation.pop()}>
-                        <Text style={styles.back}>
+                        <Text style={[styles.back,{marginLeft:5}]}>
                             Back
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() =>this.props.navigation.pop()}>
+                        <Text style={[styles.back,{marginRight:5}]}>
+                            Accept
                         </Text>
                     </TouchableOpacity>
                 </View>
