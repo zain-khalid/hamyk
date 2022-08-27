@@ -1,6 +1,3 @@
-
-
-
 import React from 'react'
 import { useState, useEffect, useMemo } from 'react'
 import { View,Text,PermissionsAndroid,Platform,Image,Alert } from 'react-native'
@@ -33,12 +30,10 @@ const Recorder = () => {
     const [counter,setCounter]=useState()
     const [flash,setFlash]=useState("off")
     const [reset,setReset]=useState(false)
-        const [shouldShow,setShouldShow]=useState(false)
-        const [video,setVideo]=useState(false)
+    const [shouldShow,setShouldShow]=useState(false)
+    const [video,setVideo]=useState(false)
 
-        const[uri,setUri] = useState("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
-
-
+    const[uri,setUri] = useState("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
 
     const device = useMemo(() => devices.find((d) => d.position === camType), [devices])
     const [permissons, setPermissons] = useState(false)
@@ -285,19 +280,17 @@ useEffect(() => {
 
 
 
-        <View style={styles.Container}>
-           <Camera
-           ref={camera}
-      style={styles.cameraRecording}
-      device={device}
-      isActive={true}
-      video={true}
-      audio={true}
-      enableZoomGesture={true}
-//       enableZoomGesture={true}
-// zoom={isEnabled}
-
-
+<View style={styles.Container}>
+    <Camera
+        ref={camera}
+        style={styles.cameraRecording}
+        device={device}
+        isActive={true}
+        video={true}
+        audio={true}
+        enableZoomGesture={true}
+        // enableZoomGesture={true}
+        // zoom={isEnabled}
     />
 
     <View style={styles.CameraOptions}>
