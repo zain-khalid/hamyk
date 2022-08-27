@@ -5,18 +5,18 @@ import {
   import colors from '../Global/colors';
 
   const WindowWidth = Dimensions.get('window').width
-  const WindowHeight = Dimensions.get('window').height; 
+  const WindowHeight = Dimensions.get('window').height;
   const styles = StyleSheet.create({
    container:{
     width:WindowWidth,
-    height:WindowHeight,
+   //  height:WindowHeight,
     // justifyContent:"center",
     alignItems:"center",
     backgroundColor:"white"
    },
    Header:{
       width:WindowWidth,
-      height:WindowHeight/18,
+      // height:WindowHeight/18,
       flexDirection:"row",
       justifyContent:"space-between",
       alignItems:"center",
@@ -50,10 +50,10 @@ import {
    FollowingBtn:{
       borderRadius:8,
       backgroundColor:"#35729B"
-      
+
    }
 
-   
+
   });
 
   export default styles
