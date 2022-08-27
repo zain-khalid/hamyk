@@ -3,7 +3,7 @@ import {
   View,
   Text,
   Dimensions,
- 
+
 } from 'react-native';
 import styles from './Styles';
 
@@ -42,14 +42,14 @@ const getItemLayout = useCallback(
 length:itemHeight,
 offset: itemHeight*index,
 index,
-        
+
 }),
 []
 
 );
 
 const onViewableItemsChanged = ({ viewableItems, changed })=> {
-  
+
   setIndexx(viewableItems[0].index)
 }
 
@@ -76,35 +76,35 @@ return(
   {newVideos.length >= 1 ?
 <FlatList
  ref={cellRefs}
- data={newVideos}
+ data={newVideos.sort((a, b) => b.id - a.id)}
  initialNumToRender={3}
  windowSize={10}
  maxToRenderPerBatch={3}
  updateCellsBatchingPeriod={10}
  renderItem={({item,index})=>{
-  
+
   var dis = getDistance(
     {latitude: lat, longitude:long},
     {latitude: item.latitude, longitude: item.longitude},
   );
 if(dis/1000 <= 6 && dis/1000 !="NaN"){
   return(
-  
+
     <RenderVideo  item={item} index={index} indexx={indexx} />
     )
 }
- 
 
- 
 
-  
+
+
+
   }
 }
 keyExtractor={KeyExtractor}
 getItemLayout={getItemLayout}
 pagingEnabled={true}
 viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-/> 
+/>
 :
 <Text style={{textAlign:"center",color:"black"}}>Create your first video by pressing{'\n'} the record button now !</Text>
 

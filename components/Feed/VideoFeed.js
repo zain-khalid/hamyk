@@ -4,9 +4,9 @@ import React,{useState,useEffect,useRef, useCallback,useMemo} from 'react';
 import {
   View,
   Text,
-  
+
   Dimensions,
- 
+
 } from 'react-native';
 import styles from './Styles';
 
@@ -39,7 +39,7 @@ const getItemLayout = useCallback(
 length:itemHeight,
 offset: itemHeight*index,
 index,
-        
+
 }),
 []
 
@@ -48,7 +48,7 @@ const snapToInterval = useMemo(() => Dimensions.get('window').height-100 , []);
 
 const onViewableItemsChanged = ({ viewableItems, changed })=> {
   // console.log("Visible item", viewableItems[0].index);
-  
+
   setIndexx(viewableItems[0].index)
 }
 
@@ -71,17 +71,17 @@ return(
 
 
 <View style={styles.ListWrapper}>
-{data.length >=1 ? 
+{data.length >=1 ?
 
 <FlatList
  ref={cellRefs}
- data={data}
+ data={data.sort((a, b) => b.id - a.id)}
  initialNumToRender={3}
  windowSize={10}
  maxToRenderPerBatch={3}
  updateCellsBatchingPeriod={10}
  renderItem={({item,index})=>
- 
+
  <RenderVideo  item={item} index={index} indexx={indexx} />
 }
 keyExtractor={KeyExtractor}
@@ -90,7 +90,7 @@ getItemLayout={getItemLayout}
 pagingEnabled={true}
 // onViewableItemsChanged={onViewableItemsChanged}
 viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-/> 
+/>
 :
 <Text style={{textAlign:"center",color:"black"}}>Create your first video by pressing{'\n'} the record button now !</Text>
 }
@@ -134,13 +134,13 @@ export default VideoFeed;
 
 ////////////////////////
 // 'use strict';
- 
+
 // import React, {Component} from 'react';
 // import {View, Text} from 'react-native';
 // import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
- 
+
 // class VideoFeed extends Component {
- 
+
 //   constructor(props) {
 //     super(props);
 //     this.state = {
@@ -149,17 +149,17 @@ export default VideoFeed;
 //       backgroundColor: '#fff'
 //     };
 //   }
- 
 
- 
+
+
   // onSwipeLeft(gestureState) {
   //   this.setState({myText: 'You swiped left!'});
   // }
- 
+
   // onSwipeRight(gestureState) {
   //   this.setState({myText: 'You swiped right!'});
   // }
- 
+
 //   onSwipe(gestureName, gestureState) {
 //     const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
 //     this.setState({gestureName: gestureName});
@@ -178,11 +178,11 @@ export default VideoFeed;
 //         break;
 //     }
 //   }
- 
+
 //   render() {
- 
-   
- 
+
+
+
 //     return (
 //       <GestureRecognizer
 //         onSwipe={(direction, state) => this.onSwipe(direction, state)}
@@ -202,5 +202,5 @@ export default VideoFeed;
 //     );
 //   }
 // }
- 
+
 // export default VideoFeed;
