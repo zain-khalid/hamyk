@@ -32,13 +32,8 @@ const [myId,setMyid]=useState("")
 const [Other_id,setOtherUserId]=useState("")
 const [token,setToken]=useState("")
 
-const [is_following,setIsfollowing]=useState(true)
 const [showOtherUser,setOtherUser]=useState(false)
 const [followings,setFollowings]=useState([])
-
-
-
-
 
 
 
@@ -98,42 +93,48 @@ fetch(`${BaseUrl}${endPoint}`, requestOptions)
 
 ////////folloing or unfollowing user///////////////
 
-function followUser(id){
-  var myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${token}`);
+
+
+
+
+
+
+
+
+const RenderUser =({item})=>{
+
+  const [is_following,setIsfollowing]=useState(true)
+
+  function followUser(id){
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    
+    var formdata = new FormData();
+    formdata.append("follow_to", id);
+    formdata.append("follow_by", myId);
+    
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+    
+    fetch(`${BaseUrl}${EndPoints.hitFollow}`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        GetFollowingList(token,myId)
+        console.log(result)})
+      .catch(error => {
+        setIsfollowing(!is_following)
   
-  var formdata = new FormData();
-  formdata.append("follow_to", id);
-  formdata.append("follow_by", myId);
+        console.log('error', error)});
+  }
   
-  var requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: formdata,
-    redirect: 'follow'
-  };
   
-  fetch(`${BaseUrl}${EndPoints.hitFollow}`, requestOptions)
-    .then(response => response.json())
-    .then(result => {
-      GetFollowingList(token,myId)
-      console.log(result)})
-    .catch(error => {
-      setIsfollowing(!is_following)
-
-      console.log('error', error)});
-}
-
-
-
-
-
-
-
-
-
-
-const renderUser =({item})=>(
+  
+  
+  return(
 <Pressable 
 onPress={()=>{
   setOtherUser(true)
@@ -177,7 +178,7 @@ null
 }
   
 </Pressable>
-)
+)}
 return(
   <Modal
   animationType={"slide"}
@@ -201,7 +202,9 @@ name='arrow-back' size={25} color="black"/>
 
     <FlatList
     data={followings}
-    renderItem={renderUser}
+    renderItem={({item})=>
+      <RenderUser item={item}/>
+    }
     
     />
     </View>
