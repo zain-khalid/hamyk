@@ -259,12 +259,10 @@ function getTopVideos(token,userId){
   fetch(`${BaseUrl}${EndPoints.TopVideos}`, requestOptions)
     .then(response => response.json())
     .then(result => {
-    if(topVideos.length != result.posts.length){
+  
 
 
       setTopVideos(result.posts)
-    }
-
     })
     .catch(error => console.log('error', error));
 }
@@ -290,11 +288,10 @@ var requestOptions = {
 fetch(`${BaseUrl}${EndPoints.NewVideos}`, requestOptions)
   .then(response => response.json())
   .then(result => {
-    if(newVideos.length != result.posts.length){
-
+ 
 console.log("new videos")
       setNewVideos(result.posts)
-    }
+    
 
   })
   .catch(error => console.log('error', error));
