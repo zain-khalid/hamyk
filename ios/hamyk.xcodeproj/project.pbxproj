@@ -535,7 +535,7 @@
 				CODE_SIGN_ENTITLEMENTS = hamyk/hamyk.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 4XZK9QW968;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = hamyk/Info.plist;
@@ -569,7 +569,7 @@
 				CODE_SIGN_ENTITLEMENTS = hamyk/hamyk.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 4XZK9QW968;
 				INFOPLIST_FILE = hamyk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
