@@ -5,6 +5,7 @@ import splash from '../../assets/images/splash.jpg'
 import { useNavigation } from "@react-navigation/native";
  import Home from "../Home/Home";
  import Login from "../Login/login";
+ import Register from "../Registeration/Registeration";
  import { useIsFocused } from "@react-navigation/native";
 export default function Splash(){
     const isFocused=useIsFocused()
@@ -20,9 +21,9 @@ export default function Splash(){
 
 
         const timer = setTimeout(() => {
-
+           
             setLoading(false)
-
+            
         }, 4000);
         return () => clearTimeout(timer);
 
@@ -32,14 +33,14 @@ export default function Splash(){
 
             GetAsyncData()
             },[shouldReload])
-
+        
 
             useEffect(()=>{
 
                 GetAsyncData()
-
+           
                 },[isFocused])
-
+            
 
 
 async function GetAsyncData(){
@@ -75,7 +76,8 @@ if(loading===true){
 else if(loading === false && Loggedin === false){
     return (
 
-    <Login  ChangeState={ChangeLoginState}/>
+    // <Login  ChangeState={ChangeLoginState}/>
+    <Register  ChangeState={ChangeLoginState}/>
     )
 }
 

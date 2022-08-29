@@ -44,8 +44,8 @@ const Recorder = () => {
     const [permissons, setPermissons] = useState(false)
 
     useEffect(() => {
-  
-       
+
+
         loadDevices()
     }, [camChanged])
 
@@ -73,8 +73,8 @@ const HideModal =()=>{
 
 /////// configuration for video ///////////////////////
 
-    const permission = async()=>{   
-        
+    const permission = async()=>{
+
         if (Platform.OS === 'ios') {
             getPermissons()
 
@@ -103,8 +103,8 @@ const HideModal =()=>{
               if (granted === PermissionsAndroid.RESULTS.GRANTED ) {
                 // Start downloading
                 getPermissons()
-                
-  
+
+
               } else {
                 // If permission denied then show alert
                 Alert.alert('Error','Storage Permission Not Granted');
@@ -118,7 +118,7 @@ const HideModal =()=>{
 
 
 
-    } 
+    }
 
 
 
@@ -151,7 +151,7 @@ const HideModal =()=>{
           if (granted === PermissionsAndroid.RESULTS.GRANTED && grantedRead === PermissionsAndroid.RESULTS.GRANTED) {
             // Start downloading
             SelectFromGallery();
-            
+
 alert("Download started please wait")
 
           } else {
@@ -168,7 +168,7 @@ alert("Download started please wait")
    async function SelectFromGallery(){
     ImagePicker.launchImageLibrary({ mediaType: 'video', includeBase64: true, }, (response) => {
         if(response.didCancel !=true){
-         
+
 if(response.assets[0].duration > 3 && response.assets[0].duration<=60){
     console.log(response);
     setUri(response.assets[0].uri)
@@ -177,7 +177,7 @@ if(response.assets[0].duration > 3 && response.assets[0].duration<=60){
 }else{
     Alert.alert("Failed","Please upload video more than 3 seconds and lesser than 60 seconds")
 }
-            
+
         }
         else{
             console.log("jedhfk")
@@ -185,7 +185,7 @@ if(response.assets[0].duration > 3 && response.assets[0].duration<=60){
 
     })
    }
-   
+
 /////////////////////////////////////////////////////
 
 
@@ -225,28 +225,28 @@ if(response.assets[0].duration > 3 && response.assets[0].duration<=60){
         camera.current.startRecording({
             flash: flash,
             onRecordingFinished: (video) => {
-                if(video.duration <= 3){   
+                if(video.duration <= 3){
                     Alert.alert("Too Short","Please Make Video upto 3 seconds")
                 }
                 else{
                     setUri(video.path)
                     setShouldShow(true)
-                    
+
                 }
-              
+
                 setIsRecording(false)
                 setReset(true)
                 setCounter()
-             
+
                 console.log(video)
-            
+
             },
             onRecordingError: (error) => console.error(error, 'videoerror'),
         })
     }
 
 
-   
+
 
 
 /////////// Counting ///////////////////
@@ -258,8 +258,8 @@ useEffect(() => {
             const timer = setTimeout(() => {
                 setCounter(counter + 1)
                 console.log(counter + 1)
-                
-                
+
+
             }, 1000);
             return () => clearTimeout(timer);
         }
@@ -284,7 +284,7 @@ useEffect(() => {
 
 
 
-       
+
         <View style={styles.Container}>
            <Camera
            ref={camera}
@@ -296,21 +296,21 @@ useEffect(() => {
       enableZoomGesture={true}
 //       enableZoomGesture={true}
 // zoom={isEnabled}
-    
-      
+
+
     />
-   
+
     <View style={styles.CameraOptions}>
 
 
 
 
 
-        
+
 <View style={styles.BottomOptions}>
 
 
-<FontAwesome  
+<FontAwesome
 onPress={()=> permissionForGallery()}
 style={{marginLeft:20}}
 name='photo' size={30} color="white"/>
@@ -318,11 +318,11 @@ name='photo' size={30} color="white"/>
     isRecording === false ?
     <Pressable
 onPress={()=>{
-    
+
     StartRecodingHandler()
     }}
 >
-<Image 
+<Image
     source={recordBtn}
     style={{width:64,height:64}}
 
@@ -330,14 +330,14 @@ onPress={()=>{
 </Pressable>:
 <Pressable
 onPress={()=>{
-    
+
     stopRecodingHandler()
     }}
 >
-<Image 
+<Image
     source={recordStarted}
     style={{width:64,height:64}}
-    
+
     />
 </Pressable>
 }
@@ -345,32 +345,32 @@ onPress={()=>{
 
 
 
- 
-   
+
+
 </View>
-   
+
     </View>
     <View style={styles.TopOptions}>
 
 
-<MaterialIcons  
+<MaterialIcons
 onPress={() => navigation.goBack()}
 style={{marginLeft:10}}
 name='arrow-back' size={32} color="white"/>
 
    {/* <Text style={{color:"white",fontSize:20}}>{counter?counter+":00":"0:00"}</Text> */}
 <View style={{flexDirection:"row"}}>
-<Ionicons  
+<Ionicons
 onPress={()=>{
     if(isRecording ===false){
         camType === "front"?  setCamType("back"):setCamType("front")
         setCamChanged(camChanged+1)
     }
-   
+
 }}
 // style={{marginLeft:20}}
 name='camera-reverse-outline' size={32} color="white"/>
-<MaterialIcons  
+<MaterialIcons
 onPress={()=>{
 console.log("fresh")
     flash === "off"? setFlash("on") : setFlash("off")
@@ -381,8 +381,8 @@ name={flash === "off"?'flash-off':"flash-on"} size={32} color="white"/>
 </View>
 
 
- 
-   
+
+
 </View>
 
         </View>
