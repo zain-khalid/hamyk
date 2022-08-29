@@ -47,6 +47,8 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
   const [paused, setPaused] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [screenShortImage, setScreenShortImage] = useState(null)
+
   const [token, setToken] = useState("");
   const [user_id,setUserId]=useState()
   const [location,setLocation]=useState("")
@@ -144,6 +146,8 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
         quality: 0.5,
       })
       .then((uri) => {
+        console.log(" >> The screen Short << ", uri)
+        setScreenShortImage('file:///'+uri)
         compressVideos(uri)
       },
       (error) => {
@@ -153,11 +157,9 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
   }
 
   ////////////////// COMPRESSING ///////////////////////////
-  const compressVideos = async(thumbnail) =>{
+  const compressVideos = async (thumbnail) =>{
     console.log("i am compressing",uri)
     Alert.alert("Compressing","Please wait we are preparing your video to upload")
-
-
     await VideoCompress.compress(
       uri,
       {
@@ -166,7 +168,6 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
       },
       (progress) => {
         console.log(progress)
-
       }
     ).then(async (compressedFileUrl) => {
       console.log("uri",compressedFileUrl)
@@ -212,22 +213,18 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
         'POST',
         'https://hymkapp.khannburger.com/api/createpost',
         {
-          // 'Content-Type': 'multipart/form-data',
+          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
         },
         [
-
-            {
-              name: 'video',
-              filename: 'video.mp4',
-              type: 'video/mp4',
-              data: RNFetchBlob.wrap(realPath),
-            },
-
+          {
+            name: 'video',
+            filename: 'video.mp4',
+            type: 'video/mp4',
+            data: RNFetchBlob.wrap(realPath),
+          },
           { name: 'user_id', data: '' + useAsync.myId },
           { name: 'description', data: '' + description },
-          // { name: 'time', data: "2022-20-20" },
-          // { name: 'date', data:  "2022-20-20"},
           { name: 'latitude', data: '' + latitude },
           { name: 'longitude', data: '' + location },
           { name: 'area', data: '' + id },
@@ -235,18 +232,12 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
           { name: 'comments', data: '' + id },
           { name: 'shares', data: '' + id },
           { name: 'filter_type', data: '' + filter },
-
-
-
-          // {name: 'thumbnail', data:Img}
-
           {
             name: "thumbnail",
-            filename: "thumbnail.jpg",
-            type: "image/jpg",
-            data:  RNFetchBlob.wrap(thumbnail),
+            filename: "thumbnail.jpeg",
+            type: "image/jpeg",
+            data:  RNFetchBlob.wrap(screenShortImage),
           },
-
         ],
       ).then(response => response.json())
         .then(res => {
@@ -256,23 +247,14 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
             Alert.alert("Congratulations","Your Video Is Posted Successfully.")
             HideModal()
             navigation.goBack()
-          }
-          else{
+          } else {
             alert("Some unknown error please try again later")
           }
-
-
         })
         .catch(err => {
           setLoading(false)
           console.log('err >>>', err);
-
         });
-
-
-
-
-
   }
 
   ///////////////////////SETUP FOR DOWNLOADING VIDEO ////////////////////////////////
