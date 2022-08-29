@@ -87,7 +87,7 @@ const onPlayPausePress = () => {
 
 function OnKeyBoardOpen(){
   setKeyBoardOpen(!keyBoardOpen)
-  
+
 }
 function onkeyBoardClose(){
   setKeyBoardOpen(!keyBoardOpen)
@@ -130,14 +130,14 @@ function getDatAndTime (){
     if(token ){
   setUserId(userID)
   setToken(token)
-  
+
     }
     if(_lat){
       setLatitude(_lat)
       setLocation(_long)
     }
   }
-  
+
 
 /////////TEXT EDITING//////////
 
@@ -168,18 +168,6 @@ function OnLayoutCaption (nativeEvent){
     console.log(nativeEvent.layout)
 }
 
-
-
-
-
-
-
-
-////////////////////////////////////////////
-
-
-
-
 //////////// BELOW IS SETUP FOR SENDING VIDEO /////////////////////////
 
 /////////////video compressing and capturing ////////////////////
@@ -192,7 +180,7 @@ const captureScreens =()=>{
     quality: 0.5,
   }).then(
     (uri) => {
-      
+
 
       // console.log(Buffer.from("", 'base64').toString('ascii'))
 compressVideos(uri)
@@ -205,12 +193,7 @@ compressVideos(uri)
   );
 }
 
-
-
-
 ////////////////// COMPRESSING ///////////////////////////
-
-
 const compressVideos = async(thumbnail) =>{
   console.log("i am compressing",uri)
   Alert.alert("Compressing","Please wait we are preparing your video to upload")
@@ -219,8 +202,8 @@ const compressVideos = async(thumbnail) =>{
   await VideoCompress.compress(
     uri,
     {
-
-bitrate:6000000000
+      compressionMethod: 'auto',
+      // bitrate:6000000000
     },
     (progress) => {
       console.log(progress)
@@ -238,16 +221,17 @@ const compressVideosII = async(url,thumbnail) =>{
   console.log("i am compressing again bro",url)
 
   var new_str = url.replace("file://", 'file:///')
-    
-console.log(new_str)
+
+  console.log(new_str)
   await VideoCompress.compress(
-    new_str,
+    url,
     {
-bitrate:6000000000
+      compressionMethod: 'auto',
+// bitrate:6000000000
     },
     (progress) => {
       console.log(progress)
-    
+
     }
   ).then(async (compressedFileUrl) => {
     console.log("uri",compressedFileUrl)
@@ -257,17 +241,7 @@ bitrate:6000000000
 
 }
 
-
-
-
-
-///////////////////////////////////////////////////////////////
-
-
-
 ////////////////SAVING VIDEO/////////////////////////////
-
-
 const SaveVideos = (uri,thumbnail) =>{
   Alert.alert("Uploading","Your video is being uploaded.")
 
@@ -285,7 +259,7 @@ const SaveVideos = (uri,thumbnail) =>{
         Authorization: `Bearer ${token}`,
       },
       [
-    
+
           {
             name: 'video',
             filename: 'video.mp4',
@@ -308,7 +282,7 @@ const SaveVideos = (uri,thumbnail) =>{
 
 
         // {name: 'thumbnail', data:Img}
-   
+
         {
           name: "thumbnail",
           filename: "thumbnail.jpg",
@@ -329,13 +303,13 @@ const SaveVideos = (uri,thumbnail) =>{
         else{
           alert("Some unknown error please try again later")
         }
-     
-        
+
+
       })
       .catch(err => {
         setLoading(false)
         console.log('err >>>', err);
-    
+
       });
 
 
@@ -344,19 +318,10 @@ const SaveVideos = (uri,thumbnail) =>{
 
 }
 
-
-
-////////////////////////////////////////////////////////////
-
 ///////////////////////SETUP FOR DOWNLOADING VIDEO ////////////////////////////////
-
-
-
-
-
 const CompressDownload = async() =>{
   setLoading(true)
-Alert.alert("Compressing","Please wait we are compressing your video, your download will start soon")
+  Alert.alert("Compressing","Please wait we are compressing your video, your download will start soon")
 // if(route !="local"){
 // console.log("not local")
 //   const options = {
@@ -366,11 +331,11 @@ Alert.alert("Compressing","Please wait we are compressing your video, your downl
 //     saveToCameraRoll: false, // default is false, iOS only
 //     saveWithCurrentDate: false, // default is false, iOS only
 //     minimumBitrate: 900000,
-    
+
 //     removeAudio: false, // default is false
 //   };
 //   ProcessingManager.compress(uri, options) // like VideoPlayer compress options
-//   .then((data) => 
+//   .then((data) =>
 //   SaveDownloadVideo(data.source)
 //   )
 // }else{
@@ -383,7 +348,7 @@ await VideoCompress.compress(
   uri,
   {
 
-bitrate:6000000000
+// bitrate:6000000000
   },
   (progress) => {
     console.log(progress)
@@ -408,7 +373,6 @@ bitrate:6000000000
 
 }
 
-
 function SaveDownloadVideo(uri){
 
   console.log("Started saving.........")
@@ -418,8 +382,8 @@ function SaveDownloadVideo(uri){
     ? uri.replace('file://', '')
     : uri;
 
-  
-  
+
+
     RNFetchBlob.fetch(
       'POST',
       `https://hymkapp.khannburger.com/api/sendvideo`,
@@ -428,7 +392,7 @@ function SaveDownloadVideo(uri){
         Authorization: `Bearer ${token}`,
       },
       [
-    
+
           {
             name: 'video',
             filename: 'video.mp4',
@@ -436,13 +400,13 @@ function SaveDownloadVideo(uri){
             data: RNFetchBlob.wrap(realPath),
           },
 
-      
 
-  
+
+
       ],
     ).then(response => response.json())
     .then(result => {
-     
+
       if(result.path){
 Download(`${EndPoints.VideoDownloadUrl}${result.path}`)
 
@@ -453,13 +417,13 @@ setTimeout(() => {setLoading(false)
 
       }
 
-  
+
     })
-     
+
       .catch(err => {
         setLoading(false)
         console.log('err >>>', err);
-    
+
       });
 
 
@@ -470,125 +434,67 @@ setTimeout(() => {setLoading(false)
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ///////setting filters/////////////
-
-
-
-
-
-
 function onSwipeLeft(gestureState) {
-if(filter < 6){
+  if(filter < 6){
 
-  setFilter(filter+1)
-}else{
-  setFilter(1)
+    setFilter(filter+1)
+  }else{
+    setFilter(1)
+  }
 }
-}
+
 function onSwipeRight(gestureState) {
   if(filter >1 ){
-  
+
     setFilter(filter-1)
   }else{
     setFilter(6)
   }
-  }
-
+}
 
 const config = {
   velocityThreshold: 0.3,
   directionalOffsetThreshold: 80
 };
 
-////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 return(
-  
+
 <Modal
-visible={shouldShow}
+  visible={shouldShow}
 >
-
-
-<View style={styles.Container}>
-
-
-
-
-<View 
-
-onPress={()=>{
-  onPlayPausePress()
-}}
-
-
-
->
-  
- <Video  
- ref={vid}
-  source={{uri:uri}}        
-  paused={paused}   
-  resizeMode="cover"            
-//   style={[styles.backgroundVideo,{transform:[{rotateY:'180deg'}]}]}  
-  style={styles.backgroundVideo}  
-  repeat={true}  
-     
-   
-  // onLoad={()=> setLoading(true)}
-  // onEnd={() => setLoading(false)}
-  
-
-  /> 
-
-<Filters filterType={filter}/>
-
-
-<GestureRecognizer
-    //         onSwipe={(direction, state) => this.onSwipe(direction, state)}
-    //         onSwipeUp={(state) => this.onSwipeUp(state)}
-    //         onSwipeDown={(state) => this.onSwipeDown(state)}
-            onSwipeLeft={(state) => onSwipeLeft(state)}
-         onSwipeRight={(state) => onSwipeRight(state)}
-            config={config}
-
-            style={styles.VideoOptionsContainer}
-        >
-   
-   {loading === false ? 
- <View>
-
-
-  
+  <View style={styles.Container}>
+    <View
+      onPress={()=>{
+        onPlayPausePress()
+      }}
+    >
+      <Video
+        ref={vid}
+        source={{uri:uri}}
+        paused={paused}
+        resizeMode="cover"
+        //   style={[styles.backgroundVideo,{transform:[{rotateY:'180deg'}]}]}
+        style={styles.backgroundVideo}
+        repeat={true}
+        // onLoad={()=> setLoading(true)}
+        // onEnd={() => setLoading(false)}
+      />
+      <Filters filterType={filter}/>
+      <GestureRecognizer
+        // onSwipe={(direction, state) => this.onSwipe(direction, state)}
+        // onSwipeUp={(state) => this.onSwipeUp(state)}
+        // onSwipeDown={(state) => this.onSwipeDown(state)}
+        onSwipeLeft={(state) => onSwipeLeft(state)}
+        onSwipeRight={(state) => onSwipeRight(state)}
+        config={config}
+        style={styles.VideoOptionsContainer}
+      >
+      {loading === false ?
+        <View>
 {
-isActive === true ? 
-<TextInput 
+isActive === true ?
+<TextInput
 
 placeholder='Type Something here....'
 placeholderTextColor={"white"}
@@ -613,7 +519,7 @@ style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%"
 }
 
 
- 
+
 
 
 
@@ -626,28 +532,28 @@ onPress={()=> CompressDownload()}
 
 >
 
-<MaterialIcons 
+<MaterialIcons
 
 style={{marginLeft:10}}
 name="file-download" color="white" size={Icon_Size} />
-      
+
 
 </Pressable>
 
-<MaterialIcon 
+<MaterialIcon
 
 onPress={()=> {
   if(latitude !=""){
     setLoading(true)
 
     captureScreens()
-  
+
   }
   else{
     Alert.alert("Warning !","Location permission is required to upload video.")
   }
 
-  
+
   }
   }
 style={{marginRight:10}}
@@ -657,11 +563,11 @@ size={Icon_Size}
 color="white"
 
 />
-     
-      </View> 
-  
+
+      </View>
+
 </View>
-:           
+:
 <SpinnerButton
                   buttonStyle={{marginBottom:20,width:50,height:50,        backgroundColor: '#ff0000',
                 }}
@@ -669,11 +575,11 @@ color="white"
                   size={1}
                   spinnerType='PulseIndicator'
                   indicatorCount={0}
-              
+
 // onPress={()=>onSubmit()}
 >
 
-</SpinnerButton> 
+</SpinnerButton>
 
 }
 </GestureRecognizer>
@@ -688,7 +594,7 @@ color="white"
 
 
 <View style={styles.TopOptions}>
-<MaterialIcons  
+<MaterialIcons
 style={{margin:10}}
 onPress={()=>HideModal()}
 name='arrow-back' size={25} color="white"/>
