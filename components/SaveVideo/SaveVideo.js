@@ -58,53 +58,26 @@ const [keyBoardOpen,setKeyBoardOpen]=useState(false)
 const [description,setDescription]=useState("")
 const [isActive,setIsActive]=useState(false)
 
-
-
-
 const onPlayPausePress = () => {
   setPaused(!paused);
 };
-
-
-///////anomated caption////////////////
-// let pan = new Animated.ValueXY();
-// const  panResponder = PanResponder.create({
-//    onMoveShouldSetPanResponder: () => true,
-//    onPanResponderGrant: () => {
-//      pan.setOffset({
-//        x: pan.x._value,
-//        y: pan.y._value
-//      });
-//    },
-//    onPanResponderMove: Animated.event([
-//      null,
-//      { dx: pan.x, dy:pan.y }
-//    ]),
-//    onPanResponderRelease: () => {
-//      pan.flattenOffset();
-//    }
-//  });
 
 function OnKeyBoardOpen(){
   setKeyBoardOpen(!keyBoardOpen)
 
 }
+
 function onkeyBoardClose(){
   setKeyBoardOpen(!keyBoardOpen)
   setIsActive(false)
 }
 
-
-
-
-
 ///////////////////// Getting AsynDATA /////////////////////
-
 useEffect(()=>{
   getAsyncData()
   getDatAndTime()
+},[])
 
-  },[])
 function getDatAndTime (){
   let today = new Date();
   let datee = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -117,38 +90,31 @@ function getDatAndTime (){
   setTime(properTime)
 }
 
-
-
-  async function getAsyncData () {
-    const token = await AsyncStorage.getItem('token')
-    const userid = await AsyncStorage.getItem('userid')
-    let userID = JSON.parse(userid)
-    const lat=await AsyncStorage.getItem("lat")
+async function getAsyncData () {
+  const token = await AsyncStorage.getItem('token')
+  const userid = await AsyncStorage.getItem('userid')
+  let userID = JSON.parse(userid)
+  const lat=await AsyncStorage.getItem("lat")
   const _lat= JSON.parse(lat)
   const long=await AsyncStorage.getItem("long")
   const _long= JSON.parse(long)
-    if(token ){
-  setUserId(userID)
-  setToken(token)
 
-    }
-    if(_lat){
-      setLatitude(_lat)
-      setLocation(_long)
-    }
+  if(token ){
+    setUserId(userID)
+    setToken(token)
   }
 
+  if(_lat){
+    setLatitude(_lat)
+    setLocation(_long)
+  }
+}
 
 /////////TEXT EDITING//////////
-
-
-
-
 var captionLayout = {
   width: 0,
   height: 0
 }
-
 
 function OnLayoutCaption (nativeEvent){
     // let target = nativeEvent.target;
@@ -171,7 +137,6 @@ function OnLayoutCaption (nativeEvent){
 //////////// BELOW IS SETUP FOR SENDING VIDEO /////////////////////////
 
 /////////////video compressing and capturing ////////////////////
-
 const captureScreens =()=>{
   console.log("i am captur9ing")
 
@@ -214,8 +179,6 @@ const compressVideos = async(thumbnail) =>{
     compressVideosII(compressedFileUrl,thumbnail)
     });
 }
-
-
 
 const compressVideosII = async(url,thumbnail) =>{
   console.log("i am compressing again bro",url)
@@ -381,9 +344,6 @@ function SaveDownloadVideo(uri){
   Platform.OS === 'ios'
     ? uri.replace('file://', '')
     : uri;
-
-
-
     RNFetchBlob.fetch(
       'POST',
       `https://hymkapp.khannburger.com/api/sendvideo`,
@@ -492,120 +452,71 @@ return(
       >
       {loading === false ?
         <View>
-{
-isActive === true ?
-<TextInput
-
-placeholder='Type Something here....'
-placeholderTextColor={"white"}
-style={{marginBottom:keyBoardOpen === false ? 20:itemHeight/3,color:"white",marginLeft:10,textAlign:"left"}}
-onPressIn={()=>OnKeyBoardOpen()}
-onEndEditing={()=>onkeyBoardClose()}
-onChangeText={(e)=>setDescription(e)}
-numberOfLines={3}
-value={description}
-
-
-/>:
-<Text
-
-onPress={()=>setIsActive(true)}
-style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%"}}
-
-
->
-{description !=""?description:"Type something here...."}
-</Text>
-}
-
-
-
-
-
-
-
-     <View
-     style={styles.optionsVideo}
-     >
-<Pressable
-onPress={()=> CompressDownload()}
-
->
-
-<MaterialIcons
-
-style={{marginLeft:10}}
-name="file-download" color="white" size={Icon_Size} />
-
-
-</Pressable>
-
-<MaterialIcon
-
-onPress={()=> {
-  if(latitude !=""){
-    setLoading(true)
-
-    captureScreens()
-
-  }
-  else{
-    Alert.alert("Warning !","Location permission is required to upload video.")
-  }
-
-
-  }
-  }
-style={{marginRight:10}}
-
-name='check-circle'
-size={Icon_Size}
-color="white"
-
-/>
-
-      </View>
-
-</View>
-:
-<SpinnerButton
-                  buttonStyle={{marginBottom:20,width:50,height:50,        backgroundColor: '#ff0000',
-                }}
-                  isLoading={true}
-                  size={1}
-                  spinnerType='PulseIndicator'
-                  indicatorCount={0}
-
-// onPress={()=>onSubmit()}
->
-
-</SpinnerButton>
-
-}
-</GestureRecognizer>
-
-
-
-
-
-
-</View>
-
-
-
-<View style={styles.TopOptions}>
-<MaterialIcons
-style={{margin:10}}
-onPress={()=>HideModal()}
-name='arrow-back' size={25} color="white"/>
-</View>
-
-
-</View>
+          {
+            isActive === true ?
+              <TextInput
+                placeholder='Type Something here....'
+                placeholderTextColor={"white"}
+                style={{marginBottom:keyBoardOpen === false ? 20:itemHeight/3,color:"white",marginLeft:10,textAlign:"left"}}
+                onPressIn={()=>OnKeyBoardOpen()}
+                onEndEditing={()=>onkeyBoardClose()}
+                onChangeText={(e)=>setDescription(e)}
+                numberOfLines={3}
+                value={description}
+              />:
+              <Text
+                onPress={()=>setIsActive(true)}
+                style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%"}}
+              >
+                {description !=""?description:"Type something here...."}
+              </Text>
+          }
+        <View
+          style={styles.optionsVideo}
+        >
+          <Pressable
+            onPress={()=> CompressDownload()}
+          >
+            <MaterialIcons
+              style={{marginLeft:10}}
+              name="file-download" color="white" size={Icon_Size}
+            />
+          </Pressable>
+          <MaterialIcon
+            onPress={()=> {
+              if(latitude !=""){
+                setLoading(true)
+                captureScreens()
+              }else{
+                Alert.alert("Warning !","Location permission is required to upload video.")
+              }
+            }}
+            style={{marginRight:10}}
+            name='check-circle'
+            size={Icon_Size}
+            color="white"
+          />
+        </View>
+      </View>:
+      <SpinnerButton
+        buttonStyle={{marginBottom:20,width:50,height:50,        backgroundColor: '#ff0000'}}
+        isLoading={true}
+        size={1}
+        spinnerType='PulseIndicator'
+        indicatorCount={0}
+      />
+      }
+      </GestureRecognizer>
+    </View>
+    <View style={styles.TopOptions}>
+      <MaterialIcons
+        style={{margin:10}}
+        onPress={()=>HideModal()}
+        name='arrow-back' size={25} color="white"
+      />
+    </View>
+  </View>
 </Modal>
+)}
 
-
-)
-
-}
 export default SaveVideo
