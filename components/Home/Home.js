@@ -38,10 +38,7 @@ function backButtonHandler() {
 }
 
 const Home =({ChangeState})=>{
-
   const getLocation = useLocation()
-
-  console.log(">> get location << ",getLocation);
   const Focused = useIsFocused()
 const navigation = useNavigation()
 const [myId,setMyId]=useState("")
@@ -83,7 +80,7 @@ const [userData,setUserData]= useState(
 ////////////DATA CALLERS/////////////////////
 
 
-
+  
 
 useEffect(()=>{
 
@@ -112,35 +109,30 @@ else if(index===2){
 
 function getAlluserDATA(){
   getUserData()
-  getUserVideos()
+  getUserVideos() 
 }
 
 
-
+ 
 
 
 ////////////////////  GETTING ASYNC DATA   ////////////////////////
 
-// useEffect(()=>{
-//     getAsyncData()
-//     },[Focused])
+useEffect(()=>{
+  GetAsyncData()
+    },[])
 
-
+    
 async function getAsyncData () {
     const userid = await AsyncStorage.getItem('userid')
     const token = await AsyncStorage.getItem('token')
-    let user_id=JSON.parse(userid)
+    let user_id=JSON.parse(userid) 
 
     if(token){
       setMyId(user_id)
       setToken(token)
       Manager(token,user_id)
     }
-    // location lat and long getting from async
-    const lat = await AsyncStorage.getItem('lat')
-    const long = await AsyncStorage.getItem('long')
-
-    console.log(" >> location from async << ",lat, long)
   }
 ///////////// RESPONSE MANAGER /////////////////////////
 
@@ -151,11 +143,11 @@ getNewvideos(token,user_id)
 
 }
 
-
-
+  
+  
 /////////////Getting User Data///////////////
-
-
+  
+  
 function getUserData (){
     var myHeaders = new Headers();
 myHeaders.append("Authorization", `Bearer ${token}`);
@@ -175,7 +167,7 @@ var requestOptions = {
 fetch(`${BaseUrl}${EndPoints.GetUserData}`, requestOptions)
   .then(response => response.json())
   .then(result => {
-
+    
     if(result.starus==="200"){
         setUserData({
             f_name:result.data[0].firstname,
@@ -210,7 +202,7 @@ fetch(`${BaseUrl}${EndPoints.UserS_Videos}`, requestOptions)
   .then(response => response.json())
   .then(result => {
     setUserVideos(result.posts)
-
+  
   })
   .catch(error => console.log('error', error));
 }
@@ -239,12 +231,12 @@ function getingFollowingVideos (){
   })
     .catch(error => console.log('error', error))
   }
-
-
-
+  
+  
+  
   /////////////////GET TOP VIDEOS /////////////////////
-
-
+  
+  
 function getTopVideos(token,userId){
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
@@ -259,12 +251,9 @@ function getTopVideos(token,userId){
   fetch(`${BaseUrl}${EndPoints.TopVideos}`, requestOptions)
     .then(response => response.json())
     .then(result => {
-    if(topVideos.length != result.posts.length){
-
-
-      setTopVideos(result.posts)
-    }
-
+ 
+    setTopVideos(result.posts)
+    
     })
     .catch(error => console.log('error', error));
 }
@@ -290,11 +279,9 @@ var requestOptions = {
 fetch(`${BaseUrl}${EndPoints.NewVideos}`, requestOptions)
   .then(response => response.json())
   .then(result => {
-    if(newVideos.length != result.posts.length){
+  
+    setNewVideos(result.posts)
 
-console.log("new videos")
-      setNewVideos(result.posts)
-    }
 
   })
   .catch(error => console.log('error', error));
@@ -320,53 +307,53 @@ function _renderTabBar(){
     style={styles.Header}
     >
      <Pressable
-
+     
      onPress={()=>{
-
+     
        setIndex(0)}}
      >
-
+         
  {userData.profile === "default"?
-
- <Image
+ 
+ <Image  
  source={profile}
- style={{  width:index===0?62:45,height:index===0?62:45,borderWidth:1}}
+ style={{  width:47,height:47,borderWidth:1,opacity:index===0?1:0.7}}
  />
 :
 
-<Image
+<Image  
  source={{uri:`${EndPoints.ProfileUrl}${userData.profile}`}}
- style={{  width:index===0?62:45,height:index===0?62:45,borderWidth:1,borderColor:"white",borderRadius:1000}}
+ style={{  width:47,height:47,borderWidth:1,borderColor:"white",borderRadius:1000,opacity:index===0?1:0.7}}
  />
 
 }
      </Pressable>
-
+ 
  <Text
  onPress={()=>setIndex(1)}
- style={{color:index!=1?'rgba(255,255,255,0.6)':"white",fontWeight:'bold',fontSize:index===1?25:22}}
+ style={{color:index!=1?'rgba(255,255,255,0.7)':"white",fontWeight:'500',fontSize:26}}
  >hamyk</Text>
-
+ 
  <Pressable
      onPress={()=>{
          setIndex(2)
          }}
  >
-
-
-     <Image
+         
+ 
+     <Image  
      source={group}
-     style={{  width:index===2?62:45,height:index===2?62:45}}
+     style={{  width:47,height:47,opacity:index===2?1:0.7}}
      />
      </Pressable>
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
     </View>
   )
-
+ 
 }
 
 
@@ -377,14 +364,14 @@ function _renderTabBar(){
 
 
 const renderScene = SceneMap({
-  first:  () =>
-
-  <UserProfile
-  userData={userData}
-
-
+  first:  () => 
+  
+  <UserProfile   
+  userData={userData} 
+  
+  
   userVideos={userVideos}
-
+  
   getUserVideos={getUserVideos}
 
   Currentindex={index}
@@ -396,7 +383,9 @@ const renderScene = SceneMap({
 
   />
   ,
-  third: ()=><VideoFeed data={followingData} Currentindex={index}/>
+  third: ()=><VideoFeed data={followingData} Currentindex={index}
+
+  />
 
 });
 
@@ -418,16 +407,18 @@ const [routes] = React.useState([
 
 return(
 <>
+
   <TabView
     renderTabBar={_renderTabBar}
     navigationState={{ index, routes }}
     renderScene={renderScene}
     onIndexChange={setIndex}
     initialLayout={{ width: layout.width }}
-
+    
   />
+
   <BottomButton/>
-</>
+    </>
 )
 
 }
@@ -515,11 +506,11 @@ export default Home
 //     getAsyncData()
 //     },[Focused])
 
-
+    
 // async function getAsyncData () {
 //     const userid = await AsyncStorage.getItem('userid')
 //     const token = await AsyncStorage.getItem('token')
-//     let user_id=JSON.parse(userid)
+//     let user_id=JSON.parse(userid) 
 
 //     if(token){
 //       setMyId(user_id)
@@ -537,11 +528,11 @@ export default Home
 
 // }
 
-
-
+  
+  
 //   /////////////Getting User Data///////////////
-
-
+  
+  
 // function getUserData (){
 //     var myHeaders = new Headers();
 // myHeaders.append("Authorization", `Bearer ${token}`);
@@ -561,7 +552,7 @@ export default Home
 // fetch(`${BaseUrl}${EndPoints.GetUserData}`, requestOptions)
 //   .then(response => response.json())
 //   .then(result => {
-
+    
 //     if(result.starus==="200"){
 //         setUserData({
 //             f_name:result.data[0].firstname,
@@ -595,7 +586,7 @@ export default Home
 //   .then(response => response.json())
 //   .then(result => {
 //     setUserVideos(result.posts)
-
+  
 //   })
 //   .catch(error => console.log('error', error));
 // }
@@ -631,32 +622,32 @@ export default Home
 //     .catch(error => console.log('error', error))
 //   }
 //   }
-
-
-
+  
+  
+  
 //   /////////////////GET TOP VIDEOS /////////////////////
-
-
+  
+  
 // function getTopVideos(token,userId){
-
-
+  
+  
 //   var myHeaders = new Headers();
 //   myHeaders.append("Authorization", `Bearer ${token}`);
-
+  
 //   var formdata = new FormData();
 //   formdata.append("user_id", userId);
-
+  
 //   var requestOptions = {
 //     method: 'POST',
 //     headers: myHeaders,
 //     body: formdata,
 //     redirect: 'follow'
 //   };
-
+  
 //   fetch(`${BaseUrl}${EndPoints.TopVideos}`, requestOptions)
 //     .then(response => response.json())
 //     .then(result => {
-
+      
 
 
 
@@ -665,7 +656,7 @@ export default Home
 
 //       setTopVideos(result.posts)
 //     }
-
+    
 //     })
 //     .catch(error => console.log('error', error));
 // }
@@ -711,18 +702,18 @@ export default Home
 // function RenderScreen(){
 //     if(index===1){
 // return(
-//     <UserProfile
-
-//     userData={userData}
-
-
+//     <UserProfile 
+    
+//     userData={userData} 
+    
+    
 //     userVideos={userVideos}
-
+    
 //     getUserVideos={getUserVideos}
-
+    
 //     />
 //     )
-
+    
 //     }
 //     else if(index===2){
 //         return(
@@ -748,15 +739,15 @@ export default Home
 //    style={styles.Header}
 //    >
 //     <Pressable
-
+    
 //     onPress={()=>{
 //       getUserData()
 //       getUserVideos()
 //       setIndex(1)}}
 //     >
+        
 
-
-//     <Image
+//     <Image  
 //     source={profile}
 //     style={{  width:index===1?62:45,height:index===1?62:45,borderWidth:1}}
 //     />
@@ -773,9 +764,9 @@ export default Home
 //         setIndex(2)
 //         }}
 // >
+        
 
-
-//     <Image
+//     <Image  
 //     source={group}
 //     style={{  width:index===2?62:45,height:index===2?62:45}}
 //     />
