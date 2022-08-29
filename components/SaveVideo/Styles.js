@@ -5,20 +5,18 @@ import {
 import { Divider } from 'react-native-paper';
   import colors from '../Global/colors';
   const WindowWidth = Dimensions.get('window').width
-  const WindowHeight = Dimensions.get('window').height; 
+  const WindowHeight = Dimensions.get('window').height;
   const styles = StyleSheet.create({
 
 
 
-   Container:{
-      width:WindowWidth,
-      height:WindowHeight,
-      backgroundColor:"black",
-alignItems:"center",
-marginBottom:40
-
-// justifyContent:"center"
-
+Container:{
+   width:WindowWidth,
+   height:WindowHeight,
+   backgroundColor:"red",
+   alignItems:"center",
+   marginBottom:40
+   // justifyContent:"center"
 },
 
 backgroundVideo:{

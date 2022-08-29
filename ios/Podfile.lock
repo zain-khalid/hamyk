@@ -288,6 +288,8 @@ PODS:
   - react-native-compressor (1.5.2):
     - NextLevelSessionExporter
     - React-Core
+  - react-native-create-thumbnail (1.5.1):
+    - React-Core
   - react-native-geolocation (2.1.0):
     - React-Core
   - react-native-image-picker (4.8.5):
@@ -441,6 +443,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-background-actions (from `../node_modules/react-native-background-actions`)
   - react-native-compressor (from `../node_modules/react-native-compressor`)
+  - react-native-create-thumbnail (from `../node_modules/react-native-create-thumbnail`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-notifications (from `../node_modules/react-native-notifications`)
@@ -531,6 +534,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-background-actions"
   react-native-compressor:
     :path: "../node_modules/react-native-compressor"
+  react-native-create-thumbnail:
+    :path: "../node_modules/react-native-create-thumbnail"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
   react-native-image-picker:
@@ -625,6 +630,7 @@ SPEC CHECKSUMS:
   React-logger: f79dd3cc0f9b44f5611c6c7862badd891a862cf8
   react-native-background-actions: 2c251c986f23347f9c1722f05fd296938f60edb1
   react-native-compressor: 2b33a85a50fddb4587165df3d4a79f9d9b8e13ef
+  react-native-create-thumbnail: dedcb7cd3d14a4b6cc2026563197242081edb52b
   react-native-geolocation: 69f4fd37650b8e7fee91816d395e62dd16f5ab8d
   react-native-image-picker: cd420f97f6ed6ff74fc4686d27dbcfdbd051db91
   react-native-notifications: 33ec77006f7987bb22de8f1665889abc633b9196

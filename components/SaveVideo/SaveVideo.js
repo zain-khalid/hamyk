@@ -15,6 +15,7 @@ import {
   Animated
 
 } from 'react-native';
+import { createThumbnail } from "react-native-create-thumbnail";
 import styles from './Styles';
 import { useNavigation } from '@react-navigation/native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
@@ -25,7 +26,7 @@ import { Modal } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNFetchBlob from 'rn-fetch-blob';
 import { ProcessingManager } from 'react-native-video-processing';
-import { captureScreen } from "react-native-view-shot";
+import ViewShot, { captureScreen } from "react-native-view-shot";
 import useLocation from '../Hooks/getLocation';
 import getAsync from '../AsynDataFolder/getAsync';
 import SpinnerButton from 'react-native-spinner-button';
@@ -38,6 +39,9 @@ const itemHeight = Dimensions.get('window').height
 const Icon_Size = 35
 
 const SaveVideo =({shouldShow,uri,HideModal,route})=>{
+
+  const viewShotRef = useRef(null);
+
   const getLoc = useLocation()
   const useAsync=getAsync()
   const navigation = useNavigation()
@@ -139,21 +143,41 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
   //////////// BELOW IS SETUP FOR SENDING VIDEO /////////////////////////
 
   /////////////video compressing and capturing ////////////////////
-  const captureScreens =()=>{
+  const captureScreens = ()=>{
     console.log("i am captur9ing")
-    captureScreen({
-        format: "jpg",
-        quality: 0.5,
-      })
-      .then((uri) => {
-        console.log(" >> The screen Short << ", uri)
-        setScreenShortImage('file:///'+uri)
-        compressVideos(uri)
-      },
-      (error) => {
-        setLoading(false)
-        console.error("Oops, snapshot failed", error)}
-      );
+    createThumbnail({
+      url: uri,
+      timeStamp: 500,
+      format: 'png'
+    })
+    .then(response => {
+      setScreenShortImage(response.path)
+      console.log(" >> path << ",response.path);
+      compressVideos(response.path)
+      // console.log(response)
+    })
+    .catch(err => {
+      setLoading(false)
+      console.error("Oops, snapshot failed", error)
+      // console.log({ err })
+    });
+
+    // const uri = await viewShotRef.current.capture();
+    // console.log("Screen Short << ", uri);
+    // setScreenShortImage(uri);
+    // captureScreen({
+    //     format: "jpg",
+    //     quality: 0.5,
+    //   })
+    //   .then((uri) => {
+    //     console.log(" >> The screen Short << ", uri)
+    //     setScreenShortImage({uri})
+    //     // compressVideos(uri)
+    //   },
+    //   (error) => {
+    //     setLoading(false)
+    //     console.error("Oops, snapshot failed", error)}
+    //   );
   }
 
   ////////////////// COMPRESSING ///////////////////////////
@@ -236,7 +260,7 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
             name: "thumbnail",
             filename: "thumbnail.jpeg",
             type: "image/jpeg",
-            data:  RNFetchBlob.wrap(screenShortImage),
+            data:  RNFetchBlob.wrap(thumbnail),
           },
         ],
       ).then(response => response.json())
@@ -341,12 +365,6 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
 
         });
 
-
-
-
-
-
-
   }
 
   ///////setting filters/////////////
@@ -377,99 +395,101 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
     <Modal
       visible={shouldShow}
     >
-      <View style={styles.Container}>
-        <View
-          onPress={()=>{
-            onPlayPausePress()
-          }}
-        >
-          <Video
-            ref={vid}
-            source={{uri:uri}}
-            paused={paused}
-            resizeMode="cover"
-            //   style={[styles.backgroundVideo,{transform:[{rotateY:'180deg'}]}]}
-            style={styles.backgroundVideo}
-            repeat={true}
-            // onLoad={()=> setLoading(true)}
-            // onEnd={() => setLoading(false)}
-          />
-          <Filters filterType={filter}/>
-          <GestureRecognizer
-            // onSwipe={(direction, state) => this.onSwipe(direction, state)}
-            // onSwipeUp={(state) => this.onSwipeUp(state)}
-            // onSwipeDown={(state) => this.onSwipeDown(state)}
-            onSwipeLeft={(state) => onSwipeLeft(state)}
-            onSwipeRight={(state) => onSwipeRight(state)}
-            config={config}
-            style={styles.VideoOptionsContainer}
+        <View style={styles.Container}>
+          <View
+            onPress={()=>{
+              onPlayPausePress()
+            }}
           >
-          {loading === false ?
-            <View>
-              {
-                isActive === true ?
-                  <TextInput
-                    placeholder='Type Something here....'
-                    placeholderTextColor={"white"}
-                    style={{marginBottom:keyBoardOpen === false ? 20:itemHeight/3,color:"white",marginLeft:10,textAlign:"left"}}
-                    onPressIn={()=>OnKeyBoardOpen()}
-                    onEndEditing={()=>onkeyBoardClose()}
-                    onChangeText={(e)=>setDescription(e)}
-                    numberOfLines={3}
-                    value={description}
-                  />:
-                  <Text
-                    onPress={()=>setIsActive(true)}
-                    style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%"}}
-                  >
-                    {description !=""?description:"Type something here...."}
-                  </Text>
-              }
-            <View
-              style={styles.optionsVideo}
-            >
-              <Pressable
-                onPress={()=> CompressDownload()}
-              >
-                <MaterialIcons
-                  style={{marginLeft:10}}
-                  name="file-download" color="white" size={Icon_Size}
-                />
-              </Pressable>
-              <MaterialIcon
-                onPress={()=> {
-                  if(latitude !=""){
-                    setLoading(true)
-                    captureScreens()
-                  }else{
-                    Alert.alert("Warning !","Location permission is required to upload video.")
-                  }
-                }}
-                style={{marginRight:10}}
-                name='check-circle'
-                size={Icon_Size}
-                color="white"
-              />
-            </View>
-          </View>:
-          <SpinnerButton
-            buttonStyle={{marginBottom:20,width:50,height:50,        backgroundColor: '#ff0000'}}
-            isLoading={true}
-            size={1}
-            spinnerType='PulseIndicator'
-            indicatorCount={0}
-          />
+          {
+            <Video
+              ref={vid}
+              source={{uri:uri}}
+              paused={paused}
+              resizeMode="cover"
+              //   style={[styles.backgroundVideo,{transform:[{rotateY:'180deg'}]}]}
+              style={styles.backgroundVideo}
+              repeat={true}
+              // onLoad={()=> setLoading(true)}
+              // onEnd={() => setLoading(false)}
+            />
           }
-          </GestureRecognizer>
+            <Filters filterType={filter}/>
+            <GestureRecognizer
+              // onSwipe={(direction, state) => this.onSwipe(direction, state)}
+              // onSwipeUp={(state) => this.onSwipeUp(state)}
+              // onSwipeDown={(state) => this.onSwipeDown(state)}
+              onSwipeLeft={(state) => onSwipeLeft(state)}
+              onSwipeRight={(state) => onSwipeRight(state)}
+              config={config}
+              style={styles.VideoOptionsContainer}
+            >
+            {loading === false ?
+              <View>
+                {
+                  isActive === true ?
+                    <TextInput
+                      placeholder='Type Something here....'
+                      placeholderTextColor={"white"}
+                      style={{marginBottom:keyBoardOpen === false ? 20:itemHeight/3,color:"white",marginLeft:10,textAlign:"left"}}
+                      onPressIn={()=>OnKeyBoardOpen()}
+                      onEndEditing={()=>onkeyBoardClose()}
+                      onChangeText={(e)=>setDescription(e)}
+                      numberOfLines={3}
+                      value={description}
+                    />:
+                    <Text
+                      onPress={()=>setIsActive(true)}
+                      style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%"}}
+                    >
+                      {description !=""?description:"Type something here...."}
+                    </Text>
+                }
+              <View
+                style={styles.optionsVideo}
+              >
+                <Pressable
+                  onPress={()=> CompressDownload()}
+                >
+                  <MaterialIcons
+                    style={{marginLeft:10}}
+                    name="file-download" color="white" size={Icon_Size}
+                  />
+                </Pressable>
+                <MaterialIcon
+                  onPress={()=> {
+                    if(latitude !=""){
+                      setLoading(true)
+                      captureScreens()
+                    }else{
+                      Alert.alert("Warning !","Location permission is required to upload video.")
+                    }
+                  }}
+                  style={{marginRight:10}}
+                  name='check-circle'
+                  size={Icon_Size}
+                  color="white"
+                />
+              </View>
+            </View>:
+            <SpinnerButton
+              buttonStyle={{marginBottom:20,width:50,height:50,        backgroundColor: '#ff0000'}}
+              isLoading={true}
+              size={1}
+              spinnerType='PulseIndicator'
+              indicatorCount={0}
+            />
+            }
+            </GestureRecognizer>
+          </View>
+          <View style={styles.TopOptions}>
+            <MaterialIcons
+              style={{margin:10}}
+              onPress={()=>HideModal()}
+              name='arrow-back' size={25} color="white"
+            />
+          </View>
         </View>
-        <View style={styles.TopOptions}>
-          <MaterialIcons
-            style={{margin:10}}
-            onPress={()=>HideModal()}
-            name='arrow-back' size={25} color="white"
-          />
-        </View>
-      </View>
     </Modal>
   )
 }

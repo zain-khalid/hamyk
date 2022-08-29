@@ -7,7 +7,7 @@ const EndPoints={
     TopVideos:"postlisttop",
     NewVideos:"postlistnew",
     UserS_Videos:"postlistuser",
-    VideoBaseUrl:"https://hamykapp.s3.ap-south-1.amazonaws.com/",
+    VideoBaseUrl:"https://hamykproduction.s3.us-east-2.amazonaws.com/",
     ProfileUrl:"https://hamykapp.s3.ap-south-1.amazonaws.com/",
     following:"getfollowedlist",
     followers:"getfollowerlist",
