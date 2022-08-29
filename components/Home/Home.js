@@ -113,7 +113,9 @@ function getAlluserDATA(){
 }
 
 
-
+useEffect(()=>{
+  GetAsyncData();
+},[])
 
 
 ////////////////////  GETTING ASYNC DATA   ////////////////////////
@@ -207,11 +209,7 @@ fetch(`${BaseUrl}${EndPoints.UserS_Videos}`, requestOptions)
   .catch(error => console.log('error', error));
 }
 
-
 //////////////Getting Following Video////////////////
-
-
-
 
 function getingFollowingVideos (){
  var myHeaders = new Headers();
@@ -230,7 +228,7 @@ function getingFollowingVideos (){
     setFollowingData(result.posts)
   })
     .catch(error => console.log('error', error))
-  }
+}
 
 
 
@@ -317,21 +315,20 @@ function _renderTabBar(){
 
  <Image
  source={profile}
- style={{  width:47,height:47,borderWidth:1,opacity:index===0?1:0.7}}
+ style={{  width:42,height:42,borderWidth:1,borderRadius:1000,opacity:index===0?1:0.7}}
  />
 :
-
 <Image
  source={{uri:`${EndPoints.ProfileUrl}${userData.profile}`}}
- style={{  width:47,height:47,borderWidth:1,borderColor:"white",borderRadius:1000,opacity:index===0?1:0.7}}
+ style={{  width:42,height:42,borderWidth:1,borderColor:"white",borderRadius:1000,opacity:index===0?1:0.7}}
  />
 
 }
-     </Pressable>
+</Pressable>
 
  <Text
  onPress={()=>setIndex(1)}
- style={{color:index!=1?'rgba(255,255,255,0.7)':"white",fontWeight:'500',fontSize:26}}
+ style={{color:index!=1?'rgba(255,255,255,0.7)':"white",fontWeight:'500',fontSize:22}}
  >hamyk</Text>
 
  <Pressable
@@ -343,7 +340,7 @@ function _renderTabBar(){
 
      <Image
      source={group}
-     style={{  width:47,height:47,opacity:index===2?1:0.7}}
+     style={{  width:42,height:42,opacity:index===2?1:0.7}}
      />
      </Pressable>
 

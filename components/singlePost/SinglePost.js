@@ -81,24 +81,24 @@ async function fetchComments(){
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${AsynData.token}`);
-  
+
   var formdata = new FormData();
   formdata.append("video_id", items.id);
-  
+
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
     body: formdata,
     redirect: 'follow'
   };
-  
+
   fetch(`${BaseUrl}${EndPoints.commentlist}`, requestOptions)
     .then(response => response.json())
     .then(result => {
 
       setCommentList(result.comments)
       console.log(result.comments)
-  
+
   })
     .catch(error => console.log('error', error));
 }
@@ -153,60 +153,58 @@ fetch(`${BaseUrl}like`, requestOptions)
 }
 
 
- 
+
 const Buffer = require("buffer").Buffer;
 
 
 return(
-  <Modal visible={Single_Post} 
-  
+  <Modal visible={Single_Post}
+
   animationType={"slide"}
   >
 
-<ImageBackground 
+<ImageBackground
   source={{uri:`${EndPoints.VideoBaseUrl}${items.thumbnail}`}}
   resizeMode="stretch"
-  
+
 style={styles.ListWrapper}>
 
 
 
 {/* <View style={styles.ListWrapper}> */}
 
-<Pressable 
+<Pressable
 
 onPress={()=>{
   onPlayPausePress()
 }}
 
 style={styles.VideoContainerWrap}>
- {/* <Video  
-  source={{uri:`${EndPoints.VideoBaseUrl}${items.video}`}}        
-  paused={paused}   
+<Video
+  source={{uri:`${EndPoints.VideoBaseUrl}${items.video}`}}
+  paused={paused}
   posterResizeMode="stretch"
-  resizeMode="stretch"            
-  style={styles.backgroundVideo}  
-  repeat={true}      
+  resizeMode="stretch"
+  style={styles.backgroundVideo}
+  repeat={true}
   // onLoad={()=> setLoading(true)}
   // onEnd={() => setLoading(false)}
-  
-
-  />  */}
-
-
-<VideoPlayer
-  video={{uri:`${EndPoints.VideoBaseUrl}${items.video}`}}        
-  paused={paused}
-  thumbnail={{uri:`${EndPoints.VideoBaseUrl}${items.thumbnail}`}}
-  resizeMode="stretch"            
-  style={styles.backgroundVideo} 
-autoplay={true}
-renderToHardwareTextureAndroid={true}
-muted={false}
-repeat={true}
-hideControlsOnStart={true}
-
 />
+
+
+{/* <VideoPlayer
+  video={{uri:`${EndPoints.VideoBaseUrl}${items.video}`}}
+  paused={paused}
+  // thumbnail={{uri:`${EndPoints.VideoBaseUrl}${items.thumbnail}`}}
+  resizeMode="stretch"
+  style={styles.backgroundVideo}
+  autoplay={true}
+  renderToHardwareTextureAndroid={true}
+  muted={false}
+  repeat={true}
+  hideControlsOnStart={true}
+  controls={false}
+/> */}
 <Filters filterType={filter}/>
 
 
@@ -214,9 +212,9 @@ hideControlsOnStart={true}
 <View style={styles.VideoOptionsContainer}>
 
 <View>
-  
+
 <Text
-     
+
      style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%"}}
 
      >{items.description}</Text>
@@ -225,9 +223,9 @@ hideControlsOnStart={true}
      >
       <View style={styles.IconWrapper}>
 
-      <Icon 
+      <Icon
 onPress={()=>{
-  
+
   onLikedPress()
   isLiked===false?onLike():onDislike()
 
@@ -239,16 +237,16 @@ color= {isLiked ===true? colors[0].primaryColor : "white"}
 />
 <Text style={styles.fontStyling}>{likeCount}</Text>
       </View>
-      
+
       <View style={styles.IconWrapper}>
 
-<MaterialIcon 
+<MaterialIcon
 onPress={async()=>{
   // fetchComments()
   setPaused(true)
   setShowModal(true)
   }
-  
+
   }
 name='comment-text'
 size={Icon_Size}
@@ -257,7 +255,7 @@ color="white"
 />
 <Text style={styles.fontStyling}>{comment}</Text>
       </View>
-      
+
 
 
 
@@ -266,7 +264,7 @@ color="white"
 
       <View style={styles.IconWrapper}>
 
-<IonIcon 
+<IonIcon
 onPress={()=>onShare(items.video)}
 name='send-sharp'
 size={Icon_Size}
@@ -275,8 +273,8 @@ color="white"
 />
 <Text style={styles.fontStyling}>0</Text>
       </View>
-      
-      </View>               
+
+      </View>
       </View>
 
 
@@ -295,8 +293,8 @@ null
 
 
 </ImageBackground>
-<MaterialIcons  
-style={{margin:10,position:"absolute"}}
+<MaterialIcons
+style={{margin:10, marginTop: 50,position:"absolute"}}
 onPress={()=>OnsetSingleVideo()}
 name='arrow-back' size={25} color="white"/>
 
@@ -304,14 +302,13 @@ name='arrow-back' size={25} color="white"/>
 
 
 
-{showModal === true ? 
+{showModal === true ?
 
-<Comment 
-state={showModal} 
-changeState={()=>onchangeState()}   
+<Comment
+state={showModal}
+changeState={()=>onchangeState()}
  commentList={commentList}
   vidId={items.id}
-  
   onCommentSent={onComment}
   otheruserID={items.user_id}
   />

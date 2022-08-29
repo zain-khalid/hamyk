@@ -65,23 +65,23 @@ const Icon_Size = 35
 async function fetchComments(id){
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${AsynData.token}`);
-  
+
   var formdata = new FormData();
   formdata.append("video_id", id);
-  
+
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
     body: formdata,
     redirect: 'follow'
   };
-  
+
   fetch(`${BaseUrl}${EndPoints.commentlist}`, requestOptions)
     .then(response => response.json())
     .then(result => {
 
       setCommentList(result.comments)
-  
+
   })
     .catch(error => console.log('error', error));
 }
@@ -113,7 +113,7 @@ async function fetchComments(id){
 
 
 
-      
+
       const Buffer = require("buffer").Buffer;
 const images= Buffer.from((item.thumbnail), 'base64').toString('ascii')
 
@@ -125,40 +125,40 @@ const images= Buffer.from((item.thumbnail), 'base64').toString('ascii')
     const onPlayPausePress = () => {
       setPaused(!paused);
     };
-  
+
     const onLikedPress=()=>{
     setIsliked((prev)=>!prev)
     }
-  
-  
+
+
     const onComment =()=>{
       setComments(comments+1)
       // fetchComments()
 
   }
 
-  
-  
+
+
   const onLike =()=>{
     GenerateLikeNotification(item.user_id)
     setLikeCount(likeCount+1)
     LikeVide()
   }
-  
+
   const onDislike =()=>{
 
     if(likeCount>0){
       LikeVide()
       setLikeCount(likeCount-1)
     }
-  
+
   }
 
 
 
   function LikeVide(){
     var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${AsynData.token}`);
+    myHeaders.append("Authorization", `Bearer ${AsynData.token}`);
 
 var formdata = new FormData();
 formdata.append("user_id", AsynData.myId);
@@ -186,8 +186,8 @@ fetch(`${BaseUrl}like`, requestOptions)
 
 function VideoOptionsAll(){
   return(<View style={styles.VideoOptionsContainer}>
-  
-  
+
+
     <View
     style={[styles.optionsVideo,{marginTop:20}]}
     >
@@ -196,41 +196,41 @@ function VideoOptionsAll(){
 
   item.image ==="default"?
   <Image source={profile}
-  
+
   style={{width:30,height:30,marginLeft:10}}
   />
 :
 
 <Image source={{uri:`${EndPoints.ProfileUrl}${item.image}`}}
-  
+
 style={{width:30,height:30,marginLeft:10,borderRadius:1000}}
 />
 
 }
   <Text
   onPress={()=>HideOtherUser()}
-  
+
   style={{color:"white",fontSize:18,marginLeft:10}}>{item.username}</Text>
 </View>
-    
-     
+
+
 
      <View style={[styles.IconWrapper,{marginRight:10}]}>
 <Pressable
  onPress={() => {
   setShouldShowReport(true)
   setPaused(true)
-  
+
   }}
 >
-<MaterialIcons 
+<MaterialIcons
 
  name="more-vert" color="white" size={30} />
 </Pressable>
-     
+
      </View>
-     
-     </View>   
+
+     </View>
 
 
 <View>
@@ -238,7 +238,7 @@ style={{width:30,height:30,marginLeft:10,borderRadius:1000}}
 
 
      <Text
-     
+
      style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%"}}
 
      >{item.description}</Text>
@@ -250,7 +250,7 @@ style={{width:30,height:30,marginLeft:10,borderRadius:1000}}
      <View style={styles.OptionsVideoInnerWrapper}>
      <View style={[styles.IconWrapper,{marginLeft:10}]}>
 
-<Icon 
+<Icon
 onPress={()=>{
 onLikedPress()
 isLiked===false?onLike():onDislike()
@@ -264,7 +264,7 @@ color= {isLiked ===true? colors[0].primaryColor : "white"}
 </View>
 <View style={styles.IconWrapper}>
 
-<MaterialIcon 
+<MaterialIcon
 onPress={async()=>{
 // fetchComments(item.id)
 setVidId(item.id)
@@ -279,12 +279,12 @@ color="white"
 <Text style={styles.fontStyling}>{comments}</Text>
 </View>
 </View>
-    
-     
+
+
 
      <View style={[styles.IconWrapper,{marginRight:10}]}>
 
-<IonIcon 
+<IonIcon
 onPress={()=> onShare(item.video,item.id)}
 name='send-sharp'
 size={Icon_Size}
@@ -293,8 +293,8 @@ color="white"
 />
 <Text style={styles.fontStyling}>{state.Global_Paused === true ?1:0}</Text>
      </View>
-     
-     </View> 
+
+     </View>
      </View>
 
 
@@ -308,84 +308,82 @@ color="white"
 
 
   return(
-  
+
     <Pressable
     onPress={()=>{
       onPlayPausePress()
     }}
-    
+
     >
-  
-  <ImageBackground 
+
+  <ImageBackground
   source={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
   resizeMode="cover"
   style={styles.ImgBg}
   >
-{/* 
-   <Video  
-    source={{uri:`${EndPoints.VideoBaseUrl}${item.video}`}}        
-    paused={paused===true?paused:indexx===index?false:true}   
-   
-    playInBackground={false}
-    resizeMode="stretch"            
-    style={styles.backgroundVideo}  
-    repeat={true}      
-    />  */}
 
-
-<VideoPlayer
-     video={{uri:`${EndPoints.VideoBaseUrl}${item.video}`}}        
-     paused={paused===true?paused:indexx===index?false:true}  
-  thumbnail={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
-  resizeMode="stretch"            
-  style={styles.backgroundVideo}  
-  autoplay={true}
-  controls={false}
-muted={false}
-repeat={true}
-hideControlsOnStart={true}
-
+<Video
+  source={{uri:`${EndPoints.VideoBaseUrl}${item.video}`}}
+  paused={paused===true?paused:indexx===index?false:true}
+  playInBackground={false}
+  resizeMode="stretch"
+  style={styles.backgroundVideo}
+  repeat={true}
 />
+
+
+{/* <VideoPlayer
+  repeat={true}
+  muted={false}
+  autoplay={true}
+  resizeMode="stretch"
+  hideControlsOnStart={true}
+  style={styles.backgroundVideo}
+  video={{uri:`${EndPoints.VideoBaseUrl}${item.video}`}}
+  paused={paused===true?paused:indexx===index?false:true}
+  thumbnail={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
+  controller = {false}
+/> */}
 
 
 
 <Filters filterType={filter}/>
 
-  
-  <VideoOptionsAll/>
- {showModal === true ? 
 
- <Comment 
- state={showModal} 
- changeState={()=>onchangeState()}   
+  <VideoOptionsAll/>
+ {showModal === true ?
+
+<Comment
+  state={showModal}
+  changeState={()=>onchangeState()}
   commentList={commentList}
-   vidId={vidId}
-   
-   onCommentSent={onComment}
-   otheruserID={item.user_id}
-   />
+  vidId={vidId}
+
+  onCommentSent={onComment}
+  otheruserID={item.user_id}
+/>
 :null
 }
 
-{showOtherUser === true ? 
-        
+{showOtherUser === true ?
+
         <OtherUser showOtherUser={showOtherUser} HideOtherUser={HideOtherUser} Other_id={item.user_id}/>
      :
      null }
 
 
-<ReportVideo 
+<ReportVideo
 showModal={showReport}
-OnSetModal={onSetReport} 
+OnSetModal={onSetReport}
 videoId={item.id}
 />
-       
+
   </ImageBackground>
 
   </Pressable>
-  
-  
-    
+
+
+
     )
-                    }
-  export default RenderVideo
+}
+export default RenderVideo
