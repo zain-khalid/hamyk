@@ -33,13 +33,8 @@ const [myId,setMyid]=useState("")
 const [Other_id,setOtherUserId]=useState("")
 const [token,setToken]=useState("")
 
-const [is_following,setIsfollowing]=useState(true)
 const [showOtherUser,setOtherUser]=useState(false)
 const [followings,setFollowings]=useState([])
-
-
-
-
 
 
 
@@ -178,7 +173,7 @@ null
 }
 
 </Pressable>
-)
+)}
 return(
   <Modal
   animationType={"slide"}
