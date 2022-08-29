@@ -38,10 +38,7 @@ function backButtonHandler() {
 }
 
 const Home =({ChangeState})=>{
-
   const getLocation = useLocation()
-
-  console.log(">> get location << ",getLocation);
   const Focused = useIsFocused()
 const navigation = useNavigation()
 const [myId,setMyId]=useState("")
@@ -121,9 +118,9 @@ function getAlluserDATA(){
 
 ////////////////////  GETTING ASYNC DATA   ////////////////////////
 
-// useEffect(()=>{
-//     getAsyncData()
-//     },[Focused])
+useEffect(()=>{
+  GetAsyncData()
+    },[])
 
 
 async function getAsyncData () {
@@ -136,11 +133,6 @@ async function getAsyncData () {
       setToken(token)
       Manager(token,user_id)
     }
-    // location lat and long getting from async
-    const lat = await AsyncStorage.getItem('lat')
-    const long = await AsyncStorage.getItem('long')
-
-    console.log(" >> location from async << ",lat, long)
   }
 ///////////// RESPONSE MANAGER /////////////////////////
 
@@ -259,10 +251,9 @@ function getTopVideos(token,userId){
   fetch(`${BaseUrl}${EndPoints.TopVideos}`, requestOptions)
     .then(response => response.json())
     .then(result => {
-  
 
+    setTopVideos(result.posts)
 
-      setTopVideos(result.posts)
     })
     .catch(error => console.log('error', error));
 }
@@ -288,10 +279,9 @@ var requestOptions = {
 fetch(`${BaseUrl}${EndPoints.NewVideos}`, requestOptions)
   .then(response => response.json())
   .then(result => {
- 
-console.log("new videos")
-      setNewVideos(result.posts)
-    
+
+    setNewVideos(result.posts)
+
 
   })
   .catch(error => console.log('error', error));
@@ -327,13 +317,13 @@ function _renderTabBar(){
 
  <Image
  source={profile}
- style={{  width:index===0?62:45,height:index===0?62:45,borderWidth:1}}
+ style={{  width:47,height:47,borderWidth:1,opacity:index===0?1:0.7}}
  />
 :
 
 <Image
  source={{uri:`${EndPoints.ProfileUrl}${userData.profile}`}}
- style={{  width:index===0?62:45,height:index===0?62:45,borderWidth:1,borderColor:"white",borderRadius:1000}}
+ style={{  width:47,height:47,borderWidth:1,borderColor:"white",borderRadius:1000,opacity:index===0?1:0.7}}
  />
 
 }
@@ -341,7 +331,7 @@ function _renderTabBar(){
 
  <Text
  onPress={()=>setIndex(1)}
- style={{color:index!=1?'rgba(255,255,255,0.6)':"white",fontWeight:'bold',fontSize:index===1?25:22}}
+ style={{color:index!=1?'rgba(255,255,255,0.7)':"white",fontWeight:'500',fontSize:26}}
  >hamyk</Text>
 
  <Pressable
@@ -353,7 +343,7 @@ function _renderTabBar(){
 
      <Image
      source={group}
-     style={{  width:index===2?62:45,height:index===2?62:45}}
+     style={{  width:47,height:47,opacity:index===2?1:0.7}}
      />
      </Pressable>
 
@@ -393,7 +383,9 @@ const renderScene = SceneMap({
 
   />
   ,
-  third: ()=><VideoFeed data={followingData} Currentindex={index}/>
+  third: ()=><VideoFeed data={followingData} Currentindex={index}
+
+  />
 
 });
 
@@ -415,6 +407,7 @@ const [routes] = React.useState([
 
 return(
 <>
+
   <TabView
     renderTabBar={_renderTabBar}
     navigationState={{ index, routes }}
@@ -423,8 +416,9 @@ return(
     initialLayout={{ width: layout.width }}
 
   />
+
   <BottomButton/>
-</>
+    </>
 )
 
 }
