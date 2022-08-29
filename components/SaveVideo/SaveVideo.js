@@ -151,7 +151,7 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
       format: 'png'
     })
     .then(response => {
-      setScreenShortImage(response.path)
+setScreenShortImage(response.path)
       console.log(" >> path << ",response.path);
       compressVideos(response.path)
       // console.log(response)
@@ -183,8 +183,7 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
   ////////////////// COMPRESSING ///////////////////////////
   const compressVideos = async (thumbnail) =>{
     console.log("i am compressing",uri)
-    Alert.alert("Compressing","Please wait we are preparing your video to upload")
-    await VideoCompress.compress(
+      await VideoCompress.compress(
       uri,
       {
         compressionMethod: 'auto',
@@ -198,6 +197,7 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
       compressVideosII(compressedFileUrl,thumbnail)
       });
   }
+}
 
   const compressVideosII = async(url,thumbnail) =>{
     console.log("i am compressing again bro",url)
@@ -220,12 +220,12 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
       SaveVideos(compressedFileUrl,thumbnail)
 
       });
+    });
 
   }
 
   ////////////////SAVING VIDEO/////////////////////////////
   const SaveVideos = (uri,thumbnail) =>{
-    Alert.alert("Uploading","Your video is being uploaded.")
 
     console.log("i am on it",thumbnail)
     const realPath =
@@ -353,6 +353,15 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
   setTimeout(() => {setLoading(false)
   }, 9000)
 
+    console.log(new_str)
+    await VideoCompress.compress(
+      url,
+      {
+        compressionMethod: 'auto',
+  // bitrate:6000000000
+      },
+      (progress) => {
+        console.log(progress)
 
         }
 
