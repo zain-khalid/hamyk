@@ -20,12 +20,10 @@ export default function useLocation () {
     currentLongitude,
     setCurrentLongitude
   ] = useState('...');
-
   const [
     currentLatitude,
     setCurrentLatitude
   ] = useState('...');
-
   const [
     locationStatus,
     setLocationStatus
@@ -35,7 +33,7 @@ export default function useLocation () {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
         getOneTimeLocation();
-        subscribeLocationLocation();
+        // subscribeLocationLocation();
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -48,7 +46,7 @@ export default function useLocation () {
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             //To Check, If Permission is granted
             getOneTimeLocation();
-            subscribeLocationLocation();
+            // subscribeLocationLocation();
           } else {
             setLocationStatus('Permission Denied');
           }
@@ -71,23 +69,20 @@ export default function useLocation () {
         setLocationStatus('You are Here');
 
         //getting the Longitude from the location json
-        const currentLongitude =
+        const currentLongitude = 
           JSON.stringify(position.coords.longitude);
 
         //getting the Latitude from the location json
-        const currentLatitude =
+        const currentLatitude = 
           JSON.stringify(position.coords.latitude);
 
         //Setting Longitude state
         setCurrentLongitude(currentLongitude);
+        AsyncStorage.setItem("lat",JSON.stringify(currentLatitude))
+AsyncStorage.setItem("long",JSON.stringify(currentLongitude))
         //Setting Longitude state
         setCurrentLatitude(currentLatitude);
-        setLocation({currentLatitude,currentLongitude});
-        AsyncStorage.setItem("lat",JSON.stringify(currentLatitude))
-        AsyncStorage.setItem("long",JSON.stringify(currentLongitude))
-        console.log(">> location here << ", currentLatitude, currentLongitude);
-        console.log(">> location from hook << ", location);
-
+        setLocation({currentLatitude,currentLongitude})
 
       },
       (error) => {
@@ -101,42 +96,42 @@ export default function useLocation () {
     );
   };
 
-  const subscribeLocationLocation = () => {
-    watchID = Geolocation.watchPosition(
-      (position) => {
-        //Will give you the location on location change
+//   const subscribeLocationLocation = () => {
+//     watchID = Geolocation.watchPosition(
+//       (position) => {
+//         //Will give you the location on location change
+        
+//         setLocationStatus('You are Here');
+//         console.log(position);
 
-        setLocationStatus('You are Here');
-        console.log(position);
+//         //getting the Longitude from the location json        
+//         const currentLongitude =
+//           JSON.stringify(position.coords.longitude);
 
-        //getting the Longitude from the location json
-        const currentLongitude =
-          JSON.stringify(position.coords.longitude);
+//         //getting the Latitude from the location json
+//         const currentLatitude = 
+//           JSON.stringify(position.coords.latitude);
 
-        //getting the Latitude from the location json
-        const currentLatitude =
-          JSON.stringify(position.coords.latitude);
+//         //Setting Longitude state
+//         setCurrentLongitude(currentLongitude);
+// AsyncStorage.setItem("lat",JSON.stringify(currentLatitude))
+// AsyncStorage.setItem("long",JSON.stringify(currentLongitude))
 
-        //Setting Longitude state
-        setCurrentLongitude(currentLongitude);
-        AsyncStorage.setItem("lat",JSON.stringify(currentLatitude))
-        AsyncStorage.setItem("long",JSON.stringify(currentLongitude))
+//         //Setting Latitude state
+//         setCurrentLatitude(currentLatitude);
 
-        //Setting Latitude state
-        setCurrentLatitude(currentLatitude);
+//         setLocation({currentLatitude,currentLongitude})
 
-        setLocation({currentLatitude,currentLongitude})
-        console.log(">> location here << ", currentLatitude, currentLongitude)
-      },
-      (error) => {
-        setLocationStatus(error.message);
-      },
-      {
-        enableHighAccuracy: false,
-        maximumAge: 1000
-      },
-    );
-  };
+//       },
+//       (error) => {
+//         setLocationStatus(error.message);
+//       },
+//       {
+//         enableHighAccuracy: false,
+//         maximumAge: 1000
+//       },
+//     );
+//   };
   return location
 
 };

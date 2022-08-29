@@ -38,10 +38,7 @@ function backButtonHandler() {
 }
 
 const Home =({ChangeState})=>{
-
   const getLocation = useLocation()
-
-  console.log(">> get location << ",getLocation);
   const Focused = useIsFocused()
 const navigation = useNavigation()
 const [myId,setMyId]=useState("")
@@ -123,9 +120,9 @@ useEffect(()=>{
 
 ////////////////////  GETTING ASYNC DATA   ////////////////////////
 
-// useEffect(()=>{
-//     getAsyncData()
-//     },[Focused])
+useEffect(()=>{
+  GetAsyncData()
+    },[])
 
 
 async function getAsyncData () {
@@ -138,11 +135,6 @@ async function getAsyncData () {
       setToken(token)
       Manager(token,user_id)
     }
-    // location lat and long getting from async
-    const lat = await AsyncStorage.getItem('lat')
-    const long = await AsyncStorage.getItem('long')
-
-    console.log(" >> location from async << ",lat, long)
   }
 ///////////// RESPONSE MANAGER /////////////////////////
 
@@ -257,10 +249,9 @@ function getTopVideos(token,userId){
   fetch(`${BaseUrl}${EndPoints.TopVideos}`, requestOptions)
     .then(response => response.json())
     .then(result => {
-  
 
+    setTopVideos(result.posts)
 
-      setTopVideos(result.posts)
     })
     .catch(error => console.log('error', error));
 }
@@ -286,10 +277,9 @@ var requestOptions = {
 fetch(`${BaseUrl}${EndPoints.NewVideos}`, requestOptions)
   .then(response => response.json())
   .then(result => {
- 
-console.log("new videos")
-      setNewVideos(result.posts)
-    
+
+    setNewVideos(result.posts)
+
 
   })
   .catch(error => console.log('error', error));
@@ -390,7 +380,9 @@ const renderScene = SceneMap({
 
   />
   ,
-  third: ()=><VideoFeed data={followingData} Currentindex={index}/>
+  third: ()=><VideoFeed data={followingData} Currentindex={index}
+
+  />
 
 });
 
@@ -412,6 +404,7 @@ const [routes] = React.useState([
 
 return(
 <>
+
   <TabView
     renderTabBar={_renderTabBar}
     navigationState={{ index, routes }}
@@ -420,8 +413,9 @@ return(
     initialLayout={{ width: layout.width }}
 
   />
+
   <BottomButton/>
-</>
+    </>
 )
 
 }
