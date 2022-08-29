@@ -8,7 +8,7 @@ import {
   Dimensions,
   ImageBackground,
   PermissionsAndroid,
-  
+
 } from 'react-native';
 import styles from './Styles';
 import profile from '../../assets/images/Profile.png'
@@ -128,10 +128,10 @@ const getItemLayout = useCallback(
   length:itemHeight,
   offset: itemHeight*index,
   index,
-          
+
   }),
   []
-  
+
   );
 
   const Buffer = require("buffer").Buffer;
@@ -139,35 +139,33 @@ const getItemLayout = useCallback(
   let today = new Date();
 
   let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  
+
 
 const RenderVideo=({item,index})=>{
 
 const uploadedDate = moment(item.created_at).format('MM/DD/YYYY');
+
 var date = new Date().getDate();
-      var month = new Date().getMonth() + 1;
-      var year = new Date().getFullYear();
+var month = new Date().getMonth() + 1;
+var year = new Date().getFullYear();
 const today = month+"/"+date+"/"+year
-  const date1 = new Date(today);
-  const date2 = new Date(uploadedDate);
- const diff= Math.abs(date2 - date1)
-
-  
-
+const date1 = new Date(today);
+const date2 = new Date(uploadedDate);
+const diff= Math.abs(date2 - date1)
 
 return(
-  <Pressable 
+  <Pressable
   onLongPress={()=>{
-    setDelId(item.id) 
+    setDelId(item.id)
     setShowDelModal(true)
   }}
   onPress={()=>
-  
+
   {
     setSinglePost(true)
     setSingleItem(item)
   }
-  
+
   }
   style={styles.ListView}>
 
@@ -177,11 +175,11 @@ return(
 
 source={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
 
-// paused={true}   
+// paused={true}
   // resizeMode="stretch"             // Fill the whole screen at aspect ratio.
   style={styles.ListView}  // any style you want
 
-  
+
 
   >
 <View style={styles.ListBottom}>
@@ -209,7 +207,7 @@ style={{flexDirection:"row",alignItems:"center"}}
 </View>
 
 
-<MaterialIcons 
+<MaterialIcons
 
 onPress={()=>Download(`${EndPoints.VideoBaseUrl}${item.video}`)}
 
@@ -218,9 +216,9 @@ name="file-download" color="white" size={30} />
 </View>
 
 </View>
-    
-    
-    </ImageBackground> 
+
+
+    </ImageBackground>
 
 
 
@@ -267,7 +265,7 @@ const permissionForGallery=async ()=>{
         if (granted === PermissionsAndroid.RESULTS.GRANTED && grantedRead === PermissionsAndroid.RESULTS.GRANTED) {
           // Start downloading
           SelectFromGallery();
-          
+
 alert("Download started please wait")
 
         } else {
@@ -284,9 +282,9 @@ alert("Download started please wait")
  async function SelectFromGallery(){
   ImagePicker.launchImageLibrary({ mediaType: 'image', includeBase64: false, }, (response) => {
       if(response.didCancel !=true){
-       
+
   UpdatePicture(response.assets[0].uri)
-          
+
       }
       else{
           console.log("jedhfk")
@@ -294,7 +292,7 @@ alert("Download started please wait")
 
   })
  }
- 
+
 
 
 
@@ -307,8 +305,8 @@ alert("Download started please wait")
     ? uri.replace('file://', '')
     : uri;
 
-  
-  
+
+
     RNFetchBlob.fetch(
       'POST',
       `https://hymkapp.khannburger.com/api/updateprofile/${asyndata.myId}`,
@@ -332,12 +330,12 @@ alert("Download started please wait")
             getUserData()
           }
         }
-    
+
       })
       .catch(err => {
         setLoading(false)
         console.log('err >>>', err);
-    
+
       });
 
 }
@@ -365,11 +363,11 @@ return(
     >
 {
   userData.profile==="default"?
-<Image  
+<Image
     source={profile}
     style={styles.Avatar}
     />:
-    <Image  
+    <Image
     source={{uri:`${EndPoints.ProfileUrl}${userData.profile}`}}
     style={styles.Avatar}
     />
@@ -381,7 +379,7 @@ return(
 <View style={[styles.Infor_dividing_view,{borderBottomWidth:1}]}>
   <Pressable
   onPress={()=>{
-    
+
     setRoute("followers")
     setShowFollowingScreen(true)}}
   style={styles.followSection}>
@@ -392,9 +390,9 @@ return(
     followers
 </Text>
   </Pressable>
-  <Pressable 
+  <Pressable
   onPress={()=>{
-    
+
     setRoute("following")
     setShowFollowingScreen(true)}}
   style={styles.followSection}>
@@ -412,7 +410,7 @@ return(
 
 
 <View style={styles.Infor_dividing_viewI}>
- 
+
 <Text style={{color:"black",fontSize:20}}>{userData.f_name} {userData.l_name}</Text>
 
 <Text>@{userData.username}</Text>
@@ -430,7 +428,7 @@ return(
 </View>
     <View style={styles.Options}>
 
-    <MaterialIcons 
+    <MaterialIcons
     onPress={()=> setShowModal(true)}
     name="more-horiz" color="#A9A9AF" size={40} />
     <View
@@ -444,8 +442,8 @@ return(
                     />
                     <Text style={{fontSize:17,marginLeft:5}}>{userData.total_likes}</Text>
                     </View>
-    
-    
+
+
     </View>
 
 
@@ -461,22 +459,22 @@ renderItem={({item})=>
 keyExtractor={KeyExtractor}
 getItemLayout={getItemLayout}
 // onViewableItemsChanged={onViewableItemsChanged}
-/> 
+/>
 :null
 
 }
-<Menu 
-showModal={showModal} 
+<Menu
+showModal={showModal}
 OnSetModal={OnSetModal}
 ChangeState={ChangeState}
 
 />
 {
-  ShowDelModal === true ? 
-<Delete 
+  ShowDelModal === true ?
+<Delete
 
-showModal={ShowDelModal} 
-OnSetModal={OnSetDelModal} 
+showModal={ShowDelModal}
+OnSetModal={OnSetDelModal}
 
 DelId={DelId}
 getUserVideos={getUserVideos}
@@ -487,15 +485,15 @@ null
 
 
 {
-                      Single_Post === true ? 
+                      Single_Post === true ?
                       <SinglePost Single_Post={Single_Post} OnsetSingleVideo={OnsetSingleVideo} items={singleItem} />
 :
 null
                     }
                     {
-showFollwingScreen === true ? 
-<Following 
-state={showFollwingScreen} 
+showFollwingScreen === true ?
+<Following
+state={showFollwingScreen}
 changeState={hideFollowing}
 route={route}
 OtherId={userData.id}

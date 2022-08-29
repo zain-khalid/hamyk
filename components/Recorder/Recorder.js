@@ -1,6 +1,3 @@
-
-
-
 import React from 'react'
 import { useState, useEffect, useMemo } from 'react'
 import { View,Text,PermissionsAndroid,Platform,Image,Alert } from 'react-native'
@@ -8,6 +5,9 @@ import { Camera, sortDevices } from 'react-native-vision-camera'
 import styles from './Styles'
 import recordBtn from'../../assets/images/record.png'
 import recordStarted from'../../assets/images/recording_start.jpg'
+import { captureScreen } from "react-native-view-shot";
+import { createThumbnail } from "react-native-create-thumbnail";
+
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -28,6 +28,7 @@ const Recorder = () => {
     const [camChanged,setCamChanged]=useState(0)
     const [isRecording,setIsRecording]=useState(false)
     const [route,setRoute]=useState("live")
+    const [screenShortImage, setScreenShortImage] = useState(null)
 
 
     const [counter,setCounter]=useState()
@@ -217,7 +218,20 @@ if(response.assets[0].duration > 3 && response.assets[0].duration<=60){
 ///////////////////////////////////////////////////////
 
 ///////////////START RECORDING/////////////////////////
-    const StartRecodingHandler =async()=> {
+    const StartRecodingHandler = async()=> {
+        // captureScreen({
+        //     format: "jpg",
+        //     quality: 0.5,
+        // })
+        // .then((uri) => {
+        //     console.log(" >> The screen Short << ", uri)
+        //     setScreenShortImage({uri})
+        //     // compressVideos(uri)
+        // },
+        // (error) => {
+        //     setLoading(false)
+        //     console.error("Oops, snapshot failed", error)}
+        // );
         setCounter(0)
         setReset(false)
         setIsRecording(true)
@@ -227,11 +241,9 @@ if(response.assets[0].duration > 3 && response.assets[0].duration<=60){
             onRecordingFinished: (video) => {
                 if(video.duration <= 3){
                     Alert.alert("Too Short","Please Make Video upto 3 seconds")
-                }
-                else{
+                } else {
                     setUri(video.path)
                     setShouldShow(true)
-
                 }
 
                 setIsRecording(false)
@@ -285,20 +297,21 @@ useEffect(() => {
 
 
 
-        <View style={styles.Container}>
-           <Camera
-           ref={camera}
-      style={styles.cameraRecording}
-      device={device}
-      isActive={true}
-      video={true}
-      audio={true}
-      enableZoomGesture={true}
-//       enableZoomGesture={true}
-// zoom={isEnabled}
+<View style={styles.Container}>
 
 
-    />
+    {
+        screenShortImage ? <Image source={screenShortImage} style={styles.cameraRecording} /> :
+        <Camera
+            ref={camera}
+            style={styles.cameraRecording}
+            device={device}
+            isActive={true}
+            video={true}
+            audio={true}
+            enableZoomGesture={true}
+        />
+    }
 
     <View style={styles.CameraOptions}>
 
