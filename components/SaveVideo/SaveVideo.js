@@ -139,23 +139,17 @@ function OnLayoutCaption (nativeEvent){
 /////////////video compressing and capturing ////////////////////
 const captureScreens =()=>{
   console.log("i am captur9ing")
-
   captureScreen({
-    format: "jpg",
-    quality: 0.5,
-  }).then(
-    (uri) => {
-
-
-      // console.log(Buffer.from("", 'base64').toString('ascii'))
-compressVideos(uri)
-    }
-      ,
+      format: "jpg",
+      quality: 0.5,
+    })
+    .then((uri) => {
+      compressVideos(uri)
+    },
     (error) => {
       setLoading(false)
-
       console.error("Oops, snapshot failed", error)}
-  );
+    );
 }
 
 ////////////////// COMPRESSING ///////////////////////////
@@ -304,36 +298,15 @@ const CompressDownload = async() =>{
 // }else{
 //   SaveDownloadVideo(uri)
 // }
-
-
-
-await VideoCompress.compress(
-  uri,
-  {
-
-// bitrate:6000000000
-  },
-  (progress) => {
-    console.log(progress)
-    // if (backgroundMode) {
-    //   console.log('Compression Progress: ', progress);
-    // } else {
-    //   console.log(progress);
-    // }
-  }
-).then(async (compressedFileUrl) => {
-  console.log("uri",compressedFileUrl)
-  SaveDownloadVideo(compressedFileUrl)
-  });
-
-
-
-
-
-
-
-
-
+  await VideoCompress.compress(
+    uri,{compressionMethod: 'auto'},
+    (progress) => {
+      console.log(progress)
+    })
+    .then(async (compressedFileUrl) => {
+      console.log("uri",compressedFileUrl)
+      SaveDownloadVideo(compressedFileUrl)
+    });
 }
 
 function SaveDownloadVideo(uri){
@@ -419,104 +392,103 @@ const config = {
 };
 
 return(
-
-<Modal
-  visible={shouldShow}
->
-  <View style={styles.Container}>
-    <View
-      onPress={()=>{
-        onPlayPausePress()
-      }}
-    >
-      <Video
-        ref={vid}
-        source={{uri:uri}}
-        paused={paused}
-        resizeMode="cover"
-        //   style={[styles.backgroundVideo,{transform:[{rotateY:'180deg'}]}]}
-        style={styles.backgroundVideo}
-        repeat={true}
-        // onLoad={()=> setLoading(true)}
-        // onEnd={() => setLoading(false)}
-      />
-      <Filters filterType={filter}/>
-      <GestureRecognizer
-        // onSwipe={(direction, state) => this.onSwipe(direction, state)}
-        // onSwipeUp={(state) => this.onSwipeUp(state)}
-        // onSwipeDown={(state) => this.onSwipeDown(state)}
-        onSwipeLeft={(state) => onSwipeLeft(state)}
-        onSwipeRight={(state) => onSwipeRight(state)}
-        config={config}
-        style={styles.VideoOptionsContainer}
+  <Modal
+    visible={shouldShow}
+  >
+    <View style={styles.Container}>
+      <View
+        onPress={()=>{
+          onPlayPausePress()
+        }}
       >
-      {loading === false ?
-        <View>
-          {
-            isActive === true ?
-              <TextInput
-                placeholder='Type Something here....'
-                placeholderTextColor={"white"}
-                style={{marginBottom:keyBoardOpen === false ? 20:itemHeight/3,color:"white",marginLeft:10,textAlign:"left"}}
-                onPressIn={()=>OnKeyBoardOpen()}
-                onEndEditing={()=>onkeyBoardClose()}
-                onChangeText={(e)=>setDescription(e)}
-                numberOfLines={3}
-                value={description}
-              />:
-              <Text
-                onPress={()=>setIsActive(true)}
-                style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%"}}
-              >
-                {description !=""?description:"Type something here...."}
-              </Text>
-          }
-        <View
-          style={styles.optionsVideo}
+        <Video
+          ref={vid}
+          source={{uri:uri}}
+          paused={paused}
+          resizeMode="cover"
+          //   style={[styles.backgroundVideo,{transform:[{rotateY:'180deg'}]}]}
+          style={styles.backgroundVideo}
+          repeat={true}
+          // onLoad={()=> setLoading(true)}
+          // onEnd={() => setLoading(false)}
+        />
+        <Filters filterType={filter}/>
+        <GestureRecognizer
+          // onSwipe={(direction, state) => this.onSwipe(direction, state)}
+          // onSwipeUp={(state) => this.onSwipeUp(state)}
+          // onSwipeDown={(state) => this.onSwipeDown(state)}
+          onSwipeLeft={(state) => onSwipeLeft(state)}
+          onSwipeRight={(state) => onSwipeRight(state)}
+          config={config}
+          style={styles.VideoOptionsContainer}
         >
-          <Pressable
-            onPress={()=> CompressDownload()}
+        {loading === false ?
+          <View>
+            {
+              isActive === true ?
+                <TextInput
+                  placeholder='Type Something here....'
+                  placeholderTextColor={"white"}
+                  style={{marginBottom:keyBoardOpen === false ? 20:itemHeight/3,color:"white",marginLeft:10,textAlign:"left"}}
+                  onPressIn={()=>OnKeyBoardOpen()}
+                  onEndEditing={()=>onkeyBoardClose()}
+                  onChangeText={(e)=>setDescription(e)}
+                  numberOfLines={3}
+                  value={description}
+                />:
+                <Text
+                  onPress={()=>setIsActive(true)}
+                  style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%"}}
+                >
+                  {description !=""?description:"Type something here...."}
+                </Text>
+            }
+          <View
+            style={styles.optionsVideo}
           >
-            <MaterialIcons
-              style={{marginLeft:10}}
-              name="file-download" color="white" size={Icon_Size}
+            <Pressable
+              onPress={()=> CompressDownload()}
+            >
+              <MaterialIcons
+                style={{marginLeft:10}}
+                name="file-download" color="white" size={Icon_Size}
+              />
+            </Pressable>
+            <MaterialIcon
+              onPress={()=> {
+                if(latitude !=""){
+                  setLoading(true)
+                  captureScreens()
+                }else{
+                  Alert.alert("Warning !","Location permission is required to upload video.")
+                }
+              }}
+              style={{marginRight:10}}
+              name='check-circle'
+              size={Icon_Size}
+              color="white"
             />
-          </Pressable>
-          <MaterialIcon
-            onPress={()=> {
-              if(latitude !=""){
-                setLoading(true)
-                captureScreens()
-              }else{
-                Alert.alert("Warning !","Location permission is required to upload video.")
-              }
-            }}
-            style={{marginRight:10}}
-            name='check-circle'
-            size={Icon_Size}
-            color="white"
-          />
-        </View>
-      </View>:
-      <SpinnerButton
-        buttonStyle={{marginBottom:20,width:50,height:50,        backgroundColor: '#ff0000'}}
-        isLoading={true}
-        size={1}
-        spinnerType='PulseIndicator'
-        indicatorCount={0}
-      />
-      }
-      </GestureRecognizer>
+          </View>
+        </View>:
+        <SpinnerButton
+          buttonStyle={{marginBottom:20,width:50,height:50,        backgroundColor: '#ff0000'}}
+          isLoading={true}
+          size={1}
+          spinnerType='PulseIndicator'
+          indicatorCount={0}
+        />
+        }
+        </GestureRecognizer>
+      </View>
+      <View style={styles.TopOptions}>
+        <MaterialIcons
+          style={{margin:10}}
+          onPress={()=>HideModal()}
+          name='arrow-back' size={25} color="white"
+        />
+      </View>
     </View>
-    <View style={styles.TopOptions}>
-      <MaterialIcons
-        style={{margin:10}}
-        onPress={()=>HideModal()}
-        name='arrow-back' size={25} color="white"
-      />
-    </View>
-  </View>
-</Modal>
+  </Modal>
 )}
 
 export default SaveVideo
