@@ -310,7 +310,7 @@ setScreenShortImage(response.path)
       });
   }
 
-  function SaveDownloadVideo(uri){
+  async function SaveDownloadVideo(uri){
     const realPath = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
     RNFetchBlob.fetch(
       'POST',
