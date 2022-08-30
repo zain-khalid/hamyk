@@ -34,6 +34,7 @@ import EndPoints from '../../configuration/EndPoints';
 import Filters from '../Filters/Filters';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { Video as VideoCompress } from 'react-native-compressor';
+import { createThumbnail } from 'react-native-create-thumbnail';
 const itemHeight = Dimensions.get('window').height
 const Icon_Size = 35
 
@@ -87,7 +88,7 @@ const onPlayPausePress = () => {
 
 function OnKeyBoardOpen(){
   setKeyBoardOpen(!keyBoardOpen)
-  
+
 }
 function onkeyBoardClose(){
   setKeyBoardOpen(!keyBoardOpen)
@@ -130,14 +131,14 @@ function getDatAndTime (){
     if(token ){
   setUserId(userID)
   setToken(token)
-  
+
     }
     if(_lat){
       setLatitude(_lat)
       setLocation(_long)
     }
   }
-  
+
 
 /////////TEXT EDITING//////////
 
@@ -184,26 +185,64 @@ function OnLayoutCaption (nativeEvent){
 
 /////////////video compressing and capturing ////////////////////
 
-const captureScreens =()=>{
+const captureScreens = ()=>{
   console.log("i am captur9ing")
+  createThumbnail({
+    url: uri,
+    timeStamp: 500,
+    format: 'png'
+  })
+  .then(response => {
+    // setScreenShortImage(response.path)
+    console.log(" >> path << ",response.path);
+    compressVideos(response.path)
+    // console.log(response)
+  })
+  .catch(err => {
+    setLoading(false)
+    console.error("Oops, snapshot failed", error)
+    // console.log({ err })
+  });
 
-  captureScreen({
-    format: "jpg",
-    quality: 0.5,
-  }).then(
-    (uri) => {
-      
-
-      // console.log(Buffer.from("", 'base64').toString('ascii'))
-compressVideos(uri)
-    }
-      ,
-    (error) => {
-      setLoading(false)
-
-      console.error("Oops, snapshot failed", error)}
-  );
+  // const uri = await viewShotRef.current.capture();
+  // console.log("Screen Short << ", uri);
+  // setScreenShortImage(uri);
+  // captureScreen({
+  //     format: "jpg",
+  //     quality: 0.5,
+  //   })
+  //   .then((uri) => {
+  //     console.log(" >> The screen Short << ", uri)
+  //     setScreenShortImage({uri})
+  //     // compressVideos(uri)
+  //   },
+  //   (error) => {
+  //     setLoading(false)
+  //     console.error("Oops, snapshot failed", error)}
+  //   );
 }
+
+
+// const captureScreens =()=>{
+//   console.log("i am captur9ing")
+
+//   captureScreen({
+//     format: "jpg",
+//     quality: 0.5,
+//   }).then(
+//     (uri) => {
+
+
+//       // console.log(Buffer.from("", 'base64').toString('ascii'))
+// compressVideos(uri)
+//     }
+//       ,
+//     (error) => {
+//       setLoading(false)
+
+//       console.error("Oops, snapshot failed", error)}
+//   );
+// }
 
 
 
@@ -237,7 +276,7 @@ const compressVideosII = async(url,thumbnail) =>{
   console.log("i am compressing again bro",url)
 
   var new_str = url.replace("file://", 'file:///')
-    
+
 console.log(new_str)
   await VideoCompress.compress(
     new_str,
@@ -246,7 +285,7 @@ bitrate:6000000000
     },
     (progress) => {
       console.log(progress)
-    
+
     }
   ).then(async (compressedFileUrl) => {
     console.log("uri",compressedFileUrl)
@@ -283,7 +322,7 @@ const SaveVideos = (uri,thumbnail) =>{
         Authorization: `Bearer ${token}`,
       },
       [
-    
+
           {
             name: 'video',
             filename: 'video.mp4',
@@ -306,7 +345,7 @@ const SaveVideos = (uri,thumbnail) =>{
 
 
         // {name: 'thumbnail', data:Img}
-   
+
         {
           name: "thumbnail",
           filename: "thumbnail.jpg",
@@ -327,13 +366,13 @@ const SaveVideos = (uri,thumbnail) =>{
         else{
           alert("Some unknown error please try again later")
         }
-     
-        
+
+
       })
       .catch(err => {
         setLoading(false)
         console.log('err >>>', err);
-    
+
       });
 
 
@@ -364,11 +403,11 @@ Alert.alert("Compressing","Please wait we are compressing your video, your downl
 //     saveToCameraRoll: false, // default is false, iOS only
 //     saveWithCurrentDate: false, // default is false, iOS only
 //     minimumBitrate: 900000,
-    
+
 //     removeAudio: false, // default is false
 //   };
 //   ProcessingManager.compress(uri, options) // like VideoPlayer compress options
-//   .then((data) => 
+//   .then((data) =>
 //   SaveDownloadVideo(data.source)
 //   )
 // }else{
@@ -416,8 +455,8 @@ function SaveDownloadVideo(uri){
     ? uri.replace('file://', '')
     : uri;
 
-  
-  
+
+
     RNFetchBlob.fetch(
       'POST',
       `https://hymkapp.khannburger.com/api/sendvideo`,
@@ -426,7 +465,7 @@ function SaveDownloadVideo(uri){
         Authorization: `Bearer ${token}`,
       },
       [
-    
+
           {
             name: 'video',
             filename: 'video.mp4',
@@ -434,13 +473,13 @@ function SaveDownloadVideo(uri){
             data: RNFetchBlob.wrap(realPath),
           },
 
-      
 
-  
+
+
       ],
     ).then(response => response.json())
     .then(result => {
-     
+
       if(result.path){
 Download(`${EndPoints.VideoDownloadUrl}${result.path}`)
 
@@ -451,13 +490,13 @@ setTimeout(() => {setLoading(false)
 
       }
 
-  
+
     })
-     
+
       .catch(err => {
         setLoading(false)
         console.log('err >>>', err);
-    
+
       });
 
 
@@ -499,7 +538,7 @@ if(filter < 6){
 }
 function onSwipeRight(gestureState) {
   if(filter >1 ){
-  
+
     setFilter(filter-1)
   }else{
     setFilter(6)
@@ -528,7 +567,7 @@ const config = {
 
 
 return(
-  
+
 <Modal
 visible={shouldShow}
 >
@@ -539,7 +578,7 @@ visible={shouldShow}
 
 
 
-<View 
+<View
 
 onPress={()=>{
   onPlayPausePress()
@@ -548,22 +587,22 @@ onPress={()=>{
 
 
 >
-  
- <Video  
+
+ <Video
  ref={vid}
-  source={{uri:uri}}        
-  paused={paused}   
-  resizeMode="cover"            
-//   style={[styles.backgroundVideo,{transform:[{rotateY:'180deg'}]}]}  
-  style={styles.backgroundVideo}  
-  repeat={true}  
-     
-   
+  source={{uri:uri}}
+  paused={paused}
+  resizeMode="cover"
+//   style={[styles.backgroundVideo,{transform:[{rotateY:'180deg'}]}]}
+  style={styles.backgroundVideo}
+  repeat={true}
+
+
   // onLoad={()=> setLoading(true)}
   // onEnd={() => setLoading(false)}
-  
 
-  /> 
+
+  />
 
 <Filters filterType={filter}/>
 
@@ -578,15 +617,15 @@ onPress={()=>{
 
             style={styles.VideoOptionsContainer}
         >
-   
-   {loading === false ? 
+
+   {loading === false ?
  <View>
 
 
-  
+
 {
-isActive === true ? 
-<TextInput 
+isActive === true ?
+<TextInput
 
 placeholder='Type Something here....'
 placeholderTextColor={"white"}
@@ -611,7 +650,7 @@ style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%"
 }
 
 
- 
+
 
 
 
@@ -624,28 +663,28 @@ onPress={()=> CompressDownload()}
 
 >
 
-<MaterialIcons 
+<MaterialIcons
 
 style={{marginLeft:10}}
 name="file-download" color="white" size={Icon_Size} />
-      
+
 
 </Pressable>
 
-<MaterialIcon 
+<MaterialIcon
 
 onPress={()=> {
   if(latitude !=""){
     setLoading(true)
 
     captureScreens()
-  
+
   }
   else{
     Alert.alert("Warning !","Location permission is required to upload video.")
   }
 
-  
+
   }
   }
 style={{marginRight:10}}
@@ -655,11 +694,11 @@ size={Icon_Size}
 color="white"
 
 />
-     
-      </View> 
-  
+
+      </View>
+
 </View>
-:           
+:
 <SpinnerButton
                   buttonStyle={{marginBottom:20,width:50,height:50,        backgroundColor: '#ff0000',
                 }}
@@ -667,11 +706,11 @@ color="white"
                   size={1}
                   spinnerType='PulseIndicator'
                   indicatorCount={0}
-              
+
 // onPress={()=>onSubmit()}
 >
 
-</SpinnerButton> 
+</SpinnerButton>
 
 }
 </GestureRecognizer>
@@ -686,7 +725,7 @@ color="white"
 
 
 <View style={styles.TopOptions}>
-<MaterialIcons  
+<MaterialIcons
 style={{margin:10}}
 onPress={()=>HideModal()}
 name='arrow-back' size={25} color="white"/>
