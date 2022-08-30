@@ -5,13 +5,13 @@ import {
 import { Divider } from 'react-native-paper';
   import colors from '../Global/colors';
   const WindowWidth = Dimensions.get('window').width
-  const WindowHeight = Dimensions.get('window').height; 
+  const WindowHeight = Dimensions.get('window').height;
   const styles = StyleSheet.create({
    Container:{
       width:WindowWidth,
       height:WindowHeight,
       backgroundColor:"brown"
- 
+
 
 },
 cameraRecording:{
@@ -40,12 +40,12 @@ marginBottom:40
 },
 TopOptions:{
    width:WindowWidth,
-position:"absolute",
+   position:"absolute",
    flexDirection:"row",
    justifyContent:"space-between",
    alignItems:"center",
-   marginTop:6
-   }
+   marginTop:50
+}
 
 
   });

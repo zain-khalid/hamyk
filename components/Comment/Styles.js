@@ -15,6 +15,7 @@ import {
     backgroundColor:"black"
    },
    Header:{
+      paddingTop:50,
       width:WindowWidth/1.2,
       height:WindowHeight/10,
       // backgroundColor:"yellow",

@@ -40,6 +40,7 @@ optionsVideo:{
 },
 
 TopOptions:{
+   paddingTop:50,
    width:WindowWidth,
    position:"absolute"
 }

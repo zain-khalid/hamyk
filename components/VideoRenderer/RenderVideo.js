@@ -1,5 +1,4 @@
 
-
 'use strict';
 
 import React,{useState,useReducer,useEffect} from 'react';
@@ -158,7 +157,7 @@ const images= Buffer.from((item.thumbnail), 'base64').toString('ascii')
 
   function LikeVide(){
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${AsynData.token}`);
+myHeaders.append("Authorization", `Bearer ${AsynData.token}`);
 
 var formdata = new FormData();
 formdata.append("user_id", AsynData.myId);
@@ -185,120 +184,99 @@ fetch(`${BaseUrl}like`, requestOptions)
 
 
 function VideoOptionsAll(){
-  return(<View style={styles.VideoOptionsContainer}>
+  return(
+    <>
+      <View
+      style={[styles.optionsVideo,{top:5, alignItems: 'center'}]}
+      >
+      <View style={styles.OptionsVideoInnerWrapperI}>
+  {
 
+    item.image ==="default"?
+    <Image source={profile}
 
-    <View
-    style={[styles.optionsVideo,{marginTop:20}]}
-    >
-     <View style={styles.OptionsVideoInnerWrapperI}>
-{
+    style={{width:30,height:30,marginLeft:10}}
+    />
+  :
 
-  item.image ==="default"?
-  <Image source={profile}
+  <Image source={{uri:`${EndPoints.ProfileUrl}${item.image}`}}
 
-  style={{width:30,height:30,marginLeft:10}}
+  style={{width:30,height:30,marginLeft:10,borderRadius:1000}}
   />
-:
 
-<Image source={{uri:`${EndPoints.ProfileUrl}${item.image}`}}
+  }
+    <Text
+    onPress={()=>HideOtherUser()}
 
-style={{width:30,height:30,marginLeft:10,borderRadius:1000}}
-/>
-
-}
-  <Text
-  onPress={()=>HideOtherUser()}
-
-  style={{color:"white",fontSize:18,marginLeft:10}}>{item.username}</Text>
-</View>
+    style={{color:"white",fontSize:18,marginLeft:10}}>{item.username}</Text>
+  </View>
 
 
 
-     <View style={[styles.IconWrapper,{marginRight:10}]}>
-<Pressable
- onPress={() => {
-  setShouldShowReport(true)
-  setPaused(true)
+      <View style={[styles.IconWrapper,{marginRight:10,}]}>
+  <Pressable
+  onPress={() => {
+    setShouldShowReport(true)
+    setPaused(true)
 
-  }}
->
-<MaterialIcons
+    }}
+  >
+  <MaterialIcons
 
- name="more-vert" color="white" size={30} />
-</Pressable>
+  name="more-vert" color="white" size={30} />
+  </Pressable>
 
-     </View>
+      </View>
 
-     </View>
-
-
-<View>
-
-
-
-     <Text
-
-     style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%"}}
-
-     >{item.description}</Text>
-
-
-  <View
-    style={styles.optionsVideo}
-    >
-     <View style={styles.OptionsVideoInnerWrapper}>
-     <View style={[styles.IconWrapper,{marginLeft:10}]}>
-
-<Icon
-onPress={()=>{
-onLikedPress()
-isLiked===false?onLike():onDislike()
-}}
-name='heart'
-size={Icon_Size}
-color= {isLiked ===true? colors[0].primaryColor : "white"}
-
-/>
-<Text style={styles.fontStyling}>{likeCount}</Text>
-</View>
-<View style={styles.IconWrapper}>
-
-<MaterialIcon
-onPress={async()=>{
-// fetchComments(item.id)
-setVidId(item.id)
-setPaused(true)
-setShowModal(true)
-}
-}
-name='comment-text'
-size={Icon_Size}
-color="white"
-/>
-<Text style={styles.fontStyling}>{comments}</Text>
-</View>
-</View>
-
-
-
-     <View style={[styles.IconWrapper,{marginRight:10}]}>
-
-<IonIcon
-onPress={()=> onShare(item.video,item.id)}
-name='send-sharp'
-size={Icon_Size}
-color="white"
-
-/>
-<Text style={styles.fontStyling}>{state.Global_Paused === true ?1:0}</Text>
-     </View>
-
-     </View>
-     </View>
-
-
-</View>)
+      </View>
+      {/* <Text
+      style={{marginBottom:20,color:"white",marginLeft:10,textAlign:"left",width:"50%",position:"absolute",bottom:0}}
+      >{item.description}</Text> */}
+      <View
+        style={[styles.optionsVideo, {bottom:50,}]}
+      >
+        <View style={styles.OptionsVideoInnerWrapper}>
+          <View
+            style={[styles.IconWrapper,{marginLeft:10}]}
+          >
+            <Icon
+              onPress={()=>{
+                onLikedPress()
+                isLiked===false?onLike():onDislike()
+              }}
+              name='heart'
+              size={Icon_Size}
+              color= {isLiked ===true? colors[0].primaryColor : "white"}
+            />
+            <Text style={styles.fontStyling}>{likeCount}</Text>
+          </View>
+          <View style={styles.IconWrapper}>
+            <MaterialIcon
+              onPress={async()=>{
+              // fetchComments(item.id)
+                setVidId(item.id)
+                setPaused(true)
+                setShowModal(true)
+              }}
+              name='comment-text'
+              size={Icon_Size}
+              color="white"
+            />
+            <Text style={styles.fontStyling}>{comments}</Text>
+          </View>
+        </View>
+        <View style={[styles.IconWrapper,{marginRight:10}]}>
+          <IonIcon
+            onPress={()=> onShare(item.video,item.id)}
+            name='send-sharp'
+            size={Icon_Size}
+            color="white"
+          />
+          <Text style={styles.fontStyling}>{state.Global_Paused === true ?1:0}</Text>
+        </View>
+      </View>
+    </>
+  )
 }
 
 
@@ -310,26 +288,25 @@ color="white"
   return(
 
     <Pressable
-    onPress={()=>{
-      onPlayPausePress()
-    }}
-
+      onPress={()=>{
+        onPlayPausePress()
+      }}
     >
 
   <ImageBackground
   source={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
-  resizeMode="cover"
-  style={styles.ImgBg}
+  resizeMode="stretch"
+
   >
 
-<Video
-  source={{uri:`${EndPoints.VideoBaseUrl}${item.video}`}}
-  paused={paused===true?paused:indexx===index?false:true}
-  playInBackground={false}
-  resizeMode="stretch"
-  style={styles.backgroundVideo}
-  repeat={true}
-/>
+   <Video
+    source={{uri:`${EndPoints.VideoBaseUrl}${item.video}`}}
+    paused={paused===true?paused:indexx===index?false:true}
+    playInBackground={false}
+    resizeMode="stretch"
+    style={styles.backgroundVideo}
+    repeat={true}
+    />
 
 
 {/* <VideoPlayer
@@ -342,7 +319,6 @@ color="white"
   video={{uri:`${EndPoints.VideoBaseUrl}${item.video}`}}
   paused={paused===true?paused:indexx===index?false:true}
   thumbnail={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
-  controller = {false}
 /> */}
 
 
@@ -353,15 +329,15 @@ color="white"
   <VideoOptionsAll/>
  {showModal === true ?
 
-<Comment
-  state={showModal}
-  changeState={()=>onchangeState()}
+ <Comment
+ state={showModal}
+ changeState={()=>onchangeState()}
   commentList={commentList}
-  vidId={vidId}
+   vidId={vidId}
 
-  onCommentSent={onComment}
-  otheruserID={item.user_id}
-/>
+   onCommentSent={onComment}
+   otheruserID={item.user_id}
+   />
 :null
 }
 
@@ -373,9 +349,14 @@ color="white"
 
 
 <ReportVideo
+
 showModal={showReport}
+
 OnSetModal={onSetReport}
+
 videoId={item.id}
+
+
 />
 
   </ImageBackground>
@@ -385,5 +366,5 @@ videoId={item.id}
 
 
     )
-}
-export default RenderVideo
+                    }
+  export default RenderVideo

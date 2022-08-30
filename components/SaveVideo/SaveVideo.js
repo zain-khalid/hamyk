@@ -1,3 +1,4 @@
+
 'use strict';
 
 
@@ -123,20 +124,7 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
   }
 
   function OnLayoutCaption (nativeEvent){
-      // let target = nativeEvent.target;
 
-      // if (this.captionLayout.width !== nativeEvent.layout.width ||
-      //     this.captionLayout.height !== nativeEvent.layout.height) {
-
-      //     this.captionLayout = nativeEvent.layout;
-
-      //     this.setCaptionStyle();
-
-      // } else {
-
-      //     this.captionLayout = nativeEvent.layout;
-
-      // }
       console.log(nativeEvent.layout)
   }
 
@@ -151,7 +139,7 @@ const SaveVideo =({shouldShow,uri,HideModal,route})=>{
       format: 'png'
     })
     .then(response => {
-setScreenShortImage(response.path)
+      setScreenShortImage(response.path)
       console.log(" >> path << ",response.path);
       compressVideos(response.path)
       // console.log(response)
@@ -162,28 +150,13 @@ setScreenShortImage(response.path)
       // console.log({ err })
     });
 
-    // const uri = await viewShotRef.current.capture();
-    // console.log("Screen Short << ", uri);
-    // setScreenShortImage(uri);
-    // captureScreen({
-    //     format: "jpg",
-    //     quality: 0.5,
-    //   })
-    //   .then((uri) => {
-    //     console.log(" >> The screen Short << ", uri)
-    //     setScreenShortImage({uri})
-    //     // compressVideos(uri)
-    //   },
-    //   (error) => {
-    //     setLoading(false)
-    //     console.error("Oops, snapshot failed", error)}
-    //   );
+
   }
 
   ////////////////// COMPRESSING ///////////////////////////
   const compressVideos = async (thumbnail) =>{
     console.log("i am compressing",uri)
-      await VideoCompress.compress(
+    await VideoCompress.compress(
       uri,
       {
         compressionMethod: 'auto',
@@ -212,11 +185,14 @@ setScreenShortImage(response.path)
       },
       (progress) => {
         console.log(progress)
-      })
-      .then(async (compressedFileUrl) => {
-        console.log("uri",compressedFileUrl)
-        SaveVideos(compressedFileUrl,thumbnail)
+
+      }
+    ).then(async (compressedFileUrl) => {
+      console.log("uri",compressedFileUrl)
+      SaveVideos(compressedFileUrl,thumbnail)
+
       });
+
   }
 
   ////////////////SAVING VIDEO/////////////////////////////
@@ -280,25 +256,7 @@ setScreenShortImage(response.path)
   const CompressDownload = async() =>{
     setLoading(true)
     Alert.alert("Compressing","Please wait we are compressing your video, your download will start soon")
-  // if(route !="local"){
-  // console.log("not local")
-  //   const options = {
-  //     width: 720,
-  //     height: 1280,
-  //     bitrateMultiplier: 3,
-  //     saveToCameraRoll: false, // default is false, iOS only
-  //     saveWithCurrentDate: false, // default is false, iOS only
-  //     minimumBitrate: 900000,
 
-  //     removeAudio: false, // default is false
-  //   };
-  //   ProcessingManager.compress(uri, options) // like VideoPlayer compress options
-  //   .then((data) =>
-  //   SaveDownloadVideo(data.source)
-  //   )
-  // }else{
-  //   SaveDownloadVideo(uri)
-  // }
     await VideoCompress.compress(
       uri,{compressionMethod: 'auto'},
       (progress) => {
@@ -310,42 +268,58 @@ setScreenShortImage(response.path)
       });
   }
 
-  async function SaveDownloadVideo(uri){
-    const realPath = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-    RNFetchBlob.fetch(
-      'POST',
-      `https://hymkapp.khannburger.com/api/sendvideo`,
-      {
-        // 'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`,
-      },
-      [
+  function SaveDownloadVideo(uri){
+
+    console.log("Started saving.........")
+
+    const realPath =
+    Platform.OS === 'ios'
+      ? uri.replace('file://', '')
+      : uri;
+      RNFetchBlob.fetch(
+        'POST',
+        `https://hymkapp.khannburger.com/api/sendvideo`,
         {
-          name: 'video',
-          filename: 'video.mp4',
-          type: 'video/mp4',
-          data: RNFetchBlob.wrap(realPath),
+          // 'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
         },
-      ])
-    .then(response => response.json())
-    .then(result => {
-      if(result.path){
-        Download(`${EndPoints.VideoDownloadUrl}${result.path}`)
-        setTimeout(() => {setLoading(false)
-        }, 9000)
-        console.log(new_str)
-        await VideoCompress.compress(
-        url,{compressionMethod: 'auto'},
-        (progress) => {
-          console.log(progress)
-        })
-      }
-    })
-    .catch(err => {
-      setLoading(false)
-      console.log('err >>>', err);
-    });
+        [
+
+            {
+              name: 'video',
+              filename: 'video.mp4',
+              type: 'video/mp4',
+              data: RNFetchBlob.wrap(realPath),
+            },
+
+
+
+
+        ],
+      ).then(response => response.json())
+      .then(result => {
+
+        if(result.path){
+  Download(`${EndPoints.VideoDownloadUrl}${result.path}`)
+
+
+  setTimeout(() => {setLoading(false)
+  }, 9000)
+
+
+        }
+
+
+      })
+
+        .catch(err => {
+          setLoading(false)
+          console.log('err >>>', err);
+
+        });
+
   }
+
   ///////setting filters/////////////
   function onSwipeLeft(gestureState) {
     if(filter < 6){
@@ -473,4 +447,8 @@ setScreenShortImage(response.path)
   )
 }
 
-export default SaveVideo;
+export default SaveVideo
+
+
+
+

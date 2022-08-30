@@ -57,7 +57,7 @@ export default function useLocation () {
     };
     requestLocationPermission();
     return () => {
-      Geolocation.clearWatch(watchID);
+      Geolocation.clearWatch(requestLocationPermission);
     };
   }, []);
 
@@ -69,11 +69,11 @@ export default function useLocation () {
         setLocationStatus('You are Here');
 
         //getting the Longitude from the location json
-        const currentLongitude = 
+        const currentLongitude =
           JSON.stringify(position.coords.longitude);
 
         //getting the Latitude from the location json
-        const currentLatitude = 
+        const currentLatitude =
           JSON.stringify(position.coords.latitude);
 
         //Setting Longitude state
@@ -100,16 +100,16 @@ AsyncStorage.setItem("long",JSON.stringify(currentLongitude))
 //     watchID = Geolocation.watchPosition(
 //       (position) => {
 //         //Will give you the location on location change
-        
+
 //         setLocationStatus('You are Here');
 //         console.log(position);
 
-//         //getting the Longitude from the location json        
+//         //getting the Longitude from the location json
 //         const currentLongitude =
 //           JSON.stringify(position.coords.longitude);
 
 //         //getting the Latitude from the location json
-//         const currentLatitude = 
+//         const currentLatitude =
 //           JSON.stringify(position.coords.latitude);
 
 //         //Setting Longitude state

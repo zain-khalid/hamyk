@@ -6,8 +6,7 @@ import {
   TextInput,
   Image,
   FlatList,
-  Modal,
-  SafeAreaView
+  Modal
 } from 'react-native';
 import styles from './Styles';
 import { useNavigation } from '@react-navigation/native';
@@ -94,31 +93,6 @@ fetch(`${BaseUrl}${endPoint}`, requestOptions)
 
 ////////folloing or unfollowing user///////////////
 
-function followUser(id){
-  var myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${token}`);
-
-  var formdata = new FormData();
-  formdata.append("follow_to", id);
-  formdata.append("follow_by", myId);
-
-  var requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: formdata,
-    redirect: 'follow'
-  };
-
-  fetch(`${BaseUrl}${EndPoints.hitFollow}`, requestOptions)
-    .then(response => response.json())
-    .then(result => {
-      GetFollowingList(token,myId)
-      console.log(result)})
-    .catch(error => {
-      setIsfollowing(!is_following)
-
-      console.log('error', error)});
-}
 
 
 
@@ -127,9 +101,40 @@ function followUser(id){
 
 
 
+const RenderUser =({item})=>{
+
+  const [is_following,setIsfollowing]=useState(true)
+
+  function followUser(id){
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    var formdata = new FormData();
+    formdata.append("follow_to", id);
+    formdata.append("follow_by", myId);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    fetch(`${BaseUrl}${EndPoints.hitFollow}`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        GetFollowingList(token,myId)
+        console.log(result)})
+      .catch(error => {
+        setIsfollowing(!is_following)
+
+        console.log('error', error)});
+  }
 
 
-const renderUser =({item})=>(
+
+
+  return(
 <Pressable
 onPress={()=>{
   setOtherUser(true)
@@ -181,7 +186,6 @@ return(
 
   // transparent={false}
   visible={state}  >
-  <SafeAreaView>
 
     <View style={styles.container}>
 <View style={styles.Header}>
@@ -198,7 +202,9 @@ name='arrow-back' size={25} color="black"/>
 
     <FlatList
     data={followings}
-    renderItem={renderUser}
+    renderItem={({item})=>
+      <RenderUser item={item}/>
+    }
 
     />
     </View>
@@ -211,7 +217,6 @@ name='arrow-back' size={25} color="black"/>
         <OtherUser showOtherUser={showOtherUser} HideOtherUser={HideOtherUser} Other_id={Other_id}/>
      :
      null }
-  </SafeAreaView>
         </Modal>
 )
 

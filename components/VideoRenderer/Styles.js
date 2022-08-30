@@ -1,27 +1,27 @@
 import {
-    StyleSheet,
-   Dimensions
-  } from 'react-native'
+   StyleSheet,
+  Dimensions
+ } from 'react-native'
 import { Divider } from 'react-native-paper';
-  import colors from '../Global/colors';
-  const WindowWidth = Dimensions.get('window').width
-  const WindowHeight = Dimensions.get('window').height;
-  const styles = StyleSheet.create({
+ import colors from '../Global/colors';
+ const WindowWidth = Dimensions.get('window').width
+ const WindowHeight = Dimensions.get('window').height;
+ const styles = StyleSheet.create({
 
 
 
-   Container:{
-      width:WindowWidth,
-      height:WindowHeight,
-      backgroundColor:"transparent",
+  Container:{
+     width:WindowWidth,
+     height:WindowHeight,
+     backgroundColor:"transparent",
 alignItems:"center",
 
 // justifyContent:"center"
 
 },
 titleWrap:{
-   // marginTop:10,
-   // marginBottom:10,
+  // marginTop:10,
+  // marginBottom:10,
 width:WindowWidth/2.3,
 borderRadius:25,
 borderColor:colors[0].FontColor,
@@ -37,15 +37,15 @@ backgroundColor:'rgba(255,255,255,0)',
 alignItems:"center" ,
 },
 backgroundVideo:{
-   width:WindowWidth,
-   height:WindowHeight-60,
-   // flex:'strech'
+  width:WindowWidth,
+  height:WindowHeight-60,
+  // flex:'strech'
 },
 
 Buttons:{
-   width:WindowWidth/2,
-   // height:WindowHeight/1.,
-   backgroundColor:"black",
+  width:WindowWidth/2,
+  // height:WindowHeight/1.,
+  backgroundColor:"black",
 
 },
 VideoContainerWrap:{
@@ -60,69 +60,69 @@ alignItems:"center"
 
 },
 Divider:{
-   width:WindowWidth,
-   height:WindowHeight/17,
-   backgroundColor:"rgba(0,0,0,0)",
-   justifyContent:"center",
-   alignItems:"center",
-   position:"absolute"
+  width:WindowWidth,
+  height:WindowHeight/17,
+  backgroundColor:"rgba(0,0,0,0)",
+  justifyContent:"center",
+  alignItems:"center",
+  position:"absolute"
 
 },
 ListWrapper:{
-   width:WindowWidth,
-   height:WindowHeight-60,
-   backgroundColor:"black",
+  width:WindowWidth,
+  height:WindowHeight-60,
+  backgroundColor:"black",
 },
 VideoOptionsContainer:{
-   position:"absolute",
+  position:"absolute",
 
-   // flexDirection: 'row',
-   // height:WindowHeight-60,
-   bottom:0,
-   width:'100%',
-   backgroundColor:"rgba(0,0,0,0)",
-   justifyContent:"space-between",
+  // flexDirection: 'row',
+  // height:WindowHeight-60,
+  bottom:0,
+  width:'100%',
+  backgroundColor:"rgba(0,0,0,0)",
+  justifyContent:"space-between",
 },
 optionsVideo:{
-   left:0,
-   right:0,
-   position:"absolute",
-   flexDirection:"row",
-   justifyContent:"space-between",
+  left:0,
+  right:0,
+  position:"absolute",
+  flexDirection:"row",
+  justifyContent:"space-between",
 },
 OptionsVideoInnerWrapper:{
-   width:WindowWidth/3,
-   flexDirection:"row",
-   alignItems:"center",
-   // backgroundColor:"yellow",
-   justifyContent:"space-between"
+  width:WindowWidth/3,
+  flexDirection:"row",
+  alignItems:"center",
+  // backgroundColor:"yellow",
+  justifyContent:"space-between"
 
 },
 OptionsVideoInnerWrapperI:{
-   width:WindowWidth/3,
-   flexDirection:"row",
-   alignItems:"center",
-   // backgroundColor:"yellow",
-   // justifyContent:"space-between"
+  width:WindowWidth/3,
+  flexDirection:"row",
+  alignItems:"center",
+  // backgroundColor:"yellow",
+  // justifyContent:"space-between"
 
 },
 IconWrapper:{
-   alignItems:"center"
+  alignItems:"center"
 },
 fontStyling:{
-   color:"white",
-   fontWeight:'400',
-   fontSize:20
+  color:"white",
+  fontWeight:'400',
+  fontSize:20
 },
 OverLay_Wrapper:{
-   width:WindowWidth,
-   height:WindowHeight-60,
+  width:WindowWidth,
+  height:WindowHeight-60,
 // backgroundColor:"brown",
-   position:"absolute"
+  position:"absolute"
 },
 LoaderView:{position:"absolute",marginTop:WindowHeight/2,color:"white"}
 
 
-  });
+ });
 
-  export default styles
+ export default styles

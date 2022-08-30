@@ -20,7 +20,8 @@ import {
       flexDirection:"row",
       justifyContent:"space-between",
       alignItems:"center",
-      margin:5
+      margin:5,
+      marginTop: 50
    },
    SearchWrapper:{
       width:WindowWidth/1.1,
