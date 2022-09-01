@@ -271,7 +271,7 @@ size={Icon_Size}
 color="white"
 
 />
-<Text style={styles.fontStyling}>0</Text>
+{/* <Text style={styles.fontStyling}>0</Text> */}
       </View>
 
       </View>
