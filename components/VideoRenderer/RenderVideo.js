@@ -187,7 +187,7 @@ function VideoOptionsAll(){
   return(
     <>
       <View
-      style={[styles.optionsVideo,{top:40, alignItems: 'center'}]}
+      style={[styles.optionsVideo,{top:50, alignItems: 'center'}]}
       >
       <View style={styles.OptionsVideoInnerWrapperI}>
   {
