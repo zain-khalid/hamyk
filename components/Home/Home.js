@@ -315,12 +315,12 @@ function _renderTabBar(){
 
  <Image
  source={profile}
- style={{  width:42,height:42,borderWidth:1,borderRadius:1000,opacity:index===0?1:0.7}}
+ style={{  width:47,height:47,borderWidth:1,borderRadius:1000,opacity:index===0?1:0.7}}
  />
 :
 <Image
  source={{uri:`${EndPoints.ProfileUrl}${userData.profile}`}}
- style={{  width:42,height:42,borderWidth:1,borderColor:"white",borderRadius:1000,opacity:index===0?1:0.7}}
+ style={{  width:47,height:47,borderWidth:1,borderColor:"white",borderRadius:1000,opacity:index===0?1:0.7}}
  />
 
 }
@@ -328,7 +328,7 @@ function _renderTabBar(){
 
  <Text
  onPress={()=>setIndex(1)}
- style={{color:index!=1?'rgba(255,255,255,0.7)':"white",fontWeight:'500',fontSize:22}}
+ style={{color:index!=1?'rgba(255,255,255,0.7)':"white",fontWeight:'500',fontSize:27}}
  >hamyk</Text>
 
  <Pressable
@@ -340,7 +340,7 @@ function _renderTabBar(){
 
      <Image
      source={group}
-     style={{  width:42,height:42,opacity:index===2?1:0.7}}
+     style={{  width:47,height:47,opacity:index===2?1:0.7}}
      />
      </Pressable>
 

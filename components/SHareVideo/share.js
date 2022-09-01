@@ -9,7 +9,7 @@ const onShare = async (video_uri) => {
     try {
       const result = await Share.share({
         message:
-          `Hello there watch that creative video on Hamyk ${EndPoints.VideoBaseUrl}${video_uri}`,
+          `Tap To Play ${'\n'}${EndPoints.VideoBaseUrl}${video_uri}`,
       });
   
       if (result.action === Share.sharedAction) {

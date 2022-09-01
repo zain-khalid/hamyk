@@ -138,6 +138,7 @@ placeholder='Search any user'
 style={{flex:1}}
 value={searchInput}
 onChangeText={(e)=>setSearchInput(e)}
+autoCapitalize="none"
 />
       
 </View>

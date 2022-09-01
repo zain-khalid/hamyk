@@ -292,7 +292,8 @@ const RenderVideo=({item,index})=>{
   const today = month+"/"+date+"/"+year
     const date1 = new Date(today);
     const date2 = new Date(uploadedDate);
-   const diff= Math.abs(date2 - date1)
+   const diff= Math.abs(Number(date2) - Number(date1))
+
 
 return(
   <Pressable
@@ -322,7 +323,7 @@ source={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
   >
 <View style={styles.ListBottom}>
 
-<Text style={{color:"white",fontSize:20}}>{diff===0?"3 days Left":diff===1?"2 days Left":diff===2?"1 day Left":"1 day Left"}</Text>
+<Text style={{color:"white",fontSize:20}}>{diff===0?"3 days Left":diff===1?"2 days Left":diff===2?"1 day Left":"3 day Left"}</Text>
 </View>
 <View style={styles.ListBottom}>
 
@@ -499,7 +500,7 @@ style={styles.FollowingBtn} >
 
 
 <FlatList
-data={userVideos}
+data={userVideos.sort((a, b) => b.id - a.id)}
 renderItem={({item})=>
 
 <RenderVideo  item={item} />

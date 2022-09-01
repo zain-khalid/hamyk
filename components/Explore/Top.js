@@ -80,7 +80,7 @@ return(
   {TopVideos.length >= 1 ?
 <FlatList
  ref={cellRefs}
- data={TopVideos.sort((a, b) => b.id - a.id)}
+ data={TopVideos}
  initialNumToRender={3}
  windowSize={10}
  maxToRenderPerBatch={3}

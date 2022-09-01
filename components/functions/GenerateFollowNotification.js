@@ -16,7 +16,7 @@ if(id,token){
     
     var formdata = new FormData();
     formdata.append("title", "Follower");
-    formdata.append("body", `You have got a new follower check out now!`);
+    formdata.append("body", `You have a new follower!`);
     formdata.append("sender_id",id);
     formdata.append("reciever_id", user_id);
     formdata.append("sendr_username", "sarib");

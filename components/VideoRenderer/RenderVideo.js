@@ -187,7 +187,7 @@ function VideoOptionsAll(){
   return(
     <>
       <View
-      style={[styles.optionsVideo,{top:5, alignItems: 'center'}]}
+      style={[styles.optionsVideo,{top:40, alignItems: 'center'}]}
       >
       <View style={styles.OptionsVideoInnerWrapperI}>
   {
@@ -272,7 +272,7 @@ function VideoOptionsAll(){
             size={Icon_Size}
             color="white"
           />
-          <Text style={styles.fontStyling}>{state.Global_Paused === true ?1:0}</Text>
+          {/* <Text style={styles.fontStyling}>{state.Global_Paused === true ?1:0}</Text> */}
         </View>
       </View>
     </>

@@ -194,7 +194,7 @@ return(
 style={{marginLeft:20}}
 onPress={()=>changeState()}
 name='arrow-back' size={25} color="black"/>
-<Text style={{marginRight:25,color:"black"}}>{route==="following"?"Followings":"Followers"}</Text>
+<Text style={{marginRight:25,color:"black"}}>{route==="following"?"Following":"Followers"}</Text>
     </View>
 
 

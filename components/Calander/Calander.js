@@ -57,6 +57,18 @@ const [year,setYear] = useState(0)
         <View style={styles.Calander}>
 <View style={{flexDirection:"row"}}>
 
+
+<View style={styles.InnerCalander}>
+<Text style={{color:colors[0].primaryColor,fontWeight:"bold",margin:5}}>Months</Text>
+<FlatList
+data={Month}
+renderItem={Months}
+showsVerticalScrollIndicator={false}
+/>
+
+</View>
+
+
 <View style={styles.InnerCalander}>
 <Text style={{color:colors[0].primaryColor,fontWeight:"bold",margin:5}}>Days</Text>
 
@@ -69,15 +81,6 @@ showsVerticalScrollIndicator={false}
 
 </View>
 
-<View style={styles.InnerCalander}>
-<Text style={{color:colors[0].primaryColor,fontWeight:"bold",margin:5}}>Months</Text>
-<FlatList
-data={Month}
-renderItem={Months}
-showsVerticalScrollIndicator={false}
-/>
-
-</View>
 
 
 
