@@ -152,6 +152,9 @@ const RenderVideo=({item,index})=>{
     const date2 = new Date(uploadedDate);
    const diff= Math.abs(Number(date2) - Number(date1))
 
+   let post_date = moment(item.created_at);
+   let moment_conversion = moment().diff(post_date, 'days');
+
 return(
   <Pressable
   onLongPress={()=>{
@@ -183,7 +186,8 @@ source={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
   >
 <View style={styles.ListBottom}>
 
-    <Text style={{color:"white",fontSize:20}}>{diff===0?"3 days Left":diff===1?"2 days Left":diff===2?"1 day Left":"3 day Left"}</Text>
+    {/* <Text style={{color:"white",fontSize:20}}>{diff===0?"3 days Left":diff===1?"2 days Left":diff===2?"1 day Left":"3 day Left"}</Text> */}
+    <Text style={{color:"white",fontSize:20}}>{`${moment_conversion} day Left`}</Text>
 </View>
 <View style={styles.ListBottom}>
 
