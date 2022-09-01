@@ -292,7 +292,10 @@ const RenderVideo=({item,index})=>{
   const today = month+"/"+date+"/"+year
     const date1 = new Date(today);
     const date2 = new Date(uploadedDate);
-   const diff= Math.abs(Number(date2) - Number(date1))
+   const diff= Math.abs(date1 - date2)
+  
+   let post_date = moment(item.created_at);
+   let moment_conversion = moment().diff(post_date, 'days');
 
 
 return(
@@ -323,7 +326,7 @@ source={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
   >
 <View style={styles.ListBottom}>
 
-<Text style={{color:"white",fontSize:20}}>{diff===0?"3 days Left":diff===1?"2 days Left":diff===2?"1 day Left":"3 day Left"}</Text>
+<Text style={{color:"white",fontSize:20}}>{moment_conversion===0?"3 days Left":moment_conversion===1?"2 days Left":moment_conversion===2?"1 day Left":"1 day Left"}</Text>
 </View>
 <View style={styles.ListBottom}>
 

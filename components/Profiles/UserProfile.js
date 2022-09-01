@@ -187,7 +187,7 @@ source={{uri:`${EndPoints.VideoBaseUrl}${item.thumbnail}`}}
 <View style={styles.ListBottom}>
 
     {/* <Text style={{color:"white",fontSize:20}}>{diff===0?"3 days Left":diff===1?"2 days Left":diff===2?"1 day Left":"3 day Left"}</Text> */}
-    <Text style={{color:"white",fontSize:20}}>{`${moment_conversion} day Left`}</Text>
+    <Text style={{color:"white",fontSize:20}}>{moment_conversion===0?"3 days Left":moment_conversion===1?"2 days Left":moment_conversion===2?"1 day Left":"1 day Left"}</Text>
 </View>
 <View style={styles.ListBottom}>
 

@@ -17,7 +17,7 @@ if(id,token){
     myHeaders.append("Authorization", `Bearer ${token}`);
     
     var formdata = new FormData();
-    formdata.append("title", "Congratulations !");
+    formdata.append("title", "Congratulations!");
     formdata.append("body", "Someone Liked your post");
     formdata.append("sender_id",id);
     formdata.append("reciever_id", user_id);
