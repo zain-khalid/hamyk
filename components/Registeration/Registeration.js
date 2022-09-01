@@ -110,13 +110,11 @@ const Register = () =>{
       }else if(result.response==="450"){
 Alert.alert("Operation Failed", "Handle is not available, try with another handle!")
 setLoading(false)
-setHandleError(true)
 
       }
       else if(result.response==="500"){
         Alert.alert("Operation Failed", "Email is already taken, try with another email!")
         setLoading(false)
-        setEmailError(t)
 
               }
     })
