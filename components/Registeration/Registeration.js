@@ -84,7 +84,7 @@ const Register = () =>{
   formdata.append("firstname", f_name);
   formdata.append("lastname", l_name);
   formdata.append("password", password);
-  formdata.append("username", username);
+  formdata.append("username", username.toLowerCase());
   formdata.append("date_of_birth", birthday);
 
   var requestOptions = {
