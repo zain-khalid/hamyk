@@ -152,7 +152,7 @@ style={{fontSize:20,color:"rgba(0,0,0,0.6)"}}
     <View style={{marginTop:20}}>
 
     <FlatList
-    data={data.filter((items) => searchInput!==""? items.username.includes(searchInput):items.username.includes("##^^hhkd992"))}
+    data={data.filter((items) => searchInput!==""? items.username.includes(searchInput.toLowerCase()):items.username.includes("##^^hhkd992"))}
     renderItem={renderUser}
     
     />

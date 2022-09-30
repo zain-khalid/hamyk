@@ -215,7 +215,7 @@ function getUserData (token,user_id){
         username:result.data[0].username,
         OtherUserr:result.data[0].id,
         profile:result.data[0].profile_photo,
-        total_likes:0
+        total_likes:result.likes
 
 
       })
