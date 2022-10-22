@@ -10,36 +10,77 @@ export default async function GenerateFollowers (user_id){
     const userid = await AsyncStorage.getItem('userid')
     const token = await AsyncStorage.getItem('token')
     let id=JSON.parse(userid) 
-if(id,token){
+    if(id){
+
+
+SendAndroid()
+
+      sendIOS()
+
+    }
+
+  function SendAndroid(){
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Bearer 68A06CABD89016E09CDF76E302782E1A1BCB8C3117015F084A09CC13759C9754");
     
-    var formdata = new FormData();
-    formdata.append("title", "Follower");
-    formdata.append("body", `You have a new follower!`);
-    formdata.append("sender_id",id);
-    formdata.append("reciever_id", user_id);
-    formdata.append("sendr_username", "sarib");
+    var raw = JSON.stringify({
+      "interests": [
+        `${user_id}`
+      ],
+      "fcm": {
+        "notification": {
+          "title": "Follower",
+          "body": `You have a new follower!`
+        }
+      }
+    });
     
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
-      body: formdata,
+      body: raw,
       redirect: 'follow'
     };
     
-    fetch(`${BaseUrl}${EndPoints.makeNotification}`, requestOptions)
-      .then(response => response.json())
-      .then(result =>{
-        console.log("go rundds")
-
-         console.log(result)})
+    fetch("https://09aff3a0-3b9f-4add-86d4-fb01cb84f27a.pushnotifications.pusher.com/publish_api/v1/instances/09aff3a0-3b9f-4add-86d4-fb01cb84f27a/publishes", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
       .catch(error => console.log('error', error));
+  }
+
+    function sendIOS(){
+      var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Bearer 68A06CABD89016E09CDF76E302782E1A1BCB8C3117015F084A09CC13759C9754");
+    
+    var raw = JSON.stringify({
+      "interests": [
+        `${user_id}`
+      ],
+      "apns": {
+        "aps": {
+          "alert": {
+            "title": "Follower",
+            "body": `You have a new follower!`
+          }
+        }
+      }
+    });
+    
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+    
+    fetch("https://09aff3a0-3b9f-4add-86d4-fb01cb84f27a.pushnotifications.pusher.com/publish_api/v1/instances/09aff3a0-3b9f-4add-86d4-fb01cb84f27a/publishes", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+    }
+
 }
-  
-
-  
 
 
-
-}
