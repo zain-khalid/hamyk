@@ -1,5 +1,5 @@
 import React from "react";
-import { View,Text,Modal,Pressable } from "react-native";
+import { View,Text,Modal,Pressable, Alert } from "react-native";
 import styles from "./Styles";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from "@react-navigation/native";
@@ -62,7 +62,7 @@ function onDeactivatePresed(){
 <View style={styles.Container}>
     <View style={styles.UpperPortion}>
 
-<Pressable 
+<Pressable
 onPress={()=>onLogout()}
 style={styles.logout}>
 <Icon
@@ -78,30 +78,30 @@ style={styles.logout}>
     </View>
 
     <View style={styles.TOS}>
-<Text 
+<Text
 
 onPress={()=>navigation.navigate("Tos")}
 style={styles.Text}>
                 Terms of Service
               </Text>
               <Text
-              
+
               onPress={()=>navigation.navigate("Policies")}
 
               style={[styles.Text,{marginTop:10}]}>
               Privacy Policy
               </Text>
 
-             
+
               <Text
-              
+
               onPress={()=> onDeletePressed()}
 
               style={[styles.Text,{marginTop:10}]}>
               Delete Account
               </Text>
               <Text
-              
+
               onPress={()=>onDeactivatePresed()}
 
               style={[styles.Text,{marginTop:10}]}>
@@ -109,8 +109,8 @@ style={styles.Text}>
               </Text>
 
               </View>
-              <Pressable 
-              
+              <Pressable
+
               onPress={()=> OnSetModal()}
               style={styles.closeModalButton}>
               <Text

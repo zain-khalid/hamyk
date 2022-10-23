@@ -97,39 +97,25 @@ const Register = () =>{
     .then(response => response.json())
     .then(result => {
       if(result.user){
-
         AsyncStorage.setItem('userid',JSON.stringify(result.user.id))
         AsyncStorage.setItem('token',result.token)
         AsyncStorage.setItem('login',JSON.stringify("true"))
         ChangeState()
-
         setLoading(false)
-
-
-
-      }else if(result.response==="450"){
-Alert.alert("Operation Failed", "Handle is not available, try with another handle!")
-setLoading(false)
-
-      }
-      else if(result.response==="500"){
+      } else if(result.response==="450") {
+        Alert.alert("Operation Failed", "Handle is not available, try with another handle!")
+        setLoading(false)
+      } else if(result.response==="500") {
         Alert.alert("Operation Failed", "Email is already taken, try with another email!")
         setLoading(false)
-
-              }
+      }
     })
     .catch(error =>{
       setSubmitPressed(true)
       setLoading(false)
-      console.log('response error', error)});
+      console.log('response error', JSON.stringify(error))
+    });
   }
-
-
-
-
-
-
-
 
 return(
   <ScrollView>
