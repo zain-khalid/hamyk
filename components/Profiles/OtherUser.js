@@ -293,7 +293,7 @@ const RenderVideo=({item,index})=>{
     const date1 = new Date(today);
     const date2 = new Date(uploadedDate);
    const diff= Math.abs(date1 - date2)
-  
+
    let post_date = moment(item.created_at);
    let moment_conversion = moment().diff(post_date, 'days');
 
@@ -488,12 +488,12 @@ style={styles.FollowingBtn} >
     >
 
     <Icon
-                    name="ios-heart"
-                    size={35}
-                    color={'red'}
-                    />
-                    <Text style={{fontSize:17,marginLeft:5}}>{userData.total_likes}</Text>
-                    </View>
+      name="ios-heart"
+      size={35}
+      color={'red'}
+      />
+      <Text style={{fontSize:17,marginLeft:5}}>{userData.total_likes}</Text>
+      </View>
 
 
     </View>
